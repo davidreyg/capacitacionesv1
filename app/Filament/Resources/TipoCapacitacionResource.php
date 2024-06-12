@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TipoDocumentoResource\Pages;
-use App\Filament\Resources\TipoDocumentoResource\RelationManagers;
-use App\Models\TipoDocumento;
+use App\Filament\Resources\TipoCapacitacionResource\Pages;
+use App\Filament\Resources\TipoCapacitacionResource\RelationManagers;
+use App\Models\TipoCapacitacion;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,11 +13,12 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class TipoDocumentoResource extends Resource
+class TipoCapacitacionResource extends Resource
 {
-    protected static ?string $model = TipoDocumento::class;
+    protected static ?string $model = TipoCapacitacion::class;
     protected static ?string $navigationGroup = 'Mantenimiento';
-    protected static ?string $modelLabel = 'Tipo de Documento';
+    protected static ?string $modelLabel = 'Tipo de capacitación';
+    protected static ?string $pluralModelLabel = 'Tipos de capacitación';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -27,9 +28,6 @@ class TipoDocumentoResource extends Resource
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(50),
-                Forms\Components\TextInput::make('digitos')
-                    ->required()
-                    ->numeric(),
             ]);
     }
 
@@ -39,8 +37,6 @@ class TipoDocumentoResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('digitos')
-                    ->numeric(),
             ])
             ->filters([
                 //
@@ -57,11 +53,10 @@ class TipoDocumentoResource extends Resource
                 ]),
             ])->defaultSort('nombre');
     }
-
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageTipoDocumentos::route('/'),
+            'index' => Pages\ManageTipoCapacitacions::route('/'),
         ];
     }
 }

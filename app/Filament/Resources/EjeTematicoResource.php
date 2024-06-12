@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TipoDocumentoResource\Pages;
-use App\Filament\Resources\TipoDocumentoResource\RelationManagers;
-use App\Models\TipoDocumento;
+use App\Filament\Resources\EjeTematicoResource\Pages;
+use App\Filament\Resources\EjeTematicoResource\RelationManagers;
+use App\Models\EjeTematico;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,11 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class TipoDocumentoResource extends Resource
+class EjeTematicoResource extends Resource
 {
-    protected static ?string $model = TipoDocumento::class;
+    protected static ?string $model = EjeTematico::class;
     protected static ?string $navigationGroup = 'Mantenimiento';
-    protected static ?string $modelLabel = 'Tipo de Documento';
+    protected static ?string $modelLabel = 'Ejes Tematico';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -27,9 +27,6 @@ class TipoDocumentoResource extends Resource
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(50),
-                Forms\Components\TextInput::make('digitos')
-                    ->required()
-                    ->numeric(),
             ]);
     }
 
@@ -39,8 +36,6 @@ class TipoDocumentoResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('digitos')
-                    ->numeric(),
             ])
             ->filters([
                 //
@@ -61,7 +56,7 @@ class TipoDocumentoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageTipoDocumentos::route('/'),
+            'index' => Pages\ManageEjeTematicos::route('/'),
         ];
     }
 }
