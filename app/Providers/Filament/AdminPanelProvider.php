@@ -66,39 +66,45 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                \Hasnayeen\Themes\Http\Middleware\SetTheme::class
             ])
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->plugins([
-                \BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin::make(),
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
-                    ->gridColumns([
-                        'default' => 2,
-                        'sm' => 1
-                    ])
-                    ->sectionColumnSpan(1)
-                    ->checkboxListColumns([
-                        'default' => 1,
-                        'sm' => 2,
-                        'lg' => 3,
-                    ])
-                    ->resourceCheckboxListColumns([
-                        'default' => 1,
-                        'sm' => 2,
-                    ]),
-                \Jeffgreco13\FilamentBreezy\BreezyCore::make()
-                    ->myProfile(
-                        shouldRegisterUserMenu: true,
-                        shouldRegisterNavigation: false,
-                        navigationGroup: 'Settings',
-                        hasAvatars: true,
-                        slug: 'my-profile'
-                    )
-                    ->myProfileComponents([
-                        'personal_info' => MyProfileExtended::class,
-                    ]),
-            ])
+            ->plugins(
+                [
+                    \BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin::make(),
+                    \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+                        ->gridColumns([
+                            'default' => 2,
+                            'sm' => 1
+                        ])
+                        ->sectionColumnSpan(1)
+                        ->checkboxListColumns([
+                            'default' => 1,
+                            'sm' => 2,
+                            'lg' => 3,
+                        ])
+                        ->resourceCheckboxListColumns([
+                            'default' => 1,
+                            'sm' => 2,
+                        ]),
+                    \Jeffgreco13\FilamentBreezy\BreezyCore::make()
+                        ->myProfile(
+                            shouldRegisterUserMenu: true,
+                            shouldRegisterNavigation: false,
+                            navigationGroup: 'Settings',
+                            hasAvatars: true,
+                            slug: 'my-profile'
+                        )
+                        ->myProfileComponents(
+                            [
+                                'personal_info' => MyProfileExtended::class,
+                            ]
+                        ),
+                    \Hasnayeen\Themes\ThemesPlugin::make()
+                ]
+            )
             ->spa();
     }
 }
