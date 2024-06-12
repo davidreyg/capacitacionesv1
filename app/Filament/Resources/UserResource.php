@@ -46,17 +46,24 @@ class UserResource extends Resource
                                     ->collection('avatars')
                                     ->alignCenter()
                                     ->columnSpanFull(),
+                                Forms\Components\Select::make('establecimiento_id')
+                                    ->relationship('establecimiento', 'nombre')
+                                    ->searchable()
+                                    ->lazy()
+                                    ->required(),
                                 Forms\Components\TextInput::make('username')
                                     ->required()
+                                    ->unique(ignoreRecord: true)
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('email')
                                     ->email()
+                                    ->unique(ignoreRecord: true)
                                     ->required()
                                     ->maxLength(255),
-                                Forms\Components\TextInput::make('firstname')
+                                Forms\Components\TextInput::make('nombre_completo')
                                     ->required()
                                     ->maxLength(255),
-                                Forms\Components\TextInput::make('lastname')
+                                Forms\Components\TextInput::make('cargo')
                                     ->required()
                                     ->maxLength(255),
                             ]),

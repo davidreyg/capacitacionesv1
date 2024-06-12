@@ -18,7 +18,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser, MustVerifyEmail, HasAvatar, HasName, HasMedia
+class User extends Authenticatable implements FilamentUser, HasAvatar, HasName, HasMedia
 {
     use InteractsWithMedia;
     use HasUuids, HasRoles;
@@ -32,9 +32,10 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
     protected $fillable = [
         'username',
         'email',
-        'firstname',
-        'lastname',
+        'nombre_completo',
+        'cargo',
         'password',
+        'establecimiento_id',
     ];
 
     /**
@@ -59,7 +60,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
 
     public function getFilamentName(): string
     {
-        return $this->username;
+        return $this->nombre_completo;
     }
 
     public function canAccessPanel(Panel $panel): bool
@@ -79,7 +80,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
     // Define an accessor for the 'name' attribute
     public function getNameAttribute()
     {
-        return "{$this->firstname} {$this->lastname}";
+        return "{$this->nombre_completo}";
     }
 
     public function isSuperAdmin(): bool
@@ -92,5 +93,11 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
         $this->addMediaConversion('thumb')
             ->fit(Fit::Contain, 300, 300)
             ->nonQueued();
+    }
+
+    // RELACIONES
+    public function establecimiento()
+    {
+        return $this->belongsTo(Establecimiento::class);
     }
 }
