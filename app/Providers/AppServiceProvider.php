@@ -31,5 +31,11 @@ class AppServiceProvider extends ServiceProvider
                 ->extremePaginationLinks()
                 ->defaultSort('created_at', 'desc');
         });
+
+        /* Para que funcione el SPA. y para que carguen los ASSETS */
+        if (config('app.env') === 'production') {
+            $this->app['request']->server->set('HTTPS', 'on');
+            \URL::forceScheme('https');
+        }
     }
 }

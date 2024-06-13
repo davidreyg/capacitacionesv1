@@ -81,6 +81,7 @@ class ResetApp extends Command
             [
                 'message' => 'Storage link to public..',
                 'function' => function () {
+                    Artisan::call('storage:unlink');
                     Artisan::call('storage:link');
                 },
                 'info' => '3. Storage link created',
