@@ -5,7 +5,10 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ItemResource\Pages;
 use App\Filament\Resources\ItemResource\RelationManagers;
 use App\Models\Item;
+use Awcodes\TableRepeater\Components\TableRepeater;
+use Awcodes\TableRepeater\Header;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -26,6 +29,18 @@ class ItemResource extends Resource
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(100),
+
+                TableRepeater::make('respuestas')
+                    ->relationship()
+                    ->headers([
+                        Header::make('nombre')->width('150px')->markAsRequired(),
+                        Header::make('valor')->width('150px'),
+                    ])
+                    ->schema([
+                        Forms\Components\TextInput::make('nombre')->required()->maxLength(100),
+                        Forms\Components\TextInput::make('valor')->required()->maxLength(2),
+                    ])
+                    ->collapsible()->columnSpanFull()
             ]);
     }
 
@@ -55,7 +70,6 @@ class ItemResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\RespuestasRelationManager::class,
         ];
     }
 

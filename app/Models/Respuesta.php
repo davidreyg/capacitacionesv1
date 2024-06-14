@@ -9,11 +9,10 @@ class Respuesta extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['nombre'];
+    protected $fillable = ['nombre', 'valor', 'item_id'];
 
-    public function items()
+    public function item()
     {
-        return $this->belongsToMany(Item::class)
-            ->withPivot(['valor']);
+        return $this->belongsTo(Item::class);
     }
 }

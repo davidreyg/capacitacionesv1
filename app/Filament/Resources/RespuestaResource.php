@@ -23,10 +23,15 @@ class RespuestaResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('item_id')
+                    ->relationship('item', 'nombre')
+                    ->required(),
                 Forms\Components\TextInput::make('nombre')
                     ->required()
-                    ->maxLength(100)
-                    ->unique(ignoreRecord: true),
+                    ->maxLength(100),
+                Forms\Components\TextInput::make('valor')
+                    ->required()
+                    ->maxLength(2),
             ]);
     }
 

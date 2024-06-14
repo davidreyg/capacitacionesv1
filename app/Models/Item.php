@@ -13,7 +13,6 @@ class Item extends Model
 
     public function respuestas()
     {
-        return $this->belongsToMany(Respuesta::class)
-            ->withPivot(['valor']);
+        return $this->hasMany(Respuesta::class);
     }
 }

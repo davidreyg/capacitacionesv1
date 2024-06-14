@@ -13,6 +13,8 @@ return new class extends Migration {
         Schema::create('respuestas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 100);
+            $table->string('valor', 2);
+            $table->foreignId('item_id')->constrained()->cascadeOnDelete();
         });
     }
 
