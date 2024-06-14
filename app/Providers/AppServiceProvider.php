@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Enums\FiltersLayout;
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Filament\Tables\Table;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        if ($this->app->isLocal()) {
+            $this->app->register(IdeHelperServiceProvider::class);
+        }
     }
 
     /**
