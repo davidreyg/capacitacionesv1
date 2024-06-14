@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\ModelStates\HasStates;
 
 class Capacitacion extends Model
 {
-    use HasFactory, HasStates;
+    use HasFactory;
     protected $fillable = [
         "codigo",
         "nombre",
@@ -18,9 +17,14 @@ class Capacitacion extends Model
         "creditos",
         "numero_horas",
         "problema",
+        "activo",
         "tipo_capacitacion_id",
         "eje_tematico_id",
         "oportunidad_id",
+    ];
+
+    protected $casts = [
+        'activo' => 'boolean',
     ];
 
     public function tipo_capacitacion()

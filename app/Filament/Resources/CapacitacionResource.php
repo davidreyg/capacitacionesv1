@@ -71,6 +71,10 @@ class CapacitacionResource extends Resource
                                             Forms\Components\TextInput::make('numero_horas')
                                                 ->required()
                                                 ->numeric(),
+                                            Forms\Components\Toggle::make('activo')
+                                                ->label('¿Activo?')
+                                                ->inline(false)
+                                                ->required(),
 
                                             Grid::make([
                                                 'default' => 1,
@@ -142,7 +146,7 @@ class CapacitacionResource extends Resource
                                     ])
                             ]),
                     ])
-                    ->activeTab(2)
+                    ->activeTab(1)
                     ->columnSpanFull()
 
             ]);
@@ -163,6 +167,8 @@ class CapacitacionResource extends Resource
                     ->numeric(),
                 Tables\Columns\TextColumn::make('numero_horas')
                     ->numeric(),
+                Tables\Columns\IconColumn::make('activo')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
