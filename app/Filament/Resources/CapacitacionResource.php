@@ -35,65 +35,62 @@ class CapacitacionResource extends Resource
                     ->tabs([
                         Tab::make('Información General')
                             ->schema([
+                                Forms\Components\Select::make('tipo_capacitacion_id')
+                                    ->label('Tipo de Capacitación')
+                                    ->relationship('tipo_capacitacion', 'nombre')
+                                    ->required(),
+                                Forms\Components\Select::make('eje_tematico_id')
+                                    ->label('Eje tematico')
+                                    ->relationship('eje_tematico', 'nombre')
+                                    ->required(),
+                                Forms\Components\Select::make('oportunidad_id')
+                                    ->relationship('oportunidad', 'nombre')
+                                    ->required(),
+                                Forms\Components\Select::make('nivels')
+                                    ->multiple()
+                                    ->label('Niveles')
+                                    ->relationship(titleAttribute: 'nombre')
+                                    ->required()
+                                    ->preload(),
+                                Forms\Components\TextInput::make('codigo')
+                                    ->required()
+                                    ->maxLength(20),
+                                Forms\Components\TextInput::make('nombre')
+                                    ->required()
+                                    ->maxLength(225),
+                                Forms\Components\TextInput::make('creditos')
+                                    ->required()
+                                    ->numeric(),
+                                Forms\Components\TextInput::make('numero_horas')
+                                    ->required()
+                                    ->numeric(),
+                                Forms\Components\Toggle::make('activo')
+                                    ->label('¿Activo?')
+                                    ->inline(false)
+                                    ->required(),
+
                                 Grid::make([
                                     'default' => 1,
                                     'sm' => 2,
-                                    'md' => 3,
-                                    'lg' => 4,
+                                ])
+                                    ->schema([
+                                        Forms\Components\Textarea::make('objetivo_aprendizaje')
+                                            ->required(),
+
+                                        Forms\Components\Textarea::make('objetivo_desempeño')
+                                            ->required(),
+                                        Forms\Components\Textarea::make('problema')
+                                            ->required(),
+                                        Forms\Components\Textarea::make('perfil')
+
+                                    ]),
+                            ])->columns([
+                                    'default' => 1,
+                                    'sm' => 2,
+                                    'md' => 2,
+                                    'lg' => 3,
                                     'xl' => 3,
-                                ])->schema([
-                                            Forms\Components\Select::make('tipo_capacitacion_id')
-                                                ->label('Tipo de Capacitación')
-                                                ->relationship('tipo_capacitacion', 'nombre')
-                                                ->required(),
-                                            Forms\Components\Select::make('eje_tematico_id')
-                                                ->label('Eje tematico')
-                                                ->relationship('eje_tematico', 'nombre')
-                                                ->required(),
-                                            Forms\Components\Select::make('oportunidad_id')
-                                                ->relationship('oportunidad', 'nombre')
-                                                ->required(),
-                                            Forms\Components\Select::make('nivels')
-                                                ->multiple()
-                                                ->label('Niveles')
-                                                ->relationship(titleAttribute: 'nombre')
-                                                ->required()
-                                                ->preload(),
-                                            Forms\Components\TextInput::make('codigo')
-                                                ->required()
-                                                ->maxLength(20),
-                                            Forms\Components\TextInput::make('nombre')
-                                                ->required()
-                                                ->maxLength(225),
-                                            Forms\Components\TextInput::make('creditos')
-                                                ->required()
-                                                ->numeric(),
-                                            Forms\Components\TextInput::make('numero_horas')
-                                                ->required()
-                                                ->numeric(),
-                                            Forms\Components\Toggle::make('activo')
-                                                ->label('¿Activo?')
-                                                ->inline(false)
-                                                ->required(),
-
-                                            Grid::make([
-                                                'default' => 1,
-                                                'sm' => 2,
-                                            ])
-                                                ->schema([
-                                                    Forms\Components\Textarea::make('objetivo_aprendizaje')
-                                                        ->required(),
-
-                                                    Forms\Components\Textarea::make('objetivo_desempeño')
-                                                        ->required(),
-                                                    Forms\Components\Textarea::make('problema')
-                                                        ->required(),
-                                                    Forms\Components\Textarea::make('perfil')
-
-                                                ]),
-                                        ])
-
-                            ]),
+                                ]),
                         Tab::make('Información del SERVIR')
                             ->schema([
                                 Forms\Components\Repeater::make('capacitacionRespuestas')
