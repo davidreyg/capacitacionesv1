@@ -37,6 +37,7 @@
         "laravel/tinker": "^2.8",
         "league/commonmark": "^2.4",
         "riodwanto/filament-ace-editor": "^1.0",
+        "spatie/laravel-model-states": "^2.7",
         "staudenmeir/laravel-adjacency-list": "^1.0",
         "z3d0x/filament-logger": "^0.6.3"
     },
