@@ -7,6 +7,8 @@ use App\Filament\Resources\EstablecimientoResource\RelationManagers;
 use App\Models\Establecimiento;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
@@ -30,9 +32,14 @@ class EstablecimientoResource extends Resource
                         'DIRIS' => 'DIRIS',
                         'ESTABLECIMIENTO' => 'ESTABLECIMIENTO',
                     ])
+                    ->live()
+                    ->afterStateUpdated(fn(Set $set) => $set('parent_id', null))
                     ->required(),
-                Forms\Components\TextInput::make('parent_id')
-                    ->numeric(),
+                Forms\Components\Select::make('parent_id')
+                    ->options(fn(Get $get) => Establecimiento::whereTipo(Establecimiento::obtenerPadre($get('tipo')))->pluck('nombre', 'id'))
+                    ->label(fn(Get $get): string => Establecimiento::obtenerPadre($get('tipo')) ?? 'Empty')
+                    ->hidden(fn(Get $get): bool => Establecimiento::obtenerPadre($get('tipo')) === null)
+                    ->required(fn(Get $get): bool => Establecimiento::obtenerPadre($get('tipo')) !== null),
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(255),
@@ -52,6 +59,7 @@ class EstablecimientoResource extends Resource
                 Forms\Components\TextInput::make('telefono')
                     ->tel()
                     ->numeric(),
+                Forms\Components\Hidden::make('parent_id'),
 
 
             ]);
