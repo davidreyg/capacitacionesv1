@@ -64,4 +64,9 @@ class Evento extends Model
             $q->where('tipo', 'indirecto');
         });
     }
+
+    public function eventoEstablecimientos()
+    {
+        return $this->hasMany(EstablecimientoEvento::class);
+    }
 }

@@ -18,8 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class EventoResource extends Resource
 {
     protected static ?string $model = Evento::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Mantenimiento';
+    protected static ?string $navigationIcon = 'tabler-calendar-event';
 
     public static function form(Form $form): Form
     {
@@ -29,8 +29,8 @@ class EventoResource extends Resource
                     ->tabs([
                         Forms\Components\Tabs\Tab::make('Datos del evento')
                             ->schema([
-                                Forms\Components\Split::make([
-                                    Forms\Components\Fieldset::make('Vacantes')->schema([
+                                Forms\Components\Grid::make()->schema([
+                                    Forms\Components\Fieldset::make('Información sobre vacantes')->schema([
                                         Forms\Components\Toggle::make('libre')
                                             ->label('¿Libre ingreso?')
                                             ->inline(false)
@@ -43,16 +43,29 @@ class EventoResource extends Resource
                                             ->required(fn(Forms\Get $get): bool => !!$get('libre'))
                                             ->numeric(),
                                         Forms\Components\Hidden::make('vacantes'),
-                                    ])->columns(2),
-                                    Forms\Components\Fieldset::make('Proveedor')->schema([
+                                    ])->columnSpan(1)->columns(2),
+                                    Forms\Components\Fieldset::make('Datos del proveedor')->schema([
                                         Forms\Components\Select::make('proveedor_id')
                                             ->relationship('proveedor', 'razon_social')
                                             ->required()
-                                            ->searchable(),
+                                            ->searchable()
+                                            ->columnSpan([
+                                                'default' => 1,
+                                                'sm' => 1,
+                                                'md' => 2,
+                                                'lg' => 2,
+                                                'xl' => 2,
+                                            ]),
                                         Forms\Components\DatePicker::make('fecha_orden_servicio')
                                             ->required(),
-                                    ])->columns(2),
-                                ])->columns(2)->columnSpanFull(),
+                                    ])->columnSpan(2)->columns([
+                                                'default' => 1,
+                                                'sm' => 2,
+                                                'md' => 3,
+                                                'lg' => 3,
+                                                'xl' => 3,
+                                            ]),
+                                ])->columns(3),
 
                                 Forms\Components\Fieldset::make('Datos del evento')
                                     ->schema([
@@ -131,9 +144,25 @@ class EventoResource extends Resource
                                         ])
                                 ])->from('md')
                             ]),
-                        Forms\Components\Tabs\Tab::make('Tab 3')
+                        Forms\Components\Tabs\Tab::make('Establecimientos')
                             ->schema([
-                                // ...
+                                TableRepeater::make('eventoEstablecimientos')
+                                    ->hiddenLabel()
+                                    ->addActionLabel('Añadir establecimiento')
+                                    ->relationship()
+                                    ->headers([
+                                        Header::make('Establecimiento')->width('150px')->markAsRequired(),
+                                        Header::make('¿Aprobado?')->width('150px'),
+                                    ])
+                                    ->schema([
+                                        Forms\Components\Select::make('establecimiento_id')
+                                            ->relationship('establecimiento', 'nombre')
+                                            ->distinct()
+                                            ->disableOptionsWhenSelectedInSiblingRepeaterItems()
+                                            ->required(),
+                                        Forms\Components\Toggle::make('aprobado')->required(),
+                                    ])
+                                    ->collapsible()->columnSpanFull()
                             ]),
                     ])
                     ->columnSpanFull(),

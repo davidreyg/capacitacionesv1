@@ -22,6 +22,7 @@ class InitSeeder extends Seeder
         $niveles = base_path('database/sql/niveles.sql');
         $costos = base_path('database/sql/costos.sql');
         $establecimientos = base_path('database/sql/establecimientos.sql');
+        $proveedores = base_path('database/sql/proveedores.sql');
 
         if (file_exists($items)) {
             $sql = file_get_contents($items);
@@ -55,12 +56,17 @@ class InitSeeder extends Seeder
             $sql = file_get_contents($establecimientos);
             \DB::unprepared($sql);
         }
+        if (file_exists($proveedores)) {
+            $sql = file_get_contents($proveedores);
+            \DB::unprepared($sql);
+        }
     }
 
     public function tipoDocumentos()
     {
         \DB::table('tipo_documentos')->insert(['nombre' => 'DNI', 'digitos' => 8]);
         \DB::table('tipo_documentos')->insert(['nombre' => 'Carné de extranjeria', 'digitos' => 11]);
+        \DB::table('tipo_documentos')->insert(['nombre' => 'RUC', 'digitos' => 14]);
     }
     public function sedePrincipal()
     {

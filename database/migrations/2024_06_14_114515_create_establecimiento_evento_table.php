@@ -10,9 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('capacitacion_evento', function (Blueprint $table) {
+        Schema::create('establecimiento_evento', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('evento_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('capacitacion_id')->constrained();
+            $table->foreignId('establecimiento_id')->constrained();
             $table->boolean('aprobado');
         });
     }
@@ -22,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('capacitacion_evento');
+        Schema::dropIfExists('establecimiento_evento');
     }
 };
