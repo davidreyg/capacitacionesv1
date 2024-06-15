@@ -25,7 +25,7 @@ class CapacitacionResource extends Resource
     protected static ?string $model = Capacitacion::class;
     protected static ?string $pluralModelLabel = 'Capacitaciones';
     protected static ?string $navigationGroup = 'Mantenimiento';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'tabler-book-2';
 
     public static function form(Form $form): Form
     {

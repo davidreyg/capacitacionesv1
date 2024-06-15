@@ -18,7 +18,7 @@ class ProveedorResource extends Resource
     protected static ?string $model = Proveedor::class;
     protected static ?string $navigationGroup = 'Mantenimiento';
     protected static ?string $pluralModelLabel = 'Proveedores';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'tabler-users-group';
 
     public static function form(Form $form): Form
     {

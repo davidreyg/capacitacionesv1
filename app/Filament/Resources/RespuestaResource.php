@@ -17,7 +17,7 @@ class RespuestaResource extends Resource
 {
     protected static ?string $model = Respuesta::class;
     protected static ?string $navigationGroup = 'Mantenimiento';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'tabler-question-mark';
 
     public static function form(Form $form): Form
     {

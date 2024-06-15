@@ -19,7 +19,7 @@ class TipoCapacitacionResource extends Resource
     protected static ?string $navigationGroup = 'Mantenimiento';
     protected static ?string $modelLabel = 'Tipo de capacitación';
     protected static ?string $pluralModelLabel = 'Tipos de capacitación';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'tabler-books';
 
     public static function form(Form $form): Form
     {

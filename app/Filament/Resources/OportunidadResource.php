@@ -18,7 +18,7 @@ class OportunidadResource extends Resource
     protected static ?string $model = Oportunidad::class;
     protected static ?string $navigationGroup = 'Mantenimiento';
     protected static ?string $pluralModelLabel = 'Oportunidades';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'tabler-timeline-event';
 
     public static function form(Form $form): Form
     {

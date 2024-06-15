@@ -18,7 +18,7 @@ class EjeTematicoResource extends Resource
     protected static ?string $model = EjeTematico::class;
     protected static ?string $navigationGroup = 'Mantenimiento';
     protected static ?string $modelLabel = 'Ejes Tematico';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'tabler-clipboard-list';
 
     public static function form(Form $form): Form
     {

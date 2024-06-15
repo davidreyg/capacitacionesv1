@@ -18,7 +18,7 @@ class ModalidadResource extends Resource
     protected static ?string $model = Modalidad::class;
     protected static ?string $navigationGroup = 'Mantenimiento';
     protected static ?string $pluralModelLabel = 'Modalidades';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'tabler-directions';
 
     public static function form(Form $form): Form
     {
