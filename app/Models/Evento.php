@@ -65,8 +65,8 @@ class Evento extends Model
         });
     }
 
-    public function eventoEstablecimientos()
+    public function asignacions()
     {
-        return $this->hasMany(EstablecimientoEvento::class);
+        return $this->hasMany(Asignacion::class);
     }
 }

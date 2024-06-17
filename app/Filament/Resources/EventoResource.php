@@ -4,12 +4,18 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EventoResource\Pages;
 use App\Filament\Resources\EventoResource\RelationManagers;
+use App\Models\Asignacion;
 use App\Models\Evento;
+use App\States\Asignacion\Aprobado;
+use App\States\Asignacion\Solicitado;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\IconSize;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -75,6 +81,7 @@ class EventoResource extends Resource
                                         Forms\Components\Select::make('capacitacion_id')
                                             ->relationship('capacitacion', 'nombre')
                                             ->required()
+                                            ->live()
                                             ->searchable(),
 
                                         Forms\Components\DatePicker::make('fecha_inicio')
@@ -144,25 +151,47 @@ class EventoResource extends Resource
                                         ])
                                 ])->from('md')
                             ]),
-                        Forms\Components\Tabs\Tab::make('Establecimientos')
+                        Forms\Components\Tabs\Tab::make('Establecimientos solicitantes')
+                            ->visibleOn('create')
                             ->schema([
-                                TableRepeater::make('eventoEstablecimientos')
+                                Forms\Components\CheckboxList::make('asignacion_ids')
+                                    ->label('Establecimientos')
+                                    ->visibleOn('create')
+                                    ->options(function (Get $get) {
+                                        return Asignacion::whereState('estado', Solicitado::class)->whereEventoId(null)->whereCapacitacionId($get('capacitacion_id'))->get()->mapWithKeys(function (Asignacion $asignacion) {
+                                            return [$asignacion->id => $asignacion->establecimiento->nombre];    // Suponiendo que 'id' es la clave primaria;
+                                        })->toArray();
+                                    })
+                                    ->required()
+                                    ->columns(2),
+                            ]),
+                        Forms\Components\Tabs\Tab::make('Establecimientos Aprobados')
+                            ->visibleOn('edit')
+                            ->schema([
+                                TableRepeater::make('asignacions')
                                     ->hiddenLabel()
-                                    ->addActionLabel('Añadir establecimiento')
+                                    ->visibleOn('edit')
+                                    ->deletable(false)
+                                    ->addable(false)
                                     ->relationship()
                                     ->headers([
-                                        Header::make('Establecimiento')->width('150px')->markAsRequired(),
-                                        Header::make('¿Aprobado?')->width('150px'),
+                                        Header::make('Nombre')->markAsRequired(),
+                                        Header::make('Estado')->markAsRequired(),
                                     ])
                                     ->schema([
-                                        Forms\Components\Select::make('establecimiento_id')
-                                            ->relationship('establecimiento', 'nombre')
-                                            ->distinct()
-                                            ->disableOptionsWhenSelectedInSiblingRepeaterItems()
-                                            ->required(),
-                                        Forms\Components\Toggle::make('aprobado')->required(),
+                                        Forms\Components\Placeholder::make('establecimiento_nombre')
+                                            ->hiddenLabel()
+                                            ->content(fn(Get $get): string => \DB::table('establecimientos')
+                                                ->where('id', $get('establecimiento_id'))
+                                                ->value('nombre')),
+                                        Forms\Components\ToggleButtons::make('estado')
+                                            ->label('Like this post?')
+                                            ->options(fn(Asignacion $record): array => $record->estado->transitionableStatesWith('action'))
+                                            ->icons(fn(Asignacion $record): array => $record->estado->transitionableStatesWith('icon'))
+                                            ->colors(fn(Asignacion $record): array => $record->estado->transitionableStatesWith('color'))
+                                            ->visible(fn(?Asignacion $record): bool => !!$record)
+                                            ->grouped(),
                                     ])
-                                    ->collapsible()->columnSpanFull()
                             ]),
                     ])
                     ->columnSpanFull(),
@@ -217,6 +246,7 @@ class EventoResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
