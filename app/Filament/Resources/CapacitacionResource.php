@@ -7,6 +7,8 @@ use App\Filament\Resources\CapacitacionResource\RelationManagers;
 use App\Models\Capacitacion;
 use App\Models\Item;
 use App\Models\Respuesta;
+use Awcodes\TableRepeater\Components\TableRepeater;
+use Awcodes\TableRepeater\Header;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Tabs;
@@ -120,6 +122,7 @@ class CapacitacionResource extends Resource
                                         ])
                                             ->schema([
                                                 Forms\Components\Select::make('item_id')
+                                                    ->hiddenLabel()
                                                     ->relationship('item', 'nombre')
                                                     ->live()
                                                     ->disabled()
@@ -137,9 +140,26 @@ class CapacitacionResource extends Resource
                                                     ->required(),
                                                 Forms\Components\TextInput::make('respuesta_valor')
                                                     ->disabled()
+                                                    ->grow(false)
                                                     ->dehydrated(false),
 
                                             ]),
+                                    ])
+                            ]),
+                        Forms\Components\Tabs\Tab::make('Establecimientos solicitantes')
+                            ->schema([
+                                TableRepeater::make('asignacions')
+                                    ->hiddenLabel()
+                                    ->addActionLabel('Añadir establecimiento')
+                                    ->relationship()
+                                    ->headers([
+                                        Header::make('Nombre')->markAsRequired(),
+                                    ])
+                                    ->schema([
+                                        Forms\Components\Select::make('establecimiento_id')
+                                            ->relationship('establecimiento', 'nombre')
+                                            ->searchable()
+                                            ->required(),
                                     ])
                             ]),
                     ])

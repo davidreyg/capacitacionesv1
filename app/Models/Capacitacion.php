@@ -50,4 +50,9 @@ class Capacitacion extends Model
     {
         return $this->hasMany(CapacitacionRespuesta::class);
     }
+
+    public function asignacions()
+    {
+        return $this->hasMany(Asignacion::class);
+    }
 }
