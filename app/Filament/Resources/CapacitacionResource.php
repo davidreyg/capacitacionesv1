@@ -95,7 +95,7 @@ class CapacitacionResource extends Resource
                                 ]),
                         Tab::make('Información del SERVIR')
                             ->schema([
-                                Forms\Components\Repeater::make('capacitacionRespuestas')
+                                TableRepeater::make('capacitacionRespuestas')
                                     ->relationship()
                                     ->addable(false)
                                     ->deletable(false)
@@ -115,35 +115,33 @@ class CapacitacionResource extends Resource
 
                                         return $data;
                                     })
+                                    ->headers([
+                                        Header::make('Item')->markAsRequired(),
+                                        Header::make('Respuesta')->markAsRequired(),
+                                        Header::make('Valor')->markAsRequired(),
+                                    ])
                                     ->schema([
-                                        Grid::make([
-                                            'default' => 1,
-                                            'sm' => 3,
-                                        ])
-                                            ->schema([
-                                                Forms\Components\Select::make('item_id')
-                                                    ->hiddenLabel()
-                                                    ->relationship('item', 'nombre')
-                                                    ->live()
-                                                    ->disabled()
-                                                    ->afterStateUpdated(fn(Set $set) => $set('respuesta_id', null))
-                                                    ->required()
-                                                    ->dehydrated(false),
-                                                Forms\Components\Select::make('respuesta_id')
-                                                    ->label('Respuesta')
-                                                    ->options(fn(Get $get) => Respuesta::whereItemId($get('item_id'))->pluck('nombre', 'id'))
-                                                    ->afterStateUpdated(fn($state, Set $set) => $set('respuesta_valor', \DB::table('respuestas')
-                                                        ->where('id', $state)
-                                                        ->value('valor')))
-                                                    ->live()
-                                                    ->suffixIconColor('warning')
-                                                    ->required(),
-                                                Forms\Components\TextInput::make('respuesta_valor')
-                                                    ->disabled()
-                                                    ->grow(false)
-                                                    ->dehydrated(false),
+                                        Forms\Components\Select::make('item_id')
+                                            ->hiddenLabel()
+                                            ->relationship('item', 'nombre')
+                                            ->live()
+                                            ->disabled()
+                                            ->afterStateUpdated(fn(Set $set) => $set('respuesta_id', null))
+                                            ->required()
+                                            ->dehydrated(false),
+                                        Forms\Components\Select::make('respuesta_id')
+                                            ->label('Respuesta')
+                                            ->options(fn(Get $get) => Respuesta::whereItemId($get('item_id'))->pluck('nombre', 'id'))
+                                            ->afterStateUpdated(fn($state, Set $set) => $set('respuesta_valor', \DB::table('respuestas')
+                                                ->where('id', $state)
+                                                ->value('valor')))
+                                            ->live()
+                                            ->suffixIconColor('warning')
+                                            ->required(),
+                                        Forms\Components\TextInput::make('respuesta_valor')
+                                            ->disabled()
+                                            ->dehydrated(false),
 
-                                            ]),
                                     ])
                             ]),
                         Forms\Components\Tabs\Tab::make('Establecimientos solicitantes')

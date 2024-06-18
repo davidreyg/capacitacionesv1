@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\Auth\EmailVerification;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Auth\RequestPasswordReset;
+use App\Filament\Pages\HabilitarCapacitaciones;
 use App\Livewire\MyProfileExtended;
 use App\Settings\GeneralSettings;
 use Filament\Http\Middleware\Authenticate;
@@ -32,6 +33,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('capacitaciones')
             ->path('')
             ->login(Login::class)
+            ->globalSearch(false)
+            ->font(app(GeneralSettings::class)->font)
             ->passwordReset(RequestPasswordReset::class)
             ->emailVerification(EmailVerification::class)
             ->favicon(fn(GeneralSettings $settings) => Storage::url($settings->site_favicon))

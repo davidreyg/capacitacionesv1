@@ -11,6 +11,19 @@ use App\States\Asignacion\Solicitado;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Split;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -31,27 +44,27 @@ class EventoResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Tabs::make('Tabs')
+                Tabs::make('Tabs')
                     ->tabs([
-                        Forms\Components\Tabs\Tab::make('Datos del evento')
+                        Tab::make('Datos del evento')
                             ->schema([
-                                Forms\Components\Grid::make()->schema([
-                                    Forms\Components\Fieldset::make('Información sobre vacantes')->schema([
-                                        Forms\Components\Toggle::make('libre')
+                                Grid::make()->schema([
+                                    Fieldset::make('Información sobre vacantes')->schema([
+                                        Toggle::make('libre')
                                             ->label('¿Libre ingreso?')
                                             ->inline(false)
                                             ->live()
                                             ->afterStateUpdated(fn(Forms\Set $set) => $set('vacantes', null))
                                             ->required(),
-                                        Forms\Components\TextInput::make('vacantes')
+                                        TextInput::make('vacantes')
                                             ->required()
                                             ->hidden(fn(Forms\Get $get): bool => !!$get('libre'))
                                             ->required(fn(Forms\Get $get): bool => !!$get('libre'))
                                             ->numeric(),
-                                        Forms\Components\Hidden::make('vacantes'),
+                                        Hidden::make('vacantes'),
                                     ])->columnSpan(1)->columns(2),
-                                    Forms\Components\Fieldset::make('Datos del proveedor')->schema([
-                                        Forms\Components\Select::make('proveedor_id')
+                                    Fieldset::make('Datos del proveedor')->schema([
+                                        Select::make('proveedor_id')
                                             ->relationship('proveedor', 'razon_social')
                                             ->required()
                                             ->searchable()
@@ -62,7 +75,7 @@ class EventoResource extends Resource
                                                 'lg' => 2,
                                                 'xl' => 2,
                                             ]),
-                                        Forms\Components\DatePicker::make('fecha_orden_servicio')
+                                        DatePicker::make('fecha_orden_servicio')
                                             ->required(),
                                     ])->columnSpan(2)->columns([
                                                 'default' => 1,
@@ -73,27 +86,27 @@ class EventoResource extends Resource
                                             ]),
                                 ])->columns(3),
 
-                                Forms\Components\Fieldset::make('Datos del evento')
+                                Fieldset::make('Datos del evento')
                                     ->schema([
-                                        Forms\Components\Select::make('modalidad_id')
+                                        Select::make('modalidad_id')
                                             ->relationship('modalidad', 'nombre')
                                             ->required(),
-                                        Forms\Components\Select::make('capacitacion_id')
+                                        Select::make('capacitacion_id')
                                             ->relationship('capacitacion', 'nombre')
                                             ->required()
                                             ->live()
                                             ->searchable(),
 
-                                        Forms\Components\DatePicker::make('fecha_inicio')
+                                        DatePicker::make('fecha_inicio')
                                             ->required(),
-                                        Forms\Components\DatePicker::make('fecha_fin')
+                                        DatePicker::make('fecha_fin')
                                             ->required(),
 
-                                        Forms\Components\TextInput::make('lugar')
+                                        TextInput::make('lugar')
                                             ->required()
                                             ->maxLength(100),
 
-                                        Forms\Components\TextInput::make('estado')
+                                        TextInput::make('estado')
                                             ->required()
                                             ->visibleOn('edit')
                                             ->maxLength(255),
@@ -108,10 +121,10 @@ class EventoResource extends Resource
                                 'lg' => 3,
                                 'xl' => 3,
                             ]),
-                        Forms\Components\Tabs\Tab::make('Costos')
+                        Tab::make('Costos')
                             ->schema([
-                                Forms\Components\Split::make([
-                                    Forms\Components\Fieldset::make('Costos directos')
+                                Split::make([
+                                    Fieldset::make('Costos directos')
                                         ->schema([
                                             TableRepeater::make('costosDirectos')
                                                 ->hiddenLabel()
@@ -121,16 +134,16 @@ class EventoResource extends Resource
                                                     Header::make('valor')->width('150px'),
                                                 ])
                                                 ->schema([
-                                                    Forms\Components\Select::make('costo_id')
+                                                    Select::make('costo_id')
                                                         ->relationship('costo', 'nombre', fn(Builder $query) => $query->where('tipo', 'directo'))
                                                         ->distinct()
                                                         ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                                         ->required(),
-                                                    Forms\Components\TextInput::make('valor')->required()->maxLength(2),
+                                                    TextInput::make('valor')->required()->maxLength(2),
                                                 ])
                                                 ->collapsible()->columnSpanFull()
                                         ]),
-                                    Forms\Components\Fieldset::make('Costos indirectos')
+                                    Fieldset::make('Costos indirectos')
                                         ->schema([
                                             TableRepeater::make('costosIndirectos')
                                                 ->hiddenLabel()
@@ -140,21 +153,21 @@ class EventoResource extends Resource
                                                     Header::make('valor')->width('150px'),
                                                 ])
                                                 ->schema([
-                                                    Forms\Components\Select::make('costo_id')
+                                                    Select::make('costo_id')
                                                         ->relationship('costo', 'nombre', fn(Builder $query) => $query->where('tipo', 'indirecto'))
                                                         ->distinct()
                                                         ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                                         ->required(),
-                                                    Forms\Components\TextInput::make('valor')->required()->maxLength(2),
+                                                    TextInput::make('valor')->required()->maxLength(2),
                                                 ])
                                                 ->collapsible()->columnSpanFull()
                                         ])
                                 ])->from('md')
                             ]),
-                        Forms\Components\Tabs\Tab::make('Establecimientos solicitantes')
+                        Tab::make('Establecimientos solicitantes')
                             ->visibleOn('create')
                             ->schema([
-                                Forms\Components\CheckboxList::make('asignacion_ids')
+                                CheckboxList::make('asignacion_ids')
                                     ->label('Establecimientos')
                                     ->visibleOn('create')
                                     ->options(function (Get $get) {
@@ -165,7 +178,7 @@ class EventoResource extends Resource
                                     ->required()
                                     ->columns(2),
                             ]),
-                        Forms\Components\Tabs\Tab::make('Establecimientos Aprobados')
+                        Tab::make('Establecimientos Aprobados')
                             ->visibleOn('edit')
                             ->schema([
                                 TableRepeater::make('asignacions')
@@ -179,12 +192,12 @@ class EventoResource extends Resource
                                         Header::make('Estado')->markAsRequired(),
                                     ])
                                     ->schema([
-                                        Forms\Components\Placeholder::make('establecimiento_nombre')
+                                        Placeholder::make('establecimiento_nombre')
                                             ->hiddenLabel()
                                             ->content(fn(Get $get): string => \DB::table('establecimientos')
                                                 ->where('id', $get('establecimiento_id'))
                                                 ->value('nombre')),
-                                        Forms\Components\ToggleButtons::make('estado')
+                                        ToggleButtons::make('estado')
                                             ->label('Like this post?')
                                             ->options(fn(Asignacion $record): array => $record->estado->transitionableStatesWith('action'))
                                             ->icons(fn(Asignacion $record): array => $record->estado->transitionableStatesWith('icon'))
@@ -194,10 +207,8 @@ class EventoResource extends Resource
                                     ])
                             ]),
                     ])
+                    ->activeTab(1)
                     ->columnSpanFull(),
-
-
-
             ]);
     }
 
