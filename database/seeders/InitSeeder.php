@@ -23,6 +23,13 @@ class InitSeeder extends Seeder
         $costos = base_path('database/sql/costos.sql');
         $establecimientos = base_path('database/sql/establecimientos.sql');
         $proveedores = base_path('database/sql/proveedores.sql');
+        $unidades_organicas = base_path('database/sql/unidades_organicas.sql');
+        $cargos = base_path('database/sql/cargos.sql');
+        $tipo_planillas = base_path('database/sql/tipo_planillas.sql');
+        $condiciones = base_path('database/sql/condiciones.sql');
+        $desplazamientos = base_path('database/sql/desplazamientos.sql');
+        $regimen_laborales = base_path('database/sql/regimen_laborales.sql');
+        $funciones = base_path('database/sql/funciones.sql');
 
         if (file_exists($items)) {
             $sql = file_get_contents($items);
@@ -58,6 +65,34 @@ class InitSeeder extends Seeder
         }
         if (file_exists($proveedores)) {
             $sql = file_get_contents($proveedores);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($unidades_organicas)) {
+            $sql = file_get_contents($unidades_organicas);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($cargos)) {
+            $sql = file_get_contents($cargos);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($tipo_planillas)) {
+            $sql = file_get_contents($tipo_planillas);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($condiciones)) {
+            $sql = file_get_contents($condiciones);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($desplazamientos)) {
+            $sql = file_get_contents($desplazamientos);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($regimen_laborales)) {
+            $sql = file_get_contents($regimen_laborales);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($funciones)) {
+            $sql = file_get_contents($funciones);
             \DB::unprepared($sql);
         }
     }
