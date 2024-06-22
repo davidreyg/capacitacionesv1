@@ -9,6 +9,7 @@ use App\Models\Evento;
 use App\States\Asignacion\Aprobado;
 use App\States\Asignacion\Evaluado;
 use App\States\Asignacion\Habilitado;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
@@ -24,7 +25,7 @@ use Filament\Tables\Table;
 
 class HabilitarCapacitaciones extends Page implements HasTable
 {
-    use InteractsWithTable;
+    use InteractsWithTable, HasPageShield;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static string $view = 'filament.pages.habilitar-capacitaciones';

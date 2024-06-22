@@ -1,5 +1,4 @@
 <?php
-use App\Settings\CurrencySettings;
 
 return [
 

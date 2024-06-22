@@ -6,16 +6,17 @@ use App\Filament\Resources\EventoResource\Pages;
 use App\Filament\Resources\EventoResource\RelationManagers;
 use App\Models\Asignacion;
 use App\Models\Evento;
-use App\States\Asignacion\Aprobado;
 use App\States\Asignacion\Solicitado;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
+
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Split;
@@ -97,9 +98,11 @@ class EventoResource extends Resource
                                             ->live()
                                             ->searchable(),
 
-                                        DatePicker::make('fecha_inicio')
+                                        DateTimePicker::make('fecha_inicio')
+                                            ->minDate(now())
                                             ->required(),
-                                        DatePicker::make('fecha_fin')
+                                        DateTimePicker::make('fecha_fin')
+                                            ->minDate(now())
                                             ->required(),
 
                                         TextInput::make('lugar')
@@ -216,33 +219,28 @@ class EventoResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('capacitacion.nombre')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('fecha_inicio')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('fecha_fin')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('fecha_orden_servicio')
-                    ->date()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('lugar')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('libre')
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('vacantes')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('estado')
-                    ->searchable(),
+                    ->badge()
+                    ->formatStateUsing(fn(Evento $record): string => $record->estado->display())
+                    ->color(fn(Evento $record): string => $record->estado->color()),
                 Tables\Columns\TextColumn::make('modalidad_id')
                     ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('capacitacion_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('proveedor_id')
-                    ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -256,8 +254,10 @@ class EventoResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
