@@ -64,6 +64,10 @@ class Evento extends Model
             $q->where('tipo', 'indirecto');
         });
     }
+    public function sesions()
+    {
+        return $this->hasMany(Sesion::class);
+    }
 
     public function asignacions()
     {

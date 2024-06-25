@@ -18,11 +18,14 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
 
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
@@ -208,6 +211,26 @@ class EventoResource extends Resource
                                             ->visible(fn(?Asignacion $record): bool => !!$record)
                                             ->grouped(),
                                     ])
+                            ]),
+                        Tab::make('Sesiones / Clases')
+                            ->schema([
+                                Repeater::make('sesions')
+                                    ->hiddenLabel()
+                                    ->relationship()
+                                    ->schema([
+                                        TextInput::make('nombre')
+                                            ->required()
+                                            ->maxLength(100),
+                                        RichEditor::make('descripcion')
+                                            ->nullable(),
+                                        DatePicker::make('fecha')
+                                            ->required(),
+                                        TimePicker::make('hora')
+                                            ->required(),
+                                    ])
+                                    ->minItems(1)
+                                    ->grid(2)
+                                    ->itemLabel(fn(array $state): ?string => $state['nombre'] ?? null),
                             ]),
                     ])
                     ->activeTab(1)
