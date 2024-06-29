@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -32,6 +33,13 @@ class UsersTableSeeder extends Seeder
 
         // Bind superadmin user to FilamentShield
         Artisan::call('shield:super-admin', ['--user' => $sid]);
+
+        \DB::table('establecimientos')->pluck('id')->each(function ($establecimientoId) {
+            $users = User::factory()->count(1)->create(['establecimiento_id' => $establecimientoId]);
+            $users->each(function (User $user) {
+                $user->assignRole('jefe');
+            });
+        });
 
         // $roles = DB::table('roles')->whereNot('name', 'super_admin')->get();
         // foreach ($roles as $role) {

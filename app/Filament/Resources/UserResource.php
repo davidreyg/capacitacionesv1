@@ -145,11 +145,14 @@ class UserResource extends Resource
                     ->formatStateUsing(fn($state): string => Str::headline($state))
                     ->colors(['info'])
                     ->badge(),
+                Tables\Columns\TextColumn::make('establecimiento.nombre')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')->label('Verified at')
-                    ->dateTime()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('email_verified_at')->label('Verified at')
+                //     ->dateTime()
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
