@@ -1,12 +1,12 @@
 <?php
-namespace App\States\Asignacion;
+namespace App\States\Solicitud;
 
 use Spatie\ModelStates\State;
 
 /**
- * @extends State<\App\Models\Asignacion>
+ * @extends State<\App\Models\Solicitud>
  */
-class Habilitado extends AsignacionState
+class Habilitado extends SolicitudState
 {
     public static $name = 'habilitado';
 

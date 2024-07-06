@@ -2,13 +2,13 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Asignacion;
+use App\Models\Solicitud;
 use App\Models\Establecimiento;
 use App\Models\EstablecimientoEvento;
 use App\Models\Evento;
-use App\States\Asignacion\Aprobado;
-use App\States\Asignacion\Evaluado;
-use App\States\Asignacion\Habilitado;
+use App\States\Solicitud\Aprobado;
+use App\States\Solicitud\Evaluado;
+use App\States\Solicitud\Habilitado;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -36,21 +36,21 @@ class HabilitarCapacitaciones extends Page implements HasTable
     {
         $this->establecimiento_ids = auth()->user()->establecimiento->tipo === config('appSection-establecimiento.tipo_establecimiento.RIS')
             ? auth()->user()->establecimiento->children()->pluck('id')->toArray()
-            : auth()->user()->establecimiento->childrenAndSelf()->pluck('id')->toArray();
+            : auth()->user()->establecimiento->descendantsAndSelf()->pluck('id')->toArray();
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(Asignacion::query()->whereHas('evento')->whereIn('establecimiento_id', $this->establecimiento_ids))
+            ->query(Solicitud::query()->whereHas('evento')->whereIn('establecimiento_id', $this->establecimiento_ids))
             ->columns([
                 TextColumn::make('establecimiento.nombre')->searchable(),
                 TextColumn::make('evento.capacitacion.nombre')->searchable(),
                 TextColumn::make('evento.fecha_inicio')->searchable(),
                 TextColumn::make('estado')
                     ->badge()
-                    ->formatStateUsing(fn(Asignacion $record): string => $record->estado->display())
-                    ->color(fn(Asignacion $record): string => $record->estado->color())
+                    ->formatStateUsing(fn(Solicitud $record): string => $record->estado->display())
+                    ->color(fn(Solicitud $record): string => $record->estado->color())
                     ->searchable(),
 
             ])
@@ -62,29 +62,29 @@ class HabilitarCapacitaciones extends Page implements HasTable
                     ->hiddenLabel()
                     ->iconSize(IconSize::Large)
                     ->tooltip('Aprobar')
-                    ->visible(fn(Asignacion $record): bool => $record->estado->canTransitionTo(Aprobado::class))
+                    ->visible(fn(Solicitud $record): bool => $record->estado->canTransitionTo(Aprobado::class))
                     ->color('info')
                     ->icon('tabler-file-like')
                     ->requiresConfirmation()
-                    ->action(fn(Asignacion $record): string => $record->estado->transitionTo(Aprobado::class)),
+                    ->action(fn(Solicitud $record): string => $record->estado->transitionTo(Aprobado::class)),
                 Action::make('Habilitar')
                     ->hiddenLabel()
                     ->iconSize(IconSize::Large)
                     ->tooltip('Habilitar')
-                    ->visible(fn(Asignacion $record): bool => $record->estado->canTransitionTo(Habilitado::class))
+                    ->visible(fn(Solicitud $record): bool => $record->estado->canTransitionTo(Habilitado::class))
                     ->color('success')
                     ->icon('tabler-file-smile')
                     ->requiresConfirmation()
-                    ->action(fn(Asignacion $record): string => $record->estado->transitionTo(Habilitado::class)),
+                    ->action(fn(Solicitud $record): string => $record->estado->transitionTo(Habilitado::class)),
                 Action::make('Evaluar')
                     ->hiddenLabel()
                     ->iconSize(IconSize::Large)
                     ->tooltip('Evaluar')
-                    ->visible(fn(Asignacion $record): bool => $record->estado->canTransitionTo(Evaluado::class))
+                    ->visible(fn(Solicitud $record): bool => $record->estado->canTransitionTo(Evaluado::class))
                     ->color('danger')
                     ->icon('tabler-file-dislike')
                     ->requiresConfirmation()
-                    ->action(fn(Asignacion $record): string => $record->estado->transitionTo(Evaluado::class)),
+                    ->action(fn(Solicitud $record): string => $record->estado->transitionTo(Evaluado::class)),
 
             ])
             ->bulkActions([

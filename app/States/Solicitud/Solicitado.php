@@ -1,18 +1,18 @@
 <?php
-namespace App\States\Asignacion;
+namespace App\States\Solicitud;
 
 use Spatie\ModelStates\State;
 
 /**
- * @extends State<\App\Models\Asignacion>
+ * @extends State<\App\Models\Solicitud>
  */
-class Solicitado extends AsignacionState
+class Solicitado extends SolicitudState
 {
     public static $name = 'solicitado';
 
     public function color(): string
     {
-        return 'default';
+        return 'gray';
     }
 
     public function display(): string

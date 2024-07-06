@@ -69,8 +69,8 @@ class Evento extends Model
         return $this->hasMany(Sesion::class);
     }
 
-    public function asignacions()
+    public function solicituds()
     {
-        return $this->hasMany(Asignacion::class);
+        return $this->hasMany(Solicitud::class);
     }
 }

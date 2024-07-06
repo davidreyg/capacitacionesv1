@@ -3,9 +3,9 @@
 namespace App\Filament\Resources\EventoResource\Pages;
 
 use App\Filament\Resources\EventoResource;
-use App\Models\Asignacion;
+use App\Models\Solicitud;
 use App\Models\Evento;
-use App\States\Asignacion\Aprobado;
+use App\States\Solicitud\Aprobado;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateEvento extends CreateRecord
@@ -17,11 +17,11 @@ class CreateEvento extends CreateRecord
     protected function handleRecordCreation(array $data): Evento
     {
         $evento = static::getModel()::create($data);
-        foreach ($data['asignacion_ids'] as $value) {
-            $asignacion = Asignacion::find($value);
-            $asignacion->evento_id = $evento->id;
-            $asignacion->save();
-            $asignacion->estado->transitionTo(Aprobado::class);
+        foreach ($data['solcitud_ids'] as $value) {
+            $solcitud = Solicitud::find($value);
+            $solcitud->evento_id = $evento->id;
+            $solcitud->save();
+            $solcitud->estado->transitionTo(Aprobado::class);
         }
         return $evento;
     }

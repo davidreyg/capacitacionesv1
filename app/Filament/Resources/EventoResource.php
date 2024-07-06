@@ -4,9 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EventoResource\Pages;
 use App\Filament\Resources\EventoResource\RelationManagers;
-use App\Models\Asignacion;
+use App\Models\Solicitud;
 use App\Models\Evento;
-use App\States\Asignacion\Solicitado;
+use App\States\Solicitud\Solicitado;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
@@ -173,12 +173,12 @@ class EventoResource extends Resource
                         Tab::make('Establecimientos solicitantes')
                             ->visibleOn('create')
                             ->schema([
-                                CheckboxList::make('asignacion_ids')
+                                CheckboxList::make('solicitud_ids')
                                     ->label('Establecimientos')
                                     ->visibleOn('create')
                                     ->options(function (Get $get) {
-                                        return Asignacion::whereState('estado', Solicitado::class)->whereEventoId(null)->whereCapacitacionId($get('capacitacion_id'))->get()->mapWithKeys(function (Asignacion $asignacion) {
-                                            return [$asignacion->id => $asignacion->establecimiento->nombre];    // Suponiendo que 'id' es la clave primaria;
+                                        return Solicitud::whereState('estado', Solicitado::class)->whereEventoId(null)->whereCapacitacionId($get('capacitacion_id'))->get()->mapWithKeys(function (Solicitud $solicitud) {
+                                            return [$solicitud->id => $solicitud->establecimiento->nombre];    // Suponiendo que 'id' es la clave primaria;
                                         })->toArray();
                                     })
                                     ->required()
@@ -187,7 +187,7 @@ class EventoResource extends Resource
                         Tab::make('Establecimientos Aprobados')
                             ->visibleOn('edit')
                             ->schema([
-                                TableRepeater::make('asignacions')
+                                TableRepeater::make('solicituds')
                                     ->hiddenLabel()
                                     ->visibleOn('edit')
                                     ->deletable(false)
@@ -205,10 +205,10 @@ class EventoResource extends Resource
                                                 ->value('nombre')),
                                         ToggleButtons::make('estado')
                                             ->label('Like this post?')
-                                            ->options(fn(Asignacion $record): array => $record->estado->transitionableStatesWith('action'))
-                                            ->icons(fn(Asignacion $record): array => $record->estado->transitionableStatesWith('icon'))
-                                            ->colors(fn(Asignacion $record): array => $record->estado->transitionableStatesWith('color'))
-                                            ->visible(fn(?Asignacion $record): bool => !!$record)
+                                            ->options(fn(Solicitud $record): array => $record->estado->transitionableStatesWith('action'))
+                                            ->icons(fn(Solicitud $record): array => $record->estado->transitionableStatesWith('icon'))
+                                            ->colors(fn(Solicitud $record): array => $record->estado->transitionableStatesWith('color'))
+                                            ->visible(fn(?Solicitud $record): bool => !!$record)
                                             ->grouped(),
                                     ])
                             ]),

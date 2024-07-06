@@ -41,6 +41,7 @@ class Login extends BasePage
         return TextInput::make('username')
             ->label('Usuario')
             ->required()
+            ->exists('users')
             ->autocomplete()
             ->autofocus();
     }

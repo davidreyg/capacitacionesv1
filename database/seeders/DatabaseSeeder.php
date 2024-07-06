@@ -20,6 +20,6 @@ class DatabaseSeeder extends Seeder
             EmpleadoSeeder::class,
         ]);
 
-        Artisan::call('shield:generate --all');
+        Artisan::call('shield:generate --all --ignore-existing-policies');
     }
 }

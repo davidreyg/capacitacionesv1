@@ -146,9 +146,11 @@ class CapacitacionResource extends Resource
                             ]),
                         Forms\Components\Tabs\Tab::make('Establecimientos solicitantes')
                             ->schema([
-                                TableRepeater::make('asignacions')
+                                TableRepeater::make('solicituds')
                                     ->hiddenLabel()
-                                    ->addActionLabel('Añadir establecimiento')
+                                    ->addable(false)
+                                    ->deletable(false)
+                                    ->defaultItems(0)
                                     ->relationship()
                                     ->headers([
                                         Header::make('Nombre')->markAsRequired(),

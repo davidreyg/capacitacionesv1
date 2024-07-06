@@ -34,7 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('')
             ->login(Login::class)
             ->globalSearch(false)
-            ->font(app(GeneralSettings::class)->font)
+            // ->font(app(GeneralSettings::class)->font)
             ->passwordReset(RequestPasswordReset::class)
             ->emailVerification(EmailVerification::class)
             ->favicon(fn(GeneralSettings $settings) => Storage::url($settings->site_favicon))

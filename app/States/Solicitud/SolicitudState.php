@@ -1,13 +1,13 @@
 <?php
-namespace App\States\Asignacion;
+namespace App\States\Solicitud;
 
 use Spatie\ModelStates\State;
 use Spatie\ModelStates\StateConfig;
 
 /**
- * @extends State<\App\Models\Asignacion>
+ * @extends State<\App\Models\Solicitud>
  */
-abstract class AsignacionState extends State
+abstract class SolicitudState extends State
 {
     abstract public function color(): string;
     abstract public function display(): string;
@@ -29,7 +29,7 @@ abstract class AsignacionState extends State
     {
         return collect($this->transitionableStates())
             ->mapWithKeys(function ($state) use ($item) {
-                $stateClass = 'App\\States\\Asignacion\\' . ucfirst($state);
+                $stateClass = 'App\\States\\Solicitud\\' . ucfirst($state);
                 return [$state => (new $stateClass($this))->$item()];
             })
             ->toArray();
