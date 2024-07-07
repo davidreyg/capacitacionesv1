@@ -3,9 +3,6 @@
 namespace App\Filament\Pages;
 
 use App\Models\Solicitud;
-use App\Models\Establecimiento;
-use App\Models\EstablecimientoEvento;
-use App\Models\Evento;
 use App\States\Solicitud\Aprobado;
 use App\States\Solicitud\Evaluado;
 use App\States\Solicitud\Habilitado;
@@ -23,12 +20,12 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 
-class HabilitarCapacitaciones extends Page implements HasTable
+class GestionarSolicitudes extends Page implements HasTable
 {
     use InteractsWithTable, HasPageShield;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.pages.habilitar-capacitaciones';
+    protected static string $view = 'filament.pages.gestionar-solicitudes';
 
     public array $establecimiento_ids;
 

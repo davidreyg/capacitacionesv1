@@ -64,35 +64,7 @@ class SolicitudResource extends Resource implements HasShieldPermissions
                 //
             ])
             ->actions([
-
-                Action::make('Aprobar')
-                    ->hiddenLabel()
-                    ->iconSize(IconSize::Large)
-                    ->tooltip('Aprobar')
-                    ->visible(fn(Solicitud $record): bool => $record->estado->canTransitionTo(Aprobado::class) && auth()->user()->can('transition_solicitud'))
-                    ->color('info')
-                    ->icon('tabler-file-like')
-                    ->requiresConfirmation()
-                    ->action(fn(Solicitud $record): string => $record->estado->transitionTo(Aprobado::class)),
-                Action::make('Habilitar')
-                    ->hiddenLabel()
-                    ->iconSize(IconSize::Large)
-                    ->tooltip('Habilitar')
-                    ->visible(fn(Solicitud $record): bool => $record->estado->canTransitionTo(Habilitado::class) && auth()->user()->can('transition_solicitud'))
-                    ->color('success')
-                    ->icon('tabler-file-smile')
-                    ->requiresConfirmation()
-                    ->action(fn(Solicitud $record): string => $record->estado->transitionTo(Habilitado::class)),
-                Action::make('Evaluar')
-                    ->hiddenLabel()
-                    ->iconSize(IconSize::Large)
-                    ->tooltip('Evaluar')
-                    ->visible(fn(Solicitud $record): bool => $record->estado->canTransitionTo(Evaluado::class) && auth()->user()->can('transition_solicitud'))
-                    ->color('danger')
-                    ->icon('tabler-file-dislike')
-                    ->requiresConfirmation()
-                    ->action(fn(Solicitud $record): string => $record->estado->transitionTo(Evaluado::class)),
-                Tables\Actions\DeleteAction::make()->hiddenLabel()->iconSize(IconSize::Large),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
