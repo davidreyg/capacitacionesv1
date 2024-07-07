@@ -12,8 +12,10 @@ return new class extends Migration {
     {
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('fecha_inicio');
-            $table->dateTime('fecha_fin');
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+            $table->time('hora_inicio');
+            $table->time('hora_fin');
             $table->date('fecha_orden_servicio');
             $table->string('lugar', 100);
             $table->boolean('libre');

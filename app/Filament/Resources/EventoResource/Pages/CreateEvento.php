@@ -17,7 +17,7 @@ class CreateEvento extends CreateRecord
     protected function handleRecordCreation(array $data): Evento
     {
         $evento = static::getModel()::create($data);
-        foreach ($data['solcitud_ids'] as $value) {
+        foreach ($data['solicitud_ids'] as $value) {
             $solcitud = Solicitud::find($value);
             $solcitud->evento_id = $evento->id;
             $solcitud->save();

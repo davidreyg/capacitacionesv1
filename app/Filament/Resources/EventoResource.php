@@ -100,22 +100,23 @@ class EventoResource extends Resource
                                             ->required()
                                             ->live()
                                             ->searchable(),
-
-                                        DateTimePicker::make('fecha_inicio')
+                                        DatePicker::make('fecha_inicio')
                                             ->minDate(now())
                                             ->required(),
-                                        DateTimePicker::make('fecha_fin')
+                                        TimePicker::make('hora_inicio')
+                                            ->required(),
+                                        DatePicker::make('fecha_fin')
                                             ->minDate(now())
                                             ->required(),
-
+                                        TimePicker::make('hora_fin')
+                                            ->required(),
                                         TextInput::make('lugar')
                                             ->required()
                                             ->maxLength(100),
-
-                                        TextInput::make('estado')
-                                            ->required()
-                                            ->visibleOn('edit')
-                                            ->maxLength(255),
+                                        // TextInput::make('estado')
+                                        //     ->required()
+                                        //     ->visibleOn('edit')
+                                        //     ->maxLength(255),
                                     ])
                                     ->columns(2),
 

@@ -18,6 +18,8 @@ class Evento extends Model
     protected $fillable = [
         'fecha_inicio',
         'fecha_fin',
+        'hora_inicio',
+        'hora_fin',
         'fecha_orden_servicio',
         'lugar',
         'libre',
