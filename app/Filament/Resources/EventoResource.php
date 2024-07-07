@@ -281,6 +281,8 @@ class EventoResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\Action::make('inscription')->label('Inscribir Alumnos')
+                        ->url(fn($record): string => "/eventos/{$record->id}/enrollment"),
                 ])
             ])
             ->bulkActions([
@@ -303,6 +305,7 @@ class EventoResource extends Resource
             'index' => Pages\ListEventos::route('/'),
             'create' => Pages\CreateEvento::route('/create'),
             'edit' => Pages\EditEvento::route('/{record}/edit'),
+            'enrollment' => Pages\InscribirAlumnos::route('/{record}/enrollment'),
         ];
     }
 }

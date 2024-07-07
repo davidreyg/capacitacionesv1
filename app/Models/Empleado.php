@@ -71,4 +71,9 @@ class Empleado extends Model
     {
         return $this->belongsTo(Funcion::class);
     }
+
+    public function eventos()
+    {
+        return $this->belongsToMany(Evento::class)->using(EmpleadoEvento::class);
+    }
 }

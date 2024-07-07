@@ -67,9 +67,9 @@ class Evento extends Model
         });
     }
 
-    public function eventoEmpleados()
+    public function empleados()
     {
-        return $this->hasMany(EmpleadoEvento::class);
+        return $this->belongsToMany(Empleado::class)->using(EmpleadoEvento::class);
     }
 
     public function sesions()
