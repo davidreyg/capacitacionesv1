@@ -66,6 +66,12 @@ class Evento extends Model
             $q->where('tipo', 'indirecto');
         });
     }
+
+    public function eventoEmpleados()
+    {
+        return $this->hasMany(EmpleadoEvento::class);
+    }
+
     public function sesions()
     {
         return $this->hasMany(Sesion::class);
