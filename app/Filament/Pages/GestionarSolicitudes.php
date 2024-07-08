@@ -31,7 +31,7 @@ class GestionarSolicitudes extends Page implements HasTable
 
     public function mount()
     {
-        $this->establecimiento_ids = auth()->user()->establecimiento->tipo === config('appSection-establecimiento.tipo_establecimiento.DIRIS')
+        $this->establecimiento_ids = auth()->user()->establecimiento->tipo === config('app-establecimiento.tipo_establecimiento.DIRIS')
             ? auth()->user()->establecimiento->descendantsAndSelf()->pluck('id')->toArray()
             : auth()->user()->establecimiento->children()->pluck('id')->toArray();
     }
