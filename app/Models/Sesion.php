@@ -16,4 +16,14 @@ class Sesion extends Model
         'hora',
         'evento_id',
     ];
+
+    public function evento()
+    {
+        return $this->belongsTo(Evento::class);
+    }
+
+    public function empleados()
+    {
+        return $this->belongsToMany(Empleado::class)->withPivot(['is_present'])->using(EmpleadoEvento::class);
+    }
 }
