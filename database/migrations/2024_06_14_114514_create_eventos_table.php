@@ -20,11 +20,18 @@ return new class extends Migration {
             $table->string('lugar', 100);
             $table->boolean('libre');
             $table->integer('vacantes')->nullable()->unsigned();
-            // $table->integer('inscritos')->nullable()->unsigned();
             $table->tinyInteger('creditos')->unsigned();
             $table->tinyInteger('numero_horas')->unsigned();
             $table->string('estado');
 
+            // Auditar reprogramacion
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->uuid('reprogramador_id')->nullable();
+            $table->foreign('reprogramador_id')->references('id')->on('users');
+            $table->timestamp('fecha_reprogramacion')->nullable();
+
+            //Foreings
             $table->foreignId('oportunidad_id')->constrained();
             $table->foreignId('modalidad_id')->constrained();
             $table->foreignId('capacitacion_id')->constrained();

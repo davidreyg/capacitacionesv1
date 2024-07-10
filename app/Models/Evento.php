@@ -24,7 +24,6 @@ class Evento extends Model
         'lugar',
         'libre',
         'vacantes',
-        // 'inscritos',
         'creditos',
         'numero_horas',
         'estado',
@@ -32,6 +31,9 @@ class Evento extends Model
         'capacitacion_id',
         'proveedor_id',
         "oportunidad_id",
+        "user_id",
+        "reprogramador_id",
+        "fecha_reprogramacion",
     ];
 
     /**
@@ -46,6 +48,15 @@ class Evento extends Model
     public function modalidad()
     {
         return $this->belongsTo(Modalidad::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function reprogramador()
+    {
+        return $this->belongsTo(User::class, 'reprogramador_id');
     }
 
     public function capacitacion()
