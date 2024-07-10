@@ -31,4 +31,9 @@ class CreateEvento extends CreateRecord
         }
         return $evento;
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->previousUrl ?? $this->getResource()::getUrl('index');
+    }
 }
