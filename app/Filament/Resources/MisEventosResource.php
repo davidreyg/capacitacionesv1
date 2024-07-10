@@ -9,6 +9,7 @@ use App\Models\Empleado;
 use App\Models\Evento;
 use App\States\Solicitud\Habilitado;
 use Filament\Forms;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
@@ -57,19 +58,16 @@ class MisEventosResource extends Resource
                         'empleado_ids' => $record->empleados()->where('establecimiento_id', auth()->user()->establecimiento_id)->pluck('empleado_id'),
                     ])
                     ->form([
-                        Repeater::make('empleado_ids')
-                            ->addActionLabel('Añadir alumnos')
+                        CheckboxList::make('empleado_ids')
                             ->label('Alumnos')
-                            ->simple(
-                                Select::make('empleados')
-                                    ->options(Empleado::whereEstablecimientoId(auth()->user()->establecimiento_id)->get()->pluck('nombres', 'id'))
-                                    ->distinct()
-                                    ->searchable()
-                                    ->disableOptionsWhenSelectedInSiblingRepeaterItems()
-                                    ->required()
-                            )
+                            ->options(fn() => Empleado::whereEstablecimientoId(auth()->user()->establecimiento_id)->get()->pluck('nombres', 'id'))
+                            ->searchable()
+                            ->bulkToggleable()
+                            ->required()
+                            ->columns(2),
                     ])
-                    ->modalSubmitActionLabel('Guardar')
+                    ->databaseTransaction()
+                    ->modalSubmitActionLabel('Confirmar inscripción')
                     ->action(function (array $data, Evento $record): void {
                         $record->empleados()->syncWithoutDetaching($data['empleado_ids']);
                         Notification::make()
