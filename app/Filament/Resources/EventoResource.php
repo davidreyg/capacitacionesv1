@@ -6,6 +6,7 @@ use App\Filament\Resources\EventoResource\Pages;
 use App\Filament\Resources\EventoResource\RelationManagers;
 use App\Models\Solicitud;
 use App\Models\Evento;
+use App\States\Solicitud\Aprobado;
 use App\States\Solicitud\Solicitado;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
@@ -188,47 +189,32 @@ class EventoResource extends Resource
                                         ])
                                 ])->from('md')
                             ]),
-                        Tab::make('Establecimientos solicitantes')
-                            ->visibleOn('create')
+                        Tab::make('Solicitudes')
                             ->schema([
                                 CheckboxList::make('solicitud_ids')
                                     ->label('Establecimientos')
-                                    ->visibleOn('create')
-                                    ->options(function (Get $get) {
-                                        return Solicitud::whereState('estado', Solicitado::class)->whereEventoId(null)->whereCapacitacionId($get('capacitacion_id'))->get()->mapWithKeys(function (Solicitud $solicitud) {
-                                            return [$solicitud->id => $solicitud->establecimiento->nombre];    // Suponiendo que 'id' es la clave primaria;
-                                        })->toArray();
+                                    ->options(function (Get $get, string $operation) {
+                                        return $operation === 'create' ?
+                                            Solicitud::whereState('estado', Solicitado::class)->whereEventoId(null)->whereCapacitacionId($get('capacitacion_id'))->get()->mapWithKeys(function (Solicitud $solicitud) {
+                                                return [$solicitud->id => $solicitud->establecimiento->nombre];    // Suponiendo que 'id' es la clave primaria;
+                                            })->toArray()
+                                            :
+                                            Solicitud::whereState('estado', [Solicitado::class, Aprobado::class])
+                                                ->where(function ($query) use ($get) {
+                                                    $query->where('evento_id', $get('id'))
+                                                        ->orWhereNull('evento_id');
+                                                })
+                                                ->whereCapacitacionId($get('capacitacion_id'))->get()->mapWithKeys(function (Solicitud $solicitud) {
+                                                    return [$solicitud->id => $solicitud->establecimiento->nombre];    // Suponiendo que 'id' es la clave primaria;
+                                                })->toArray();
                                     })
+                                    ->disableOptionWhen(function (array $state, string $value): bool {
+                                        $solicitud = Solicitud::findOrFail($value);
+                                        return $solicitud->evento_id != null;
+                                    })
+
                                     ->required()
                                     ->columns(2),
-                            ]),
-                        Tab::make('Establecimientos Aprobados')
-                            ->visibleOn('edit')
-                            ->schema([
-                                TableRepeater::make('solicituds')
-                                    ->hiddenLabel()
-                                    ->visibleOn('edit')
-                                    ->deletable(false)
-                                    ->addable(false)
-                                    ->relationship()
-                                    ->headers([
-                                        Header::make('Nombre')->markAsRequired(),
-                                        Header::make('Estado')->markAsRequired(),
-                                    ])
-                                    ->schema([
-                                        Placeholder::make('establecimiento_nombre')
-                                            ->hiddenLabel()
-                                            ->content(fn(Get $get): string => \DB::table('establecimientos')
-                                                ->where('id', $get('establecimiento_id'))
-                                                ->value('nombre')),
-                                        ToggleButtons::make('estado')
-                                            ->label('Like this post?')
-                                            ->options(fn(Solicitud $record): array => $record->estado->transitionableStatesWith('action'))
-                                            ->icons(fn(Solicitud $record): array => $record->estado->transitionableStatesWith('icon'))
-                                            ->colors(fn(Solicitud $record): array => $record->estado->transitionableStatesWith('color'))
-                                            ->visible(fn(?Solicitud $record): bool => !!$record)
-                                            ->grouped(),
-                                    ])
                             ]),
                         Tab::make('Sesiones / Clases')
                             ->schema([
@@ -297,7 +283,7 @@ class EventoResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\EditAction::make()->label('Reprogramar'),
                     Tables\Actions\DeleteAction::make(),
                 ])
             ])
