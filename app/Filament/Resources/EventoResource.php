@@ -108,6 +108,7 @@ class EventoResource extends Resource
                                             ->required(),
                                         Select::make('capacitacion_id')
                                             ->relationship('capacitacion', 'nombre')
+                                            ->disabledOn('edit')
                                             ->required()
                                             ->live()
                                             ->searchable(),
@@ -283,6 +284,7 @@ class EventoResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make()->label('Reprogramar'),
                     Tables\Actions\DeleteAction::make(),
                 ])
@@ -306,6 +308,7 @@ class EventoResource extends Resource
         return [
             'index' => Pages\ListEventos::route('/'),
             'create' => Pages\CreateEvento::route('/create'),
+            'view' => Pages\ViewEvento::route('/{record}'),
             'edit' => Pages\EditEvento::route('/{record}/edit'),
         ];
     }
