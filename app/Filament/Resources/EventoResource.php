@@ -242,6 +242,7 @@ class EventoResource extends Resource
                                         RichEditor::make('descripcion')
                                             ->nullable(),
                                         DatePicker::make('fecha')
+                                            ->after(fn(Get $get): ?string => $get('../../fecha_inicio'))
                                             ->required(),
                                         TimePicker::make('hora')
                                             ->required(),
