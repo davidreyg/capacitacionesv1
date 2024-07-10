@@ -39,6 +39,9 @@ class EventoPolicy
      */
     public function update(User $user, Evento $evento): bool
     {
+        if (isset($evento->fecha_reprogramacion)) {
+            return false;
+        }
         return $user->can('update_evento');
     }
 
