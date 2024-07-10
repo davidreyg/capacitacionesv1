@@ -124,14 +124,17 @@ class EventoResource extends Resource
                                 Fieldset::make('Fecha y Hora')
                                     ->schema([
                                         DatePicker::make('fecha_inicio')
-                                            ->minDate(now())
+                                            ->minDate(now()->toDateString())
                                             ->required(),
                                         TimePicker::make('hora_inicio')
+                                            ->seconds(false)
                                             ->required(),
                                         DatePicker::make('fecha_fin')
-                                            ->minDate(now())
+                                            ->after('fecha_inicio')
                                             ->required(),
                                         TimePicker::make('hora_fin')
+                                            ->seconds(false)
+                                            ->after('hora_inicio')
                                             ->required(),
                                     ]),
                             ])
