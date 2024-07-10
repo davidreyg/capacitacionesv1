@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('empleado_evento', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('evento_id')->constrained();
+            $table->foreignId('evento_id')->constrained()->cascadeOnDelete();
             $table->foreignId('empleado_id')->constrained();
         });
     }
