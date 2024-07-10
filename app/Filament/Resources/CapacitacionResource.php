@@ -45,9 +45,6 @@ class CapacitacionResource extends Resource
                                     ->label('Eje tematico')
                                     ->relationship('eje_tematico', 'nombre')
                                     ->required(),
-                                Forms\Components\Select::make('oportunidad_id')
-                                    ->relationship('oportunidad', 'nombre')
-                                    ->required(),
                                 Forms\Components\Select::make('nivels')
                                     ->multiple()
                                     ->label('Niveles')
@@ -60,12 +57,6 @@ class CapacitacionResource extends Resource
                                 Forms\Components\TextInput::make('nombre')
                                     ->required()
                                     ->maxLength(225),
-                                Forms\Components\TextInput::make('creditos')
-                                    ->required()
-                                    ->numeric(),
-                                Forms\Components\TextInput::make('numero_horas')
-                                    ->required()
-                                    ->numeric(),
                                 Forms\Components\Toggle::make('activo')
                                     ->label('¿Activo?')
                                     ->inline(false)
@@ -180,10 +171,6 @@ class CapacitacionResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('creditos')
-                    ->numeric(),
-                Tables\Columns\TextColumn::make('numero_horas')
-                    ->numeric(),
                 Tables\Columns\IconColumn::make('activo')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')

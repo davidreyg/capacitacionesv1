@@ -14,13 +14,10 @@ class Capacitacion extends Model
         "perfil",
         "objetivo_aprendizaje",
         "objetivo_desempeño",
-        "creditos",
-        "numero_horas",
         "problema",
         "activo",
         "tipo_capacitacion_id",
         "eje_tematico_id",
-        "oportunidad_id",
     ];
 
     protected $casts = [
@@ -35,10 +32,6 @@ class Capacitacion extends Model
     public function eje_tematico()
     {
         return $this->belongsTo(EjeTematico::class);
-    }
-    public function oportunidad()
-    {
-        return $this->belongsTo(Oportunidad::class);
     }
 
     public function nivels()

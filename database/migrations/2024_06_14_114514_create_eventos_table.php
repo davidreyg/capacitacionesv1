@@ -20,8 +20,12 @@ return new class extends Migration {
             $table->string('lugar', 100);
             $table->boolean('libre');
             $table->integer('vacantes')->nullable()->unsigned();
+            // $table->integer('inscritos')->nullable()->unsigned();
+            $table->tinyInteger('creditos')->unsigned();
+            $table->tinyInteger('numero_horas')->unsigned();
             $table->string('estado');
 
+            $table->foreignId('oportunidad_id')->constrained();
             $table->foreignId('modalidad_id')->constrained();
             $table->foreignId('capacitacion_id')->constrained();
             $table->foreignId('proveedor_id')->constrained();

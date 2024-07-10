@@ -67,6 +67,7 @@ class EventoResource extends Resource
                                             ->afterStateUpdated(fn(Forms\Set $set) => $set('vacantes', null))
                                             ->required(),
                                         TextInput::make('vacantes')
+                                            // ->label(fn(string $operation): string => $operation === 'create' ? 'Vacantes' : 'Vacantes / Inscripciones')
                                             ->required()
                                             ->hidden(fn(Forms\Get $get): bool => !!$get('libre'))
                                             ->required(fn(Forms\Get $get): bool => !!$get('libre'))
@@ -101,11 +102,27 @@ class EventoResource extends Resource
                                         Select::make('modalidad_id')
                                             ->relationship('modalidad', 'nombre')
                                             ->required(),
+                                        Select::make('oportunidad_id')
+                                            ->relationship('oportunidad', 'nombre')
+                                            ->required(),
                                         Select::make('capacitacion_id')
                                             ->relationship('capacitacion', 'nombre')
                                             ->required()
                                             ->live()
                                             ->searchable(),
+                                        TextInput::make('lugar')
+                                            ->required()
+                                            ->maxLength(100),
+                                        TextInput::make('creditos')
+                                            ->required()
+                                            ->numeric(),
+                                        TextInput::make('numero_horas')
+                                            ->required()
+                                            ->numeric(),
+                                    ])
+                                    ->columns(2),
+                                Fieldset::make('Fecha y Hora')
+                                    ->schema([
                                         DatePicker::make('fecha_inicio')
                                             ->minDate(now())
                                             ->required(),
@@ -116,16 +133,7 @@ class EventoResource extends Resource
                                             ->required(),
                                         TimePicker::make('hora_fin')
                                             ->required(),
-                                        TextInput::make('lugar')
-                                            ->required()
-                                            ->maxLength(100),
-                                        // TextInput::make('estado')
-                                        //     ->required()
-                                        //     ->visibleOn('edit')
-                                        //     ->maxLength(255),
-                                    ])
-                                    ->columns(2),
-
+                                    ]),
                             ])
                             ->columns([
                                 'default' => 1,

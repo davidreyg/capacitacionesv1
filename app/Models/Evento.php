@@ -24,10 +24,14 @@ class Evento extends Model
         'lugar',
         'libre',
         'vacantes',
+        // 'inscritos',
+        'creditos',
+        'numero_horas',
         'estado',
         'modalidad_id',
         'capacitacion_id',
         'proveedor_id',
+        "oportunidad_id",
     ];
 
     /**
@@ -52,6 +56,11 @@ class Evento extends Model
     public function proveedor()
     {
         return $this->belongsTo(Proveedor::class);
+    }
+
+    public function oportunidad()
+    {
+        return $this->belongsTo(Oportunidad::class);
     }
 
     public function costosDirectos()
