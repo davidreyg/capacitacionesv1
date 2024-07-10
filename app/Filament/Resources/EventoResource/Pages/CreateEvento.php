@@ -13,6 +13,12 @@ class CreateEvento extends CreateRecord
     protected static string $resource = EventoResource::class;
     protected ?bool $hasDatabaseTransactions = true;
 
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['user_id'] = auth()->id();
+        return $data;
+    }
+
     // TODO: Esto es peligroso
     protected function handleRecordCreation(array $data): Evento
     {
