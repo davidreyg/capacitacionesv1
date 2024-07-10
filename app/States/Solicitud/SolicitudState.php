@@ -20,9 +20,12 @@ abstract class SolicitudState extends State
             ->default(Solicitado::class)
             ->allowTransition(Solicitado::class, Aprobado::class)
             ->allowTransition(Solicitado::class, Evaluado::class)
+
             ->allowTransition(Aprobado::class, Habilitado::class)
             ->allowTransition(Aprobado::class, Solicitado::class)
             ->allowTransition(Aprobado::class, Evaluado::class)
+
+            ->allowTransition(Habilitado::class, Solicitado::class)
         ;
     }
 
