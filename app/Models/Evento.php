@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\States\Evento\EventoState;
+use App\States\Solicitud\Solicitado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\ModelStates\HasStates;
@@ -100,5 +101,17 @@ class Evento extends Model
     public function solicituds()
     {
         return $this->hasMany(Solicitud::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (Evento $evento) {
+            // Actualizar el estado de las solicitudes relacionadas
+            $evento->solicituds->each(function (Solicitud $solicitud) {
+                $solicitud->estado->transitionTo(Solicitado::class);
+            });
+        });
     }
 }

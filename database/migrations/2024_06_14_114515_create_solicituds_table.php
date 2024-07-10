@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('capacitacion_id')->constrained();
             $table->foreignId('establecimiento_id')->constrained();
-            $table->foreignId('evento_id')->nullable()->constrained();
+            $table->foreignId('evento_id')->nullable()->constrained()->nullOnDelete();
             $table->string('estado');
         });
     }
