@@ -103,10 +103,15 @@ class Evento extends Model
         return $this->hasMany(Solicitud::class);
     }
 
-    // Attribute: vacantes_disponibles
+    /**
+     * En caso de ser libre el curso devolvemos 0 en vacantes disponibles
+     * @return int
+     * @author David Rey Gutierrez
+     * @copyright (c) 2024
+     */
     public function getVacantesDisponiblesAttribute(): int
     {
-        return $this->vacantes - $this->empleados()->count();
+        return ($this->libre || $this->vacantes === null) ? 0 : $this->vacantes - $this->empleados()->count();
     }
 
     protected static function boot()
