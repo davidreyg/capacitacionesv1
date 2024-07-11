@@ -21,15 +21,26 @@ class GiveBasicPermissionToRolesSeeder extends Seeder
         $rol2 = Role::findByName(config('app-roles.roles.ris'), $guard);
         $rol2->givePermissionTo([
             'page_GestionarSolicitudes',
+
             'enroll_students_evento',
             'view_any_evento',
             'view_evento',
+
+            'view_any_solicitud',
+            'view_solicitud',
+            'create_solicitud',
+            'delete_solicitud',
         ]);
         $rol3 = Role::findByName(config('app-roles.roles.establecimiento'), $guard);
         $rol3->givePermissionTo([
             'enroll_students_evento',
             'view_any_evento',
             'view_evento',
+
+            'view_any_solicitud',
+            'view_solicitud',
+            'create_solicitud',
+            'delete_solicitud',
         ]);
 
     }
