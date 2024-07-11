@@ -44,8 +44,8 @@ class MisEventosResource extends Resource
             ->columns([
                 TextColumn::make('capacitacion.nombre')->searchable(),
                 TextColumn::make('fecha_inicio')->label('Fecha de Inicio')->searchable(),
-                TextColumn::make('vacantes_disponibles')->label('Vacantes / Cupos ')
-                    ->prefix(fn(Evento $record): string => "$record->vacantes / "),
+                TextColumn::make('vacantes_disponibles')->label('Vacantes / Cupos disponibles ')
+                    ->formatStateUsing(fn(Evento $record, string $state): string => $record->libre ? "Curso libre" : "  $record->vacantes / $state"),
                 TextColumn::make('estado')
                     ->badge()
                     ->formatStateUsing(fn(Evento $record): string => $record->estado->display())
@@ -57,6 +57,7 @@ class MisEventosResource extends Resource
             ])
             ->actions([
                 Action::make('inscribirAlumnos')
+                    ->visible(fn() => auth()->user()->can('enroll_students_evento'))
                     ->fillForm(fn(Evento $record): array => [
                         'empleado_ids' => $record->empleados()->where('establecimiento_id', auth()->user()->establecimiento_id)->pluck('empleado_id'),
                     ])
