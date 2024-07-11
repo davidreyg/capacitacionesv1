@@ -21,5 +21,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Artisan::call('shield:generate --all --ignore-existing-policies');
+
+        $this->call([
+            GiveBasicPermissionToRolesSeeder::class,
+        ]);
     }
 }
