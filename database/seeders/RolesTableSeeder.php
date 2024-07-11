@@ -12,9 +12,18 @@ class RolesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = ["super_admin", "admin", "jefe"];
+        $super_admin = config('filament-shield.super_admin.name');
+        DB::table('roles')->insert(
+            [
+                'name' => $super_admin,
+                'guard_name' => 'web',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
 
-        foreach ($roles as $key => $role) {
+        $roles = config('app-roles.roles');
+        foreach ($roles as $role) {
             DB::table('roles')->insert(
                 [
                     'name' => $role,
