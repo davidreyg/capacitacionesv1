@@ -31,13 +31,15 @@ class InscribirEmpleados
         // Se suma los inscritos + las vacantes disponibles. para poder seleccionar / deseleccionar empleados.
         $vacantesDisponibles = $evento->vacantes_disponibles + count($empleadosPrevios);
 
-        if ((count($alumnos) > $vacantesDisponibles)) {
-            Notification::make()
-                ->title("No hay vacantes suficientes.")
-                ->body("Solo quedan $evento->vacantes_disponibles disponibles.")
-                ->danger()
-                ->send();
-            throw new Halt("No hay vancantes suficientes");
+        if (!$evento->libre || isset($evento->vacantes)) {
+            if ((count($alumnos) > $vacantesDisponibles)) {
+                Notification::make()
+                    ->title("No hay vacantes suficientes.")
+                    ->body("Solo quedan $evento->vacantes_disponibles disponibles.")
+                    ->danger()
+                    ->send();
+                throw new Halt("No hay vancantes suficientes");
+            }
         }
         // Actualizar la relación para este establecimiento
         // Primero, eliminar todas las relaciones actuales de empleados del establecimiento con el evento
