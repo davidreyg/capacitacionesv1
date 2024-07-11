@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Actions\Evento\InscribirEmpleados;
 use App\Filament\Resources\MisEventosResource\Pages;
 use App\Filament\Resources\MisEventosResource\Pages\GestionarSesiones;
 use App\Filament\Resources\MisEventosResource\RelationManagers;
@@ -43,6 +44,8 @@ class MisEventosResource extends Resource
             ->columns([
                 TextColumn::make('capacitacion.nombre')->searchable(),
                 TextColumn::make('fecha_inicio')->label('Fecha de Inicio')->searchable(),
+                TextColumn::make('vacantes_disponibles')->label('Vacantes / Cupos ')
+                    ->prefix(fn(Evento $record): string => "$record->vacantes / "),
                 TextColumn::make('estado')
                     ->badge()
                     ->formatStateUsing(fn(Evento $record): string => $record->estado->display())
@@ -68,12 +71,10 @@ class MisEventosResource extends Resource
                     ])
                     ->databaseTransaction()
                     ->modalSubmitActionLabel('Confirmar inscripción')
-                    ->action(function (array $data, Evento $record): void {
-                        $record->empleados()->syncWithoutDetaching($data['empleado_ids']);
-                        Notification::make()
-                            ->title('Alumnos inscritos correctamente.')
-                            ->success()
-                            ->send();
+                    ->action(function (Action $action, array $data, Evento $record): void {
+                        // Obtener los IDs de empleados seleccionados
+                        $empleadosSeleccionados = $data['empleado_ids'];
+                        InscribirEmpleados::make()->handle($record, $empleadosSeleccionados, auth()->user()->establecimiento_id);
                     }),
                 Action::make('verSesiones')
                     ->url(fn(Evento $record): string => GestionarSesiones::getUrl(['record' => $record]))
