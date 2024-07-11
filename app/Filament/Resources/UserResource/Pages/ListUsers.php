@@ -33,14 +33,24 @@ class ListUsers extends ListRecords
         $user = auth()->user();
         $tabs = [
             null => Tab::make('All'),
-            'admin' => Tab::make()->query(fn ($query) => $query->with('roles')->whereRelation('roles', 'name', '=', 'admin')),
+            'admin' => Tab::make()->query(fn($query) => $query->with('roles')->whereRelation('roles', 'name', '=', 'admin')),
         ];
+        $tabs = array_merge($tabs, $this->buildTabFromDefaultRoles());
 
         if ($user->isSuperAdmin()) {
-            $tabs['superadmin'] = Tab::make()->query(fn ($query) => $query->with('roles')->whereRelation('roles', 'name', '=', config('filament-shield.super_admin.name')));
+            $tabs['superadmin'] = Tab::make()->query(fn($query) => $query->with('roles')->whereRelation('roles', 'name', '=', config('filament-shield.super_admin.name')));
         }
-
         return $tabs;
+    }
+
+    private function buildTabFromDefaultRoles(): array
+    {
+        $role_tabs = [];
+        $roles = config('app-roles.roles');
+        foreach ($roles as $key => $role) {
+            $role_tabs[$key] = Tab::make()->query(fn($query) => $query->with('roles')->whereRelation('roles', 'name', '=', $role));
+        }
+        return $role_tabs;
     }
 
     protected function getTableQuery(): Builder
