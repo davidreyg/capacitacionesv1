@@ -34,35 +34,22 @@ class UsersTableSeeder extends Seeder
         // Bind superadmin user to FilamentShield
         Artisan::call('shield:super-admin', ['--user' => $sid]);
 
-        \DB::table('establecimientos')->pluck('id')->each(function ($establecimientoId) {
-            $users = User::factory()->count(1)->create(['establecimiento_id' => $establecimientoId]);
-            $users->each(function (User $user) {
-                $user->assignRole('jefe');
+        \DB::table('establecimientos')->get()->each(function ($establecimiento) {
+            $user = User::factory()->count(1)->create(['establecimiento_id' => $establecimiento->id]);
+            $user->each(function (User $user) use ($establecimiento) {
+                switch ($establecimiento->tipo) {
+                    case 'DIRIS':
+                        $user->assignRole(config('app-roles.roles.diris'));
+                        break;
+                    case 'RIS':
+                        $user->assignRole(config('app-roles.roles.ris'));
+                        break;
+                    case 'ESTABLECIMIENTO':
+                        $user->assignRole(config('app-roles.roles.establecimiento'));
+                        break;
+                }
             });
         });
-
-        // $roles = DB::table('roles')->whereNot('name', 'super_admin')->get();
-        // foreach ($roles as $role) {
-        //     for ($i = 0; $i < 10; $i++) {
-        //         $userId = Str::uuid();
-        //         DB::table('users')->insert([
-        //             'id' => $userId,
-        //             'username' => $faker->unique()->userName,
-        //             'firstname' => $faker->firstName,
-        //             'lastname' => $faker->lastName,
-        //             'email' => $faker->unique()->safeEmail,
-        //             'email_verified_at' => now(),
-        //             'password' => Hash::make('password'),
-        //             'created_at' => now(),
-        //             'updated_at' => now(),
-        //         ]);
-        //         DB::table('model_has_roles')->insert([
-        //             'role_id' => $role->id,
-        //             'model_type' => 'App\Models\User',
-        //             'model_id' => $userId,
-        //         ]);
-        //     }
-        // }
     }
 }
 
