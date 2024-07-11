@@ -103,6 +103,12 @@ class Evento extends Model
         return $this->hasMany(Solicitud::class);
     }
 
+    // Attribute: vacantes_disponibles
+    public function getVacantesDisponiblesAttribute(): int
+    {
+        return $this->vacantes - $this->empleados()->count();
+    }
+
     protected static function boot()
     {
         parent::boot();
