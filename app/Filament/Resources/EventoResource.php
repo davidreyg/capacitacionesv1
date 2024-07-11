@@ -10,6 +10,7 @@ use App\States\Solicitud\Aprobado;
 use App\States\Solicitud\Solicitado;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
@@ -39,7 +40,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class EventoResource extends Resource
+class EventoResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Evento::class;
     protected static ?string $navigationGroup = 'Mantenimiento';
@@ -311,5 +312,10 @@ class EventoResource extends Resource
             'view' => Pages\ViewEvento::route('/{record}'),
             'edit' => Pages\EditEvento::route('/{record}/edit'),
         ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return array_merge(config('filament-shield.permission_prefixes.resource'), ['enroll_students']);
     }
 }

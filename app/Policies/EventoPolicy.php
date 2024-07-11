@@ -108,4 +108,12 @@ class EventoPolicy
     {
         return $user->can('reorder_evento');
     }
+
+    /**
+     * Determine whether the user can enroll students.
+     */
+    public function enrollStudents(User $user): bool
+    {
+        return $user->can('enroll_students_evento');
+    }
 }

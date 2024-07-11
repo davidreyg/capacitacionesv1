@@ -77,5 +77,6 @@ return [
         'restore_any' => 'Restore Any',
         'replicate' => 'Replicate',
         'transition' => 'Change state',
+        'enroll_students' => 'Enroll students',
     ],
 ];

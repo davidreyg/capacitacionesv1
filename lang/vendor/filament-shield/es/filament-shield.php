@@ -77,5 +77,6 @@ return [
         'restore_any' => 'Restaurar varios registros',
         'replicate' => 'Replicar',
         'transition' => 'Cambiar de estado',
+        'enroll_students' => 'Matricular alumnos',
     ],
 ];
