@@ -78,6 +78,7 @@ class MisEventosResource extends Resource
                         InscribirEmpleados::make()->handle($record, $empleadosSeleccionados, auth()->user()->establecimiento_id);
                     }),
                 Action::make('verSesiones')
+                    ->visible(fn() => auth()->user()->can('view_any_sesion'))
                     ->url(fn(Evento $record): string => GestionarSesiones::getUrl(['record' => $record]))
             ])
             ->bulkActions([
