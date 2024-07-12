@@ -103,10 +103,12 @@ class ResetApp extends Command
             [
                 'message' => 'Cache!',
                 'function' => function () {
-                    Artisan::call('optimize');
-                    Artisan::call('config:cache');
                     Artisan::call('icons:cache');
-                    Artisan::call('filament:cache-components');
+                    if (app()->isProduction()) {
+                        Artisan::call('optimize');
+                        Artisan::call('config:cache');
+                        Artisan::call('filament:cache-components');
+                    }
                 },
                 'info' => '7. Aplicacion cacheada exitosamente.',
             ],
