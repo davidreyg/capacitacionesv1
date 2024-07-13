@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Evaluacion extends Model
 {
     public $timestamps = false;
-    protected $fillable = ['nombre', 'porcentaje', 'evento_id'];
+    protected $fillable = ['nombre', 'descripcion', 'porcentaje', 'evento_id'];
     use HasFactory;
 
     public function evento()

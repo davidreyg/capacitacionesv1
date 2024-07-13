@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('evaluacions', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 100);
+            $table->string('descripcion', 200)->nullable();
             $table->decimal('porcentaje', 5, 2);
             $table->foreignId('evento_id')->constrained()->cascadeOnDelete();
             // $table->timestamps();

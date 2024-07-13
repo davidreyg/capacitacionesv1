@@ -6,6 +6,8 @@ use App\Filament\Resources\EvaluacionResource\Pages;
 use App\Filament\Resources\EvaluacionResource\RelationManagers;
 use App\Models\Evaluacion;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -29,10 +31,9 @@ class EvaluacionResource extends Resource
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(100),
+                Forms\Components\TextInput::make('descripcion')
+                    ->maxLength(200),
                 Forms\Components\TextInput::make('porcentaje')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('evento_id')
                     ->required()
                     ->numeric(),
             ]);
@@ -44,6 +45,7 @@ class EvaluacionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('nombre'),
                 Tables\Columns\TextColumn::make('porcentaje')
                     ->numeric()
                     ->sortable(),
