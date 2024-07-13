@@ -22,7 +22,7 @@ class SesionResource extends Resource
     use NestedResource;
     protected static ?string $model = Sesion::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'tabler-presentation';
 
     public static function form(Form $form): Form
     {

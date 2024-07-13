@@ -28,6 +28,6 @@ class Habilitado extends SolicitudState
 
     public function icon(): string
     {
-        return 'tabler-file-smile';
+        return 'tabler-file-like';
     }
 }
