@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
+use Filament\Notifications\Notification;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Tables\Table;
@@ -35,6 +36,11 @@ class AppServiceProvider extends ServiceProvider
         FilamentAsset::register([
             Js::make('TopNavigation', __DIR__ . '/../../resources/js/TopNavigation.js'),
         ]);
+
+        Notification::configureUsing(function (Notification $notification): void {
+            $notification
+                ->seconds(2.5);
+        });
 
         /* Para que funcione el SPA. y para que carguen los ASSETS */
         if (config('app.env') === 'production') {
