@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\EventoResource\Pages\CreateEventoSesion;
 use App\Filament\Resources\SesionResource\Pages;
 use App\Filament\Resources\SesionResource\RelationManagers;
 use App\Models\Sesion;
@@ -14,6 +15,7 @@ use Guava\FilamentNestedResources\Ancestor;
 use Guava\FilamentNestedResources\Concerns\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Livewire\Component;
 
 class SesionResource extends Resource
 {
@@ -32,12 +34,24 @@ class SesionResource extends Resource
                 Forms\Components\Textarea::make('descripcion')
                     ->columnSpanFull(),
                 Forms\Components\DatePicker::make('fecha')
+                    ->after(function (?Sesion $record, Component $livewire) {
+                        if ($record) {
+                            return $record->evento->fecha_inicio;
+                        } else {
+                            return $livewire->getOwnerRecord()->fecha_inicio;
+                        }
+                    })
+                    ->before(function (?Sesion $record, Component $livewire) {
+                        if ($record) {
+                            return $record->evento->fecha_fin;
+                        } else {
+                            return $livewire->getOwnerRecord()->fecha_fin;
+                        }
+                    })
                     ->required(),
-                Forms\Components\TextInput::make('hora')
+                Forms\Components\TimePicker::make('hora')
+                    ->seconds(false)
                     ->required(),
-                Forms\Components\TextInput::make('evento_id')
-                    ->required()
-                    ->numeric(),
             ]);
     }
 
