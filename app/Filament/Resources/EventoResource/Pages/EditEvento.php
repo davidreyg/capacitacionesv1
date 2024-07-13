@@ -7,12 +7,16 @@ use App\Models\Solicitud;
 use App\States\Solicitud\Aprobado;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Guava\FilamentNestedResources\Concerns\NestedPage;
 use Illuminate\Database\Eloquent\Model;
 
 class EditEvento extends EditRecord
 {
+    use NestedPage;
 
     protected ?string $heading = 'Reprogramar Evento';
+    protected static ?string $navigationLabel = 'Editar evento';
+
     protected static string $resource = EventoResource::class;
 
     protected function mutateFormDataBeforeFill(array $data): array

@@ -103,6 +103,11 @@ class Evento extends Model
         return $this->hasMany(Solicitud::class);
     }
 
+    public function evaluacions()
+    {
+        return $this->hasMany(Evaluacion::class);
+    }
+
     /**
      * En caso de ser libre el curso devolvemos 0 en vacantes disponibles
      * @return int

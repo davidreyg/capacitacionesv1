@@ -33,24 +33,30 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Pages\Page;
+use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\IconSize;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Guava\FilamentNestedResources\Ancestor;
+use Guava\FilamentNestedResources\Concerns\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EventoResource extends Resource implements HasShieldPermissions
 {
+    use NestedResource;
     protected static ?string $model = Evento::class;
     protected static ?string $navigationGroup = 'Mantenimiento';
     protected static ?string $navigationIcon = 'tabler-calendar-event';
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     // Este permiso es para que solo los superusuarios puedan ver TODOS LOS EVENTOS.
-    public static function canAccess(): bool
-    {
-        return auth()->user()->isSuperAdmin();
-    }
+    // public static function canAccess(): bool
+    // {
+    //     return auth()->user()->isSuperAdmin();
+    // }
 
     public static function form(Form $form): Form
     {
@@ -311,11 +317,30 @@ class EventoResource extends Resource implements HasShieldPermissions
             'create' => Pages\CreateEvento::route('/create'),
             'view' => Pages\ViewEvento::route('/{record}'),
             'edit' => Pages\EditEvento::route('/{record}/edit'),
+
+            // Showcase of relations using Relationship Pages
+            'evaluacions' => Pages\GestionarEventoEvaluacions::route('/{record}/evaluacions'),
+            // Showcase of create child pages
+            'evaluacions.create' => Pages\CreateEventoEvaluacion::route('/{record}/evaluacions/create'),
         ];
     }
 
     public static function getPermissionPrefixes(): array
     {
         return array_merge(config('filament-shield.permission_prefixes.resource'), ['enroll_students']);
+    }
+
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+            Pages\EditEvento::class,
+            Pages\GestionarEventoEvaluacions::class,
+            // Pages\ManageArtistSongs::class,
+        ]);
+    }
+
+    public static function getAncestor(): ?Ancestor
+    {
+        return null;
     }
 }

@@ -7,9 +7,11 @@ use App\Models\Solicitud;
 use App\Models\Evento;
 use App\States\Solicitud\Aprobado;
 use Filament\Resources\Pages\CreateRecord;
+use Guava\FilamentNestedResources\Concerns\NestedPage;
 
 class CreateEvento extends CreateRecord
 {
+    use NestedPage;
     protected static string $resource = EventoResource::class;
     protected ?bool $hasDatabaseTransactions = true;
 
