@@ -78,5 +78,6 @@ return [
         'replicate' => 'Replicar',
         'transition' => 'Cambiar de estado',
         'enroll_students' => 'Matricular alumnos',
+        'view_own' => 'Ver mis registros',
     ],
 ];

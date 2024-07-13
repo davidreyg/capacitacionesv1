@@ -23,7 +23,7 @@ class GiveBasicPermissionToRolesSeeder extends Seeder
             'page_GestionarSolicitudes',
 
             'enroll_students_evento',
-            'view_any_evento',
+            'view_own_evento',
             'view_evento',
 
             'view_any_solicitud',
@@ -34,7 +34,7 @@ class GiveBasicPermissionToRolesSeeder extends Seeder
         $rol3 = Role::findByName(config('app-roles.roles.establecimiento'), $guard);
         $rol3->givePermissionTo([
             'enroll_students_evento',
-            'view_any_evento',
+            'view_own_evento',
             'view_evento',
 
             'view_any_solicitud',

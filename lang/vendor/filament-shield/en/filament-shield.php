@@ -78,5 +78,6 @@ return [
         'replicate' => 'Replicate',
         'transition' => 'Change state',
         'enroll_students' => 'Enroll students',
+        'view_own' => 'View own',
     ],
 ];

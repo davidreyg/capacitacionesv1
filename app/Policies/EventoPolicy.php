@@ -116,4 +116,12 @@ class EventoPolicy
     {
         return $user->can('enroll_students_evento');
     }
+
+    /**
+     * Determine whether the user can enroll students.
+     */
+    public function viewOwn(User $user): bool
+    {
+        return $user->can('view_own_evento');
+    }
 }
