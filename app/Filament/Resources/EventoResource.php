@@ -224,27 +224,6 @@ class EventoResource extends Resource implements HasShieldPermissions
                                     ->required()
                                     ->columns(2),
                             ]),
-                        Tab::make('Sesiones / Clases')
-                            ->schema([
-                                Repeater::make('sesions')
-                                    ->hiddenLabel()
-                                    ->relationship()
-                                    ->schema([
-                                        TextInput::make('nombre')
-                                            ->required()
-                                            ->maxLength(100),
-                                        RichEditor::make('descripcion')
-                                            ->nullable(),
-                                        DatePicker::make('fecha')
-                                            ->after(fn(Get $get): ?string => $get('../../fecha_inicio'))
-                                            ->required(),
-                                        TimePicker::make('hora')
-                                            ->required(),
-                                    ])
-                                    ->minItems(1)
-                                    ->grid(2)
-                                    ->itemLabel(fn(array $state): ?string => $state['nombre'] ?? null),
-                            ]),
                     ])
                     ->activeTab(1)
                     ->columnSpanFull(),
