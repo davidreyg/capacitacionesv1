@@ -112,8 +112,8 @@ class ManageGeneral extends SettingsPage
                                     ->label(fn() => __('page.general_settings.fields.primary'))->rgb(),
                                 Forms\Components\ColorPicker::make('site_theme.secondary')
                                     ->label(fn() => __('page.general_settings.fields.secondary'))->rgb(),
-                                Forms\Components\ColorPicker::make('site_theme.gray')
-                                    ->label(fn() => __('page.general_settings.fields.gray'))->rgb(),
+                                // Forms\Components\ColorPicker::make('site_theme.gray')
+                                //     ->label(fn() => __('page.general_settings.fields.gray'))->rgb(),
                                 Forms\Components\ColorPicker::make('site_theme.success')
                                     ->label(fn() => __('page.general_settings.fields.success'))->rgb(),
                                 Forms\Components\ColorPicker::make('site_theme.danger')
