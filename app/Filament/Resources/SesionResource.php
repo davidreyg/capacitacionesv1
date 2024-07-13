@@ -10,13 +10,16 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Guava\FilamentNestedResources\Ancestor;
+use Guava\FilamentNestedResources\Concerns\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SesionResource extends Resource
 {
+    use NestedResource;
     protected static ?string $model = Sesion::class;
-    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -57,7 +60,6 @@ class SesionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -66,10 +68,27 @@ class SesionResource extends Resource
             ]);
     }
 
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
     public static function getPages(): array
     {
         return [
-            // 'index' => Pages\ManageSesions::route('/'),
+            // 'index' => Pages\ListSesions::route('/'),
+            // 'create' => Pages\CreateSesion::route('/create'),
+            'edit' => Pages\EditSesion::route('/{record}/edit'),
         ];
+    }
+
+    public static function getAncestor(): ?Ancestor
+    {
+        return Ancestor::make(
+            'sesions',
+            'evento',
+        );
     }
 }

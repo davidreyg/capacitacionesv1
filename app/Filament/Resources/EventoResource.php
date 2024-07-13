@@ -320,8 +320,10 @@ class EventoResource extends Resource implements HasShieldPermissions
 
             // Showcase of relations using Relationship Pages
             'evaluacions' => Pages\GestionarEventoEvaluacions::route('/{record}/evaluacions'),
+            'sesions' => Pages\GestionarEventoSesions::route('/{record}/sesions'),
             // Showcase of create child pages
             'evaluacions.create' => Pages\CreateEventoEvaluacion::route('/{record}/evaluacions/create'),
+            'sesions.create' => Pages\CreateEventoSesion::route('/{record}/sesions/create'),
         ];
     }
 
@@ -335,7 +337,7 @@ class EventoResource extends Resource implements HasShieldPermissions
         return $page->generateNavigationItems([
             Pages\EditEvento::class,
             Pages\GestionarEventoEvaluacions::class,
-            // Pages\ManageArtistSongs::class,
+            Pages\GestionarEventoSesions::class,
         ]);
     }
 
