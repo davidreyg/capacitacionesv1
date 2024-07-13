@@ -128,6 +128,10 @@ class EventoResource extends Resource implements HasShieldPermissions
                                         TextInput::make('numero_horas')
                                             ->required()
                                             ->numeric(),
+                                        Toggle::make('evaluacion_simple')
+                                            ->label('¿Evaluación simple?')
+                                            ->inline(false)
+                                            ->required(),
                                     ])
                                     ->columns(2),
                                 Fieldset::make('Fecha y Hora')

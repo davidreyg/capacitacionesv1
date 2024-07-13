@@ -24,6 +24,7 @@ class Evento extends Model
         'fecha_orden_servicio',
         'lugar',
         'libre',
+        'evaluacion_simple',
         'vacantes',
         'creditos',
         'numero_horas',
@@ -44,6 +45,8 @@ class Evento extends Model
      */
     protected $casts = [
         'estado' => EventoState::class,
+        'evaluacion_simple' => 'boolean',
+        'libre' => 'boolean',
     ];
 
     public function modalidad()

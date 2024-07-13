@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->integer('vacantes')->nullable()->unsigned();
             $table->tinyInteger('creditos')->unsigned();
             $table->tinyInteger('numero_horas')->unsigned();
+            $table->boolean('evaluacion_simple');
             $table->string('estado');
 
             // Auditar reprogramacion
