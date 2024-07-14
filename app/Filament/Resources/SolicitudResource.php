@@ -4,12 +4,15 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SolicitudResource\Pages;
 use App\Filament\Resources\SolicitudResource\RelationManagers;
+use App\Models\Capacitacion;
 use App\Models\Solicitud;
+use App\Models\TipoCapacitacion;
 use App\States\Solicitud\Aprobado;
 use App\States\Solicitud\Evaluado;
 use App\States\Solicitud\Habilitado;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
@@ -32,13 +35,11 @@ class SolicitudResource extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                Select::make('capacitacion_id')
-                    ->relationship('capacitacion', 'nombre', fn(Builder $query) => $query->where('activo', true))
-                    ->required(),
                 Select::make('establecimiento_id')
                     ->default(auth()->user()->establecimiento_id)
                     ->relationship('establecimiento', 'nombre')
-                    ->required(),
+                    ->required()->columnSpanFull(),
+                ...static::buildCheckboxLists(),
                 Hidden::make('estado'),
             ]);
     }
@@ -78,6 +79,27 @@ class SolicitudResource extends Resource implements HasShieldPermissions
         return auth()->user()->hasRole('super_admin')
             ? parent::getEloquentQuery()
             : parent::getEloquentQuery()->whereIn('establecimiento_id', auth()->user()->establecimiento->descendantsAndSelf()->pluck('id')->toArray());
+    }
+
+    public static function buildCheckboxLists(): array
+    {
+        $checkBoxLists = [];
+        $tipoCapacitaciones = TipoCapacitacion::get();
+        foreach ($tipoCapacitaciones as $key => $tipoCapacitacion) {
+            $checkBoxLists[$key] = CheckboxList::make('capacitacion_ids')
+                ->label(function () use ($tipoCapacitacion) {
+                    return $tipoCapacitacion->nombre;
+                })
+                ->options(function () use ($tipoCapacitacion) {
+                    return Capacitacion::whereTipoCapacitacionId($tipoCapacitacion->id)
+                        ->get()
+                        ->mapWithKeys(fn(Capacitacion $capacitacion) => [$capacitacion->id => $capacitacion->nombre])
+                        ->toArray();
+                })
+                ->required()
+                ->columns(2);
+        }
+        return $checkBoxLists;
     }
 
     public static function getPages(): array
