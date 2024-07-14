@@ -301,6 +301,7 @@ class EventoResource extends Resource implements HasShieldPermissions
             'view' => Pages\ViewEvento::route('/{record}'),
             'edit' => Pages\EditEvento::route('/{record}/edit'),
             'criterios-evaluacion' => Pages\GestionarEventoCriterioEvaluaciones::route('/{record}/criterios-evaluacion'),
+            'evaluaciones' => Pages\GestionarEventoEvaluacions::route('/{record}/evaluaciones'),
 
             // Showcase of relations using Relationship Pages
             'sesions' => Pages\GestionarEventoSesions::route('/{record}/sesions'),
@@ -320,6 +321,7 @@ class EventoResource extends Resource implements HasShieldPermissions
             Pages\EditEvento::class,
             Pages\GestionarEventoCriterioEvaluaciones::class,
             Pages\GestionarEventoSesions::class,
+            Pages\GestionarEventoEvaluacions::class,
         ]);
     }
 

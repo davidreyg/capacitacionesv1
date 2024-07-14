@@ -28,6 +28,7 @@ class GestionarEventoCriterioEvaluaciones extends CustomPageRecord
     protected static ?string $breadcrumb = 'Criterios de evaluación';
     protected ?string $subheading = 'En esta sección podra registrar los criterios para evaluar a los alumnos';
     protected static ?string $navigationIcon = 'tabler-notes';
+    protected static string $view = 'filament.resources.evento-resource.pages.gestionar-evento-criterio-evaluaciones';
 
     public static function getNavigationLabel(): string
     {
@@ -40,7 +41,6 @@ class GestionarEventoCriterioEvaluaciones extends CustomPageRecord
         return true;
     }
 
-    protected static string $view = 'filament.resources.evento-resource.pages.gestionar-evento-criterio-evaluaciones';
 
     public function form(Form $form): Form
     {
