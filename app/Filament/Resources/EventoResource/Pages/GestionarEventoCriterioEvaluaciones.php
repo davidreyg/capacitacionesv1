@@ -21,17 +21,17 @@ use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
 
-class GestionarEventoEvaluaciones extends CustomPageRecord
+class GestionarEventoCriterioEvaluaciones extends CustomPageRecord
 {
     protected static string $resource = EventoResource::class;
-    protected ?string $heading = 'Evaluaciones';
-    protected static ?string $breadcrumb = 'Evaluaciones';
-    protected ?string $subheading = 'En esta sección podra registrar la forma de evaluar a los asistentes';
+    protected ?string $heading = 'Criterios de evaluación';
+    protected static ?string $breadcrumb = 'Criterios de evaluación';
+    protected ?string $subheading = 'En esta sección podra registrar los criterios para evaluar a los alumnos';
     protected static ?string $navigationIcon = 'tabler-notes';
 
     public static function getNavigationLabel(): string
     {
-        return 'Evaluaciones';
+        return 'Criterios de evaluación';
     }
 
     // TODO: Falta realizar este permiso!
@@ -40,7 +40,7 @@ class GestionarEventoEvaluaciones extends CustomPageRecord
         return true;
     }
 
-    protected static string $view = 'filament.resources.evento-resource.pages.gestionar-evento-evaluaciones';
+    protected static string $view = 'filament.resources.evento-resource.pages.gestionar-evento-criterio-evaluaciones';
 
     public function form(Form $form): Form
     {
@@ -82,7 +82,7 @@ class GestionarEventoEvaluaciones extends CustomPageRecord
                         : 'Tenga en consideración que la sumatoria de los porcentajes debe ser igual al 100%')
                     ->schema([
                         // ...
-                        TableRepeater::make('evaluacions')
+                        TableRepeater::make('criterioEvaluacions')
                             ->required()
                             ->minItems(1)
                             ->relationship()
@@ -140,7 +140,7 @@ class GestionarEventoEvaluaciones extends CustomPageRecord
             data_set($livewire, $statePath . '.porcentaje_total', 0.00);
             return;
         }
-        $evaluaciones = data_get($livewire, $statePath . '.evaluacions');
+        $evaluaciones = data_get($livewire, $statePath . '.criterioEvaluacions');
         if (collect($evaluaciones)->isEmpty()) {
             data_set($livewire, $statePath . '.porcentaje_total', 0.00);
             return;

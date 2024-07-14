@@ -106,9 +106,9 @@ class Evento extends Model
         return $this->hasMany(Solicitud::class);
     }
 
-    public function evaluacions()
+    public function criterioEvaluacions()
     {
-        return $this->hasMany(Evaluacion::class);
+        return $this->hasMany(CriterioEvaluacion::class);
     }
 
     /**

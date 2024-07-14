@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\EvaluacionResource\Pages;
+namespace App\Filament\Resources\CriterioEvaluacionResource\Pages;
 
-use App\Filament\Resources\EvaluacionResource;
+use App\Filament\Resources\CriterioEvaluacionResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Guava\FilamentNestedResources\Concerns\NestedPage;
 
-class EditEvaluacion extends EditRecord
+class EditCriterioEvaluacion extends EditRecord
 {
     use NestedPage;
-    protected static string $resource = EvaluacionResource::class;
+    protected static string $resource = CriterioEvaluacionResource::class;
 
     protected function getHeaderActions(): array
     {

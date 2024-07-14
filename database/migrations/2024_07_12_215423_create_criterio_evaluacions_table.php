@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('evaluacions', function (Blueprint $table) {
+        Schema::create('criterio_evaluacions', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 100);
             $table->string('descripcion', 200)->nullable();
@@ -25,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('evaluacions');
+        Schema::dropIfExists('criterio_evaluacions');
     }
 };

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Evaluacion extends Model
+class CriterioEvaluacion extends Model
 {
     public $timestamps = false;
     protected $fillable = ['nombre', 'descripcion', 'valor', 'evento_id'];
