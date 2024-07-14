@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('nombre', 100);
             $table->string('descripcion', 200)->nullable();
-            $table->decimal('porcentaje', 5, 2);
+            $table->integer('valor')->unsigned()->nullable();
             $table->foreignId('evento_id')->constrained()->cascadeOnDelete();
             // $table->timestamps();
         });
