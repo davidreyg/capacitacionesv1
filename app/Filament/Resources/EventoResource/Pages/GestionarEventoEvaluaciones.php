@@ -55,10 +55,13 @@ class GestionarEventoEvaluaciones extends CustomPageRecord
                             ->live()
                             ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="data.evaluacion_simple" />')))
                             ->inline(false)
+                            ->afterStateUpdated(function (Get $get, Component $livewire) {
+                                self::updateTotals($get, $livewire);
+                            })
                             ->required(),
                         TextInput::make('porcentaje_total')
                             ->readOnly()
-                            // ->visible(fn(Get $get) => !$get('evaluacion_simple'))
+                            ->visible(fn(Get $get) => !$get('evaluacion_simple'))
                             ->suffix('%')
                             ->rules([
                                 fn(): Closure => function (string $attribute, $value, Closure $fail) {
@@ -67,13 +70,11 @@ class GestionarEventoEvaluaciones extends CustomPageRecord
                                     }
                                 },
                             ])
-                        // ->afterStateHydrated(function (Get $get, Set $set) {
-                        //     self::updateTotals($get, $set);
-                        // }),
+
                     ])->columns(2)
                     ->grow(false),
                 Section::make('Lista de evaluaciones')
-                    // ->aside()
+                    ->aside()
                     ->heading(fn(Get $get) => $get('evaluacion_simple') ?
                         'Evaluacion Simple' : 'Evaluacion Ponderada')
                     ->description(fn(Get $get) => $get('evaluacion_simple') ?
@@ -82,6 +83,8 @@ class GestionarEventoEvaluaciones extends CustomPageRecord
                     ->schema([
                         // ...
                         TableRepeater::make('evaluacions')
+                            ->required()
+                            ->minItems(1)
                             ->relationship()
                             ->addActionLabel('Añadir evaluación')
                             ->hiddenLabel()
@@ -126,8 +129,13 @@ class GestionarEventoEvaluaciones extends CustomPageRecord
     {
         // Retrieve the state path of the form. Most likely it's `data` but it could be something else.
         $statePath = $livewire->getFormStatePath();
+        if ($get('evaluacion_simple')) {
+            data_set($livewire, $statePath . '.porcentaje_total', 0.00);
+            return;
+        }
         $evaluaciones = data_get($livewire, $statePath . '.evaluacions');
         if (collect($evaluaciones)->isEmpty()) {
+            data_set($livewire, $statePath . '.porcentaje_total', 0.00);
             return;
         }
         $selectedProducts = collect($evaluaciones)->filter(fn($item) => !empty ($item['valor']));
