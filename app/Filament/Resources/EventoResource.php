@@ -300,12 +300,13 @@ class EventoResource extends Resource implements HasShieldPermissions
             'create' => Pages\CreateEvento::route('/create'),
             'view' => Pages\ViewEvento::route('/{record}'),
             'edit' => Pages\EditEvento::route('/{record}/edit'),
+            'evaluaciones' => Pages\GestionarEventoEvaluaciones::route('/{record}/evaluaciones'),
 
             // Showcase of relations using Relationship Pages
-            'evaluacions' => Pages\GestionarEventoEvaluacions::route('/{record}/evaluacions'),
+            // 'evaluacions' => Pages\GestionarEventoEvaluacions::route('/{record}/evaluacions'),
             'sesions' => Pages\GestionarEventoSesions::route('/{record}/sesions'),
             // Showcase of create child pages
-            'evaluacions.create' => Pages\CreateEventoEvaluacion::route('/{record}/evaluacions/create'),
+            // 'evaluacions.create' => Pages\CreateEventoEvaluacion::route('/{record}/evaluacions/create'),
             'sesions.create' => Pages\CreateEventoSesion::route('/{record}/sesions/create'),
         ];
     }
@@ -319,7 +320,8 @@ class EventoResource extends Resource implements HasShieldPermissions
     {
         return $page->generateNavigationItems([
             Pages\EditEvento::class,
-            Pages\GestionarEventoEvaluacions::class,
+                // Pages\GestionarEventoEvaluacions::class,
+            Pages\GestionarEventoEvaluaciones::class,
             Pages\GestionarEventoSesions::class,
         ]);
     }

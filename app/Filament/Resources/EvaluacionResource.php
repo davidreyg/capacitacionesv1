@@ -28,14 +28,31 @@ class EvaluacionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('descripcion')
-                    ->maxLength(200),
-                Forms\Components\TextInput::make('porcentaje')
-                    ->required()
-                    ->numeric(),
+                // Forms\Components\TextInput::make('nombre')
+                //     ->required()
+                //     ->maxLength(100),
+                // Forms\Components\TextInput::make('descripcion')
+                //     ->maxLength(200),
+                // Forms\Components\TextInput::make('valor')
+                //     ->required()
+                //     ->numeric()
+                //     ->minValue(0.1)
+                //     ->maxValue(90.80)
+                //     ->mask('99.99')
+                //     ->placeholder('##.##')
+                //     ->suffix('%')
+                //     ->live(true)
+                //     ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="data.porcentaje" />')))
+                //     ->afterStateUpdated(function (Forms\Contracts\HasForms $livewire, Forms\Components\TextInput $component) {
+                //         $livewire->validateOnly($component->getStatePath());
+                //     })
+                //     ->rules([
+                //         // fn(?Evaluacion $record): Closure => function (string $attribute, $value, Closure $fail) use ($record) {
+                //         //    return new ValidarPorcentajesEvaluacion($record->evento_id, $record->id);
+                //         // },
+                //         fn(?Evaluacion $record) => new ValidarPorcentajesEvaluacion($record->evento_id, $record->id)
+                //     ], fn(?Evaluacion $record) => !!$record),
+
             ]);
     }
 
@@ -78,7 +95,7 @@ class EvaluacionResource extends Resource
         return [
             // 'index' => Pages\ListEvaluacions::route('/'),
             // 'create' => Pages\CreateEvaluacion::route('/create'),
-            'edit' => Pages\EditEvaluacion::route('/{record}/edit'),
+            // 'edit' => Pages\EditEvaluacion::route('/{record}/edit'),
         ];
     }
 
