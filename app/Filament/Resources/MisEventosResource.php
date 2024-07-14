@@ -100,7 +100,7 @@ class MisEventosResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
+        return parent::getEloquentQuery()->withCount('empleados')
             ->whereHas('solicituds', function (Builder $query) {
                 $query
                     ->where('establecimiento_id', auth()->user()->establecimiento_id)

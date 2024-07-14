@@ -119,7 +119,7 @@ class Evento extends Model
      */
     public function getVacantesDisponiblesAttribute(): int
     {
-        return ($this->libre || $this->vacantes === null) ? 0 : $this->vacantes - $this->empleados()->count();
+        return ($this->libre || $this->vacantes === null) ? 0 : $this->vacantes - $this->empleados_count;
     }
 
     protected static function boot()
