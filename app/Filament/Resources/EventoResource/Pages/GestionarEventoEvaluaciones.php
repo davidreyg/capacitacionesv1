@@ -101,7 +101,14 @@ class GestionarEventoEvaluaciones extends CustomPageRecord
                                     ->minValue(0.1)
                                     ->maxValue(99.99)
                                     ->visible(fn(Get $get) => !$get('../../evaluacion_simple'))
-                                    ->live()
+                                    ->live(debounce: 1000)
+                                    ->hint(
+                                        fn(TextInput $component) =>
+                                        new HtmlString(
+                                            Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])
+                                        )
+                                    )
+
                                     ->afterStateUpdated(function (Get $get, $livewire) {
                                         self::updateTotals($get, $livewire);
                                     })
