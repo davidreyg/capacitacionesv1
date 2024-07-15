@@ -9,6 +9,7 @@ use Awcodes\TableRepeater\Header;
 use Blade;
 use Closure;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Textarea;
@@ -59,6 +60,17 @@ class GestionarEventoCriterioEvaluaciones extends CustomPageRecord
                                 self::updateTotals($get, $livewire);
                             })
                             ->required(),
+                        Placeholder::make('importante')
+                            ->label(
+                                new HtmlString('
+                            <span class="text-red-500 font-bold">Importante<span/>')
+                            )
+                            ->content(
+                                new HtmlString('
+                            <span class="text-red-500 font-bold">
+                            Al cambiar esta opción, afectará a las evaluaciones que tenga registradas.
+                            <span/>')
+                            ),
                         TextInput::make('porcentaje_total')
                             ->readOnly()
                             ->visible(fn(Get $get) => !$get('evaluacion_simple'))
@@ -161,5 +173,14 @@ class GestionarEventoCriterioEvaluaciones extends CustomPageRecord
             $headers = array_merge($headers, [Header::make('Valor')->width('150px')->markAsRequired()]);
         }
         return $headers;
+    }
+
+    // Actualizar todas las evaluaciones seteando en NULL los valores de los porcentajes.
+    protected function afterSave(): void
+    {
+        if ($this->getRecord()->evaluacion_simple) {
+            $this->getRecord()->criterioEvaluacions()->update(['valor' => NULL]);
+        }
+        $this->fillForm();
     }
 }
