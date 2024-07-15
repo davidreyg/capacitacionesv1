@@ -74,7 +74,7 @@ class ResetApp extends Command
                     Artisan::call('cache:clear');
                     Artisan::call('clear-compiled');
                     Artisan::call('filament:clear-cached-components');
-                    Artisan::call('media-library:clean');
+                    Artisan::call('media-library:clean --force');
 
                 },
                 'info' => '2. App clear successfully',
