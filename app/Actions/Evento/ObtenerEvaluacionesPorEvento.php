@@ -59,6 +59,7 @@ class ObtenerEvaluacionesPorEvento
 
         foreach ($empleados as $empleado) {
             $alumnoData = [
+                'empleado_id' => $empleado->id,
                 'alumno' => "$empleado->apellido_paterno $empleado->apellido_materno, $empleado->nombres",
                 'notas' => [],
                 'promedio' => 0
