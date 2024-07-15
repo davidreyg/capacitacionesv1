@@ -76,4 +76,9 @@ class Empleado extends Model
     {
         return $this->belongsToMany(Evento::class)->using(EmpleadoEvento::class);
     }
+
+    public function evaluacions()
+    {
+        return $this->hasMany(Evaluacion::class);
+    }
 }
