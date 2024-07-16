@@ -6,6 +6,7 @@ use App\Filament\Resources\EventoResource\Pages\CreateEventoSesion;
 use App\Filament\Resources\SesionResource\Pages;
 use App\Filament\Resources\SesionResource\RelationManagers;
 use App\Models\Sesion;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Livewire\Component;
 
-class SesionResource extends Resource
+class SesionResource extends Resource implements HasShieldPermissions
 {
     use NestedResource;
     protected static ?string $model = Sesion::class;
@@ -97,6 +98,11 @@ class SesionResource extends Resource
             'edit' => Pages\EditSesion::route('/{record}/edit'),
             'asistencia' => Pages\RegistrarSesionAsistencia::route('/{record}/asistencia'),
         ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return array_merge(config('filament-shield.permission_prefixes.resource'), ['attendance']);
     }
 
     public static function getAncestor(): ?Ancestor

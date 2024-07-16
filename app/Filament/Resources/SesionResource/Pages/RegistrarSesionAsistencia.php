@@ -23,6 +23,11 @@ class RegistrarSesionAsistencia extends CustomPageRecord
 
     public $asistencia = [];
 
+    public static function canAccess($parameters = []): bool
+    {
+        return auth()->user()->can('attendance_sesion');
+    }
+
     protected function mutateFormDataBeforeFill(array $data): array
     {
         // $data = [];

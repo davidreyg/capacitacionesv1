@@ -60,6 +60,7 @@ class GestionarEventoSesions extends ManageRelatedRecords
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('asistencia')
                     ->icon('tabler-list-search')
+                    ->visible(fn() => auth()->user()->can('attendance_sesion'))
                     ->url(fn(Sesion $record): string => RegistrarSesionAsistencia::getUrl(['record' => $record])),
 
             ])

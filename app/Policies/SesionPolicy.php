@@ -105,4 +105,12 @@ class SesionPolicy
     {
         return $user->can('reorder_sesion');
     }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function attendance(User $user): bool
+    {
+        return $user->can('attendance_sesion');
+    }
 }

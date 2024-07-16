@@ -52,12 +52,6 @@ class EventoResource extends Resource implements HasShieldPermissions
     protected static ?string $navigationIcon = 'tabler-calendar-event';
     protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
-    // Este permiso es para que solo los superusuarios puedan ver TODOS LOS EVENTOS.
-    // public static function canAccess(): bool
-    // {
-    //     return auth()->user()->isSuperAdmin();
-    // }
-
     public static function form(Form $form): Form
     {
         return $form
