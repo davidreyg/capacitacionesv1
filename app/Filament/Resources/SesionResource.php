@@ -8,6 +8,7 @@ use App\Filament\Resources\SesionResource\RelationManagers;
 use App\Models\Sesion;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -29,6 +30,13 @@ class SesionResource extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
+                SpatieMediaLibraryFileUpload::make('media')
+                    ->label('Recursos')
+                    // ->avatar()
+                    ->collection('sesiones')
+                    ->multiple()
+                    ->alignCenter()
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(100),
