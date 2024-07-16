@@ -35,14 +35,14 @@ class SesionResource extends Resource implements HasShieldPermissions
                 Forms\Components\Textarea::make('descripcion')
                     ->columnSpanFull(),
                 Forms\Components\DatePicker::make('fecha')
-                    ->after(function (?Sesion $record, Component $livewire) {
+                    ->afterOrEqual(function (?Sesion $record, Component $livewire) {
                         if ($record) {
                             return $record->evento->fecha_inicio;
                         } else {
                             return $livewire->getOwnerRecord()->fecha_inicio;
                         }
                     })
-                    ->before(function (?Sesion $record, Component $livewire) {
+                    ->beforeOrEqual(function (?Sesion $record, Component $livewire) {
                         if ($record) {
                             return $record->evento->fecha_fin;
                         } else {
