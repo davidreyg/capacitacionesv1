@@ -63,4 +63,9 @@ class GestionarEventoSesions extends ManageRelatedRecords
                 ]),
             ]);
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with('evento');
+    }
 }

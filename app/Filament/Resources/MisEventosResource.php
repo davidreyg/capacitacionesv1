@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Actions\Evento\InscribirEmpleados;
 use App\Filament\Resources\MisEventosResource\Pages;
-use App\Filament\Resources\MisEventosResource\Pages\GestionarSesiones;
 use App\Filament\Resources\MisEventosResource\RelationManagers;
 use App\Models\Empleado;
 use App\Models\Evento;
@@ -15,20 +14,25 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Pages\Page;
+use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Guava\FilamentNestedResources\Ancestor;
+use Guava\FilamentNestedResources\Concerns\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MisEventosResource extends Resource
 {
+    use NestedResource;
     protected static ?string $model = Evento::class;
     protected static ?string $modelLabel = 'Mis eventos';
-
     protected static ?string $navigationIcon = 'tabler-calendar-event';
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     // Este permiso es para que solo los superusuarios puedan ver TODOS LOS EVENTOS.
     public static function canAccess(): bool
@@ -38,10 +42,7 @@ class MisEventosResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return EventoResource::form($form);
     }
 
     public static function table(Table $table): Table
@@ -83,9 +84,6 @@ class MisEventosResource extends Resource
                         $empleadosSeleccionados = $data['empleado_ids'];
                         InscribirEmpleados::make()->handle($record, $empleadosSeleccionados, auth()->user()->establecimiento_id);
                     }),
-                Action::make('verSesiones')
-                    ->visible(fn() => auth()->user()->can('view_any_sesion'))
-                    ->url(fn(Evento $record): string => GestionarSesiones::getUrl(['record' => $record]))
             ])
             ->bulkActions([
             ]);
@@ -112,9 +110,25 @@ class MisEventosResource extends Resource
     {
         return [
             'index' => Pages\ListMisEventos::route('/'),
-            'sesions' => Pages\GestionarSesiones::route('/{record}/sesions'),
+            'view' => Pages\ViewMisEventos::route('/{record}'),
+
+            'sesions' => Pages\GestionarMisEventosSesions::route('/{record}/sesions'),
+            'sesions.create' => Pages\CreateMisEventosSesion::route('/{record}/sesions/create'),
             // 'create' => Pages\CreateMisEventos::route('/create'),
             // 'edit' => Pages\EditMisEventos::route('/{record}/edit'),
         ];
+    }
+
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+            Pages\ViewMisEventos::class,
+            Pages\GestionarMisEventosSesions::class,
+        ]);
+    }
+
+    public static function getAncestor(): ?Ancestor
+    {
+        return null;
     }
 }

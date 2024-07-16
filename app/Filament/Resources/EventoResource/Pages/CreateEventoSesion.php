@@ -3,10 +3,6 @@
 namespace App\Filament\Resources\EventoResource\Pages;
 
 use App\Filament\Resources\EventoResource;
-use App\Models\Solicitud;
-use App\Models\Evento;
-use App\States\Solicitud\Aprobado;
-use Filament\Resources\Pages\CreateRecord;
 use Guava\FilamentNestedResources\Concerns\NestedPage;
 use Guava\FilamentNestedResources\Pages\CreateRelatedRecord;
 

@@ -78,7 +78,7 @@ class SolicitudResource extends Resource implements HasShieldPermissions
     {
         return auth()->user()->hasRole('super_admin')
             ? parent::getEloquentQuery()
-            : parent::getEloquentQuery()->whereIn('establecimiento_id', auth()->user()->establecimiento->descendantsAndSelf()->pluck('id')->toArray());
+            : parent::getEloquentQuery()->where('establecimiento_id', auth()->user()->establecimiento_id);
     }
 
     public static function buildCheckboxLists(): array
