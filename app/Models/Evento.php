@@ -110,9 +110,17 @@ class Evento extends Model
     {
         return $this->hasMany(CriterioEvaluacion::class);
     }
+
+    /**
+     * Solo es referencial ya que directamente no hay relacion entre el evento y las evaluaciones.
+     * pero si desde criterioEvaluacions. :)
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @author David Rey Gutierrez
+     * @copyright (c) 2024
+     */
     public function evaluacions()
     {
-        return $this->hasMany(Evaluacion::class);
+        return $this->hasManyThrough(Evaluacion::class, CriterioEvaluacion::class);
     }
 
     /**

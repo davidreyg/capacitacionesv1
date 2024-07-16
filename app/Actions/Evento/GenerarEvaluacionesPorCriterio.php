@@ -25,7 +25,6 @@ class GenerarEvaluacionesPorCriterio
         foreach ($empleados as $empleado) {
             Evaluacion::updateOrCreate(
                 [
-                    'evento_id' => $evento->id,
                     'empleado_id' => $empleado->id,
                     'criterio_evaluacion_id' => $criterioId
                 ],

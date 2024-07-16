@@ -8,12 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Evaluacion extends Model
 {
     use HasFactory;
-    protected $fillable = ['evento_id', 'criterio_evaluacion_id', 'empleado_id', 'nota'];
+    protected $fillable = ['criterio_evaluacion_id', 'empleado_id', 'nota'];
 
-    public function evento()
-    {
-        return $this->belongsTo(Evento::class);
-    }
     public function criterioEvaluacion()
     {
         return $this->belongsTo(CriterioEvaluacion::class);

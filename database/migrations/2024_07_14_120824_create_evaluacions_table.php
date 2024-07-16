@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::create('evaluacions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('evento_id')->constrained()->cascadeOnDelete();
+            // $table->foreignId('evento_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('criterio_evaluacion_id')->constrained()->cascadeOnDelete();
             $table->foreignId('empleado_id')->constrained();
-            $table->foreignId('criterio_evaluacion_id')->constrained();
             $table->decimal('nota', 4, 2);
             $table->timestamps();
         });

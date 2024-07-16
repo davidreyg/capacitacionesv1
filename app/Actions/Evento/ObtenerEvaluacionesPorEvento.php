@@ -71,7 +71,6 @@ class ObtenerEvaluacionesPorEvento
 
             foreach ($criterios as $criterio) {
                 $nota = Evaluacion::where('empleado_id', $empleado->id)
-                    ->where('evento_id', $evento->id)
                     ->where('criterio_evaluacion_id', $criterio->id)
                     ->value('nota');
 
