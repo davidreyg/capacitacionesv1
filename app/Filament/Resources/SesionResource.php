@@ -61,9 +61,9 @@ class SesionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('fecha')
-                    ->date()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('fecha')
+                //     ->date()
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('hora'),
                 Tables\Columns\TextColumn::make('evento_id')
                     ->numeric()
@@ -95,6 +95,7 @@ class SesionResource extends Resource
             // 'index' => Pages\ListSesions::route('/'),
             // 'create' => Pages\CreateSesion::route('/create'),
             'edit' => Pages\EditSesion::route('/{record}/edit'),
+            'asistencia' => Pages\RegistrarSesionAsistencia::route('/{record}/asistencia'),
         ];
     }
 

@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\EventoResource\Pages;
 
 use App\Filament\Resources\EventoResource;
+use App\Filament\Resources\SesionResource\Pages\RegistrarSesionAsistencia;
+use App\Models\Sesion;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -56,6 +58,10 @@ class GestionarEventoSesions extends ManageRelatedRecords
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('asistencia')
+                    ->icon('tabler-list-search')
+                    ->url(fn(Sesion $record): string => RegistrarSesionAsistencia::getUrl(['record' => $record])),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
