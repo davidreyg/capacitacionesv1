@@ -42,7 +42,7 @@ class GestionarSolicitudes extends Page implements HasTable
             ->query(Solicitud::query()->whereHas('evento')->whereIn('establecimiento_id', $this->establecimiento_ids))
             ->columns([
                 TextColumn::make('establecimiento.nombre')->searchable(),
-                TextColumn::make('evento.capacitacion.nombre')->searchable(),
+                TextColumn::make('evento.capacitacion.nombre')->wrap()->searchable(),
                 TextColumn::make('evento.fecha_inicio')->searchable(),
                 TextColumn::make('estado')
                     ->badge()

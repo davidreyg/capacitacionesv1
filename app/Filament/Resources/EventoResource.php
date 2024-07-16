@@ -239,7 +239,7 @@ class EventoResource extends Resource implements HasShieldPermissions
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('capacitacion.nombre')
-                    ->numeric()
+                    ->wrap()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('fecha_inicio')
                     ->date()

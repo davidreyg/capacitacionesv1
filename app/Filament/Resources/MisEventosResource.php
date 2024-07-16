@@ -49,7 +49,7 @@ class MisEventosResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('capacitacion.nombre')->searchable(),
+                TextColumn::make('capacitacion.nombre')->wrap()->searchable(),
                 TextColumn::make('fecha_inicio')->label('Fecha de Inicio')->searchable(),
                 TextColumn::make('vacantes_disponibles')->label('Vacantes / Cupos disponibles ')
                     ->formatStateUsing(fn(Evento $record, string $state): string => $record->libre ? "Curso libre" : "  $record->vacantes / $state"),
