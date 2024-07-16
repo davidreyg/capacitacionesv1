@@ -24,6 +24,6 @@ class Sesion extends Model
 
     public function empleados()
     {
-        return $this->belongsToMany(Empleado::class)->withPivot(['is_present'])->using(EmpleadoEvento::class);
+        return $this->belongsToMany(Empleado::class)->withPivot(['is_present'])->using(EmpleadoSesion::class);
     }
 }
