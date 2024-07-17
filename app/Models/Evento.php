@@ -6,10 +6,13 @@ use App\States\Evento\EventoState;
 use App\States\Solicitud\Solicitado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStates\HasStates;
 
-class Evento extends Model
+class Evento extends Model implements HasMedia
 {
+    use InteractsWithMedia;
     use HasFactory, HasStates;
     /**
      * The attributes that are mass assignable.

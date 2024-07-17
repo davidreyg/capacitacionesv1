@@ -23,6 +23,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
@@ -48,8 +49,11 @@ class EventoResource extends Resource implements HasShieldPermissions
 {
     use NestedResource;
     protected static ?string $model = Evento::class;
-    protected static ?string $navigationGroup = 'Mantenimiento';
+    protected static ?string $modelLabel = 'Programación';
+    protected static ?string $pluralModelLabel = 'Programaciones';
+    protected static ?string $navigationGroup = 'Gestion de capacitaciones';
     protected static ?string $navigationIcon = 'tabler-calendar-event';
+
     protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function form(Form $form): Form
@@ -221,6 +225,16 @@ class EventoResource extends Resource implements HasShieldPermissions
 
                                     ->required()
                                     ->columns(2),
+                            ]),
+                        Tab::make('Contenido')
+                            ->schema([
+                                SpatieMediaLibraryFileUpload::make('silabo')
+                                    ->label('Silabo')
+                                    // ->avatar()
+                                    ->collection('sesiones')
+                                    // ->multiple()
+                                    ->alignCenter()
+                                    ->columnSpanFull(),
                             ]),
                     ])
                     ->activeTab(1)
