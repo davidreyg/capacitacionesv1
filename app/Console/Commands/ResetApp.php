@@ -75,6 +75,8 @@ class ResetApp extends Command
                     Artisan::call('clear-compiled');
                     Artisan::call('filament:clear-cached-components');
                     Artisan::call('media-library:clean --force');
+                    Artisan::call('settings:clear-discovered');
+                    Artisan::call('settings:clear-cache');
 
                 },
                 'info' => '2. App clear successfully',
@@ -107,6 +109,7 @@ class ResetApp extends Command
                     Artisan::call('icons:cache');
                     if (app()->isProduction()) {
                         Artisan::call('optimize');
+                        Artisan::call('settings:discover');
                         Artisan::call('config:cache');
                         Artisan::call('filament:cache-components');
                     }
