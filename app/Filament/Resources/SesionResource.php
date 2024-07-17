@@ -30,13 +30,7 @@ class SesionResource extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                SpatieMediaLibraryFileUpload::make('media')
-                    ->label('Recursos')
-                    // ->avatar()
-                    ->collection('sesiones')
-                    ->multiple()
-                    ->alignCenter()
-                    ->columnSpanFull(),
+
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(100),
@@ -61,6 +55,13 @@ class SesionResource extends Resource implements HasShieldPermissions
                 Forms\Components\TimePicker::make('hora')
                     ->seconds(false)
                     ->required(),
+                SpatieMediaLibraryFileUpload::make('media')
+                    ->label('Recursos')
+                    // ->avatar()
+                    ->collection('sesiones')
+                    ->multiple()
+                    ->alignCenter()
+                    ->columnSpanFull(),
             ]);
     }
 

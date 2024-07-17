@@ -21,9 +21,9 @@ class GestionarEventoEvaluacions extends Page
 {
     use InteractsWithRecord;
     protected static string $resource = EventoResource::class;
-    protected ?string $heading = 'Evaluaciones de los estudiantes';
-    protected static ?string $breadcrumb = 'Evaluaciones de los estudiantes';
-    protected ?string $subheading = 'En esta sección podra registrar las notas de los estudiantes';
+    protected ?string $heading = 'Evaluaciones';
+    protected static ?string $breadcrumb = 'Evaluaciones';
+    protected ?string $subheading = 'En esta sección podra registrar las notas';
     protected static ?string $navigationIcon = 'tabler-school';
     protected static string $view = 'filament.resources.evento-resource.pages.gestionar-evento-evaluaciones';
 
@@ -36,7 +36,7 @@ class GestionarEventoEvaluacions extends Page
 
     public static function getNavigationLabel(): string
     {
-        return 'Evaluaciones de los estudiantes';
+        return 'Evaluaciones';
     }
 
     public function form(Form $form): Form
