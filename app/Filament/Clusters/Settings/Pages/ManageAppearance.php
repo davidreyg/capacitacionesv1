@@ -8,6 +8,7 @@ use App\Enums\Setting\RecordsPerPage;
 use App\Enums\Setting\TableSortDirection;
 use App\Filament\Clusters\Settings;
 use App\Settings\AppearanceSettings;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Section;
@@ -22,6 +23,7 @@ use function Filament\Support\is_app_url;
 
 class ManageAppearance extends SettingsPage
 {
+    use HasPageShield;
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
     protected static ?int $navigationSort = 2;
     protected static string $settings = AppearanceSettings::class;
