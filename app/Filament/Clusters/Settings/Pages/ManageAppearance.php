@@ -24,7 +24,7 @@ use function Filament\Support\is_app_url;
 class ManageAppearance extends SettingsPage
 {
     use HasPageShield;
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationIcon = 'tabler-palette';
     protected static ?int $navigationSort = 2;
     protected static string $settings = AppearanceSettings::class;
 

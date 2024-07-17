@@ -21,7 +21,7 @@ use function Filament\Support\is_app_url;
 class ManageLocalization extends SettingsPage
 {
     use HasPageShield;
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationIcon = 'tabler-world';
 
     protected static string $settings = LocalizationSettings::class;
 
