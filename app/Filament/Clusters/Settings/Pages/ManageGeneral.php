@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Filament\Pages\Setting;
+namespace App\Filament\Clusters\Settings\Pages;
 
+use App\Filament\Clusters\Settings;
 use App\Services\FileService;
 use App\Settings\GeneralSettings;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
@@ -21,8 +22,9 @@ class ManageGeneral extends SettingsPage
     use HasPageShield;
     protected static string $settings = GeneralSettings::class;
 
-    protected static ?int $navigationSort = 99;
+    protected static ?int $navigationSort = 1;
     protected static ?string $navigationIcon = 'fluentui-settings-20';
+    protected static ?string $cluster = Settings::class;
 
     /**
      * @var array<string, mixed> | null
@@ -167,11 +169,6 @@ class ManageGeneral extends SettingsPage
         } catch (\Throwable $th) {
             throw $th;
         }
-    }
-
-    public static function getNavigationGroup(): ?string
-    {
-        return __("menu.nav_group.settings");
     }
 
     public static function getNavigationLabel(): string

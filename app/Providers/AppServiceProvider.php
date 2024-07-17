@@ -26,21 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Table::configureUsing(function (Table $table): void {
-            $table
-                ->defaultPaginationPageOption(10)
-                ->paginated([10, 25, 50, 100])
-                ->extremePaginationLinks();
-        });
-
         FilamentAsset::register([
             Js::make('TopNavigation', __DIR__ . '/../../resources/js/TopNavigation.js'),
         ]);
-
-        Notification::configureUsing(function (Notification $notification): void {
-            $notification
-                ->seconds(2.5);
-        });
 
         /* Para que funcione el SPA. y para que carguen los ASSETS */
         if (config('app.env') === 'production') {

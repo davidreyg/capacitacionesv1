@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Filament\Pages\Setting;
+namespace App\Filament\Clusters\Settings\Pages;
 
+use App\Filament\Clusters\Settings;
 use App\Mail\TestMail;
 use App\Settings\MailSettings;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
@@ -23,6 +24,7 @@ class ManageMail extends SettingsPage
 
     protected static ?int $navigationSort = 99;
     protected static ?string $navigationIcon = 'fluentui-mail-settings-20';
+    protected static ?string $cluster = Settings::class;
 
     /**
      * @var array<string, mixed> | null
@@ -86,9 +88,9 @@ class ManageMail extends SettingsPage
                             ])
                     ])
                     ->columnSpan([
-                        "md" => 2
+                        "md" => 3
                     ]),
-                Forms\Components\Group::make()
+                Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Section::make('From (Sender)')
                             ->label(fn() => __('page.mail_settings.section.sender.title'))
@@ -99,6 +101,12 @@ class ManageMail extends SettingsPage
                                 Forms\Components\TextInput::make('from_name')->label(fn() => __('page.mail_settings.fields.name'))
                                     ->required(),
                             ]),
+                    ])
+                    ->columnSpan([
+                        "md" => 2
+                    ]),
+                Forms\Components\Section::make()
+                    ->schema([
 
                         Forms\Components\Section::make('Mail to')
                             ->label(fn() => __('page.mail_settings.section.mail_to.title'))
@@ -188,10 +196,10 @@ class ManageMail extends SettingsPage
             ->send();
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return __("menu.nav_group.settings");
-    }
+    // public static function getNavigationGroup(): ?string
+    // {
+    //     return __("menu.nav_group.settings");
+    // }
 
     public static function getNavigationLabel(): string
     {

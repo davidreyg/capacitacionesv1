@@ -11,8 +11,6 @@ class GeneralSettings extends Settings
     public string $brand_logoHeight;
     public bool $site_active;
     public ?string $site_favicon;
-    public array $site_theme;
-    public string $font;
 
     public static function group(): string
     {

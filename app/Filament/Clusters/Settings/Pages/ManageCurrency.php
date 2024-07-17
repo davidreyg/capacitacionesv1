@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Filament\Pages\Setting;
+namespace App\Filament\Clusters\Settings\Pages;
 
+use App\Filament\Clusters\Settings;
 use App\Settings\CurrencySettings;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms;
@@ -16,6 +17,7 @@ class ManageCurrency extends SettingsPage
     protected static ?string $navigationIcon = 'tabler-settings-dollar';
     protected static ?int $navigationSort = 99;
     protected static string $settings = CurrencySettings::class;
+    protected static ?string $cluster = Settings::class;
 
     public function form(Form $form): Form
     {
@@ -43,11 +45,6 @@ class ManageCurrency extends SettingsPage
                         "md" => 2
                     ]),
             ]);
-    }
-
-    public static function getNavigationGroup(): ?string
-    {
-        return __("menu.nav_group.settings");
     }
 
     public static function getNavigationLabel(): string

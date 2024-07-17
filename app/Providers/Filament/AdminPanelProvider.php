@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\Auth\EmailVerification;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Auth\RequestPasswordReset;
+use App\Http\Middleware\ConfigureCurrentPanel;
 use App\Livewire\MyProfileExtended;
 use App\Settings\GeneralSettings;
 use Filament\Http\Middleware\Authenticate;
@@ -36,11 +37,11 @@ class AdminPanelProvider extends PanelProvider
             // ->font(app(GeneralSettings::class)->font)
             ->passwordReset(RequestPasswordReset::class)
             ->emailVerification(EmailVerification::class)
-            ->favicon(fn(GeneralSettings $settings) => Storage::url($settings->site_favicon))
-            ->brandName(fn(GeneralSettings $settings) => $settings->brand_name)
-            ->brandLogo(fn(GeneralSettings $settings) => Storage::url($settings->brand_logo))
-            ->brandLogoHeight(fn(GeneralSettings $settings) => $settings->brand_logoHeight)
-            ->colors(fn(GeneralSettings $settings) => $settings->site_theme)
+            // ->favicon(fn(GeneralSettings $settings) => Storage::url($settings->site_favicon))
+            // ->brandName(fn(GeneralSettings $settings) => $settings->brand_name)
+            // ->brandLogo(fn(GeneralSettings $settings) => Storage::url($settings->brand_logo))
+            // ->brandLogoHeight(fn(GeneralSettings $settings) => $settings->brand_logoHeight)
+            // ->colors(fn(GeneralSettings $settings) => $settings->site_theme)
             ->databaseNotifications()->databaseNotificationsPolling('30s')
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->sidebarCollapsibleOnDesktop()
@@ -71,6 +72,9 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
                 \Hasnayeen\Themes\Http\Middleware\SetTheme::class
             ])
+            ->middleware([
+                ConfigureCurrentPanel::class,
+            ], isPersistent: true)
             ->authMiddleware([
                 Authenticate::class,
             ])
