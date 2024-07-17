@@ -51,9 +51,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome.deb \
-    && apt-get install -y ./google-chrome.deb \
-    && rm google-chrome.deb
+# Instalar Chrome y Firefox usando Puppeteer
+RUN npx puppeteer browsers install chrome \
+    && npx puppeteer browsers install firefox
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.2
 
