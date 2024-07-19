@@ -11,32 +11,9 @@ RESET=$(tput sgr0)
 # Variables
 ENV_FILE=".env"
 DOCKER_COMPOSE_FILE="docker-compose.yml"
-USE_SAIL=false
-SAIL_CHOICE=""
 
 # Comprobación de Dependencias
-command -v composer >/dev/null 2>&1 || { echo >&2 "${RED}Composer is required but it's not installed. Aborting.${RESET}"; exit 1; }
-command -v npm >/dev/null 2>&1 || { echo >&2 "${RED}npm is required but it's not installed. Aborting.${RESET}"; exit 1; }
 command -v docker >/dev/null 2>&1 || { echo >&2 "${RED}Docker is required but it's not installed. Aborting.${RESET}"; exit 1; }
-
-# Prompt para configuración inicial
-echo "${YELLOW}Do you want to use Laravel Sail? (y/n)${RESET}"
-read -p "Enter choice: " use_sail_choice
-case $use_sail_choice in
-    y|Y|yes|Yes|YES)
-        USE_SAIL=true
-        SAIL_CHOICE="${BLUE}Using Laravel Sail${RESET}"
-        ;;
-    n|N|no|No|NO)
-        USE_SAIL=false
-        SAIL_CHOICE="${RED}Not using Laravel Sail${RESET}"
-        ;;
-    *)
-        echo "${RED}Invalid choice. Defaulting to not using Sail.${RESET}"
-        USE_SAIL=false
-        SAIL_CHOICE="${RED}Not using Laravel Sail (default)${RESET}"
-        ;;
-esac
 
 # Logo en ASCII con Colores
 LOGO="
@@ -52,10 +29,30 @@ ${CYAN}Laravel Developer${RESET}
 ${CYAN}GitHub: https://github.com/davidreyg${RESET}
 "
 # Descripción con colores
-DESCRIPTION="${BLUE}$SAIL_CHOICE${RESET}
+DESCRIPTION="${BLUE}Using Laravel sail for all operations${RESET}
 "
 
 # Funciones
+install_composer_dependencies() {
+    if [[ -f "./vendor/bin/sail" ]]; then
+        echo "${GREEN}Installing Composer dependencies using Sail...${RESET}"
+        ./vendor/bin/sail composer install --ignore-platform-reqs
+    else
+        echo "${GREEN}Sail not found. Installing Composer dependencies using Docker...${RESET}"
+        docker run --rm \
+            -u "$(id -u):$(id -g)" \
+            -v "$(pwd):/var/www/html" \
+            -w /var/www/html \
+            laravelsail/php82-composer:latest \
+            composer install --ignore-platform-reqs
+    fi
+}
+
+install_npm_dependencies() {
+    echo "${GREEN}Installing NPM dependencies using Sail...${RESET}"
+    ./vendor/bin/sail npm install
+}
+
 copy_file() {
     local source=$1
     local destination=$2
@@ -75,36 +72,19 @@ install_dependencies() {
 
     local env=$(grep "^APP_ENV=" $ENV_FILE | cut -d '=' -f 2)
 
-    if [[ $USE_SAIL == true ]]; then
-        if [[ $env == "local" ]]; then
-            echo "${GREEN}Installing development dependencies using Sail...${RESET}"
-            ./vendor/bin/sail composer install
-            ./vendor/bin/sail npm install
-            echo "${GREEN}Development dependencies installed.${RESET}"
-        elif [[ $env == "production" ]]; then
-            echo "${GREEN}Installing production dependencies using Sail...${RESET}"
-            ./vendor/bin/sail composer install --no-dev --optimize-autoloader
-            ./vendor/bin/sail npm install --production
-            echo "${GREEN}Production dependencies installed.${RESET}"
-        else
-            echo "${RED}Invalid environment in .env file. APP_ENV should be 'local' or 'production'.${RESET}"
-            exit 1
-        fi
+    if [[ $env == "local" ]]; then
+        echo "${GREEN}Installing development dependencies...${RESET}"
+        install_composer_dependencies
+        install_npm_dependencies
+        echo "${GREEN}Development dependencies installed.${RESET}"
+    elif [[ $env == "production" ]]; then
+        echo "${GREEN}Installing production dependencies...${RESET}"
+        install_composer_dependencies --no-dev --optimize-autoloader
+        ./vendor/bin/sail npm install --production
+        echo "${GREEN}Production dependencies installed.${RESET}"
     else
-        if [[ $env == "local" ]]; then
-            echo "${GREEN}Installing development dependencies...${RESET}"
-            composer install
-            npm install
-            echo "${GREEN}Development dependencies installed.${RESET}"
-        elif [[ $env == "production" ]]; then
-            echo "${GREEN}Installing production dependencies...${RESET}"
-            composer install --no-dev --optimize-autoloader
-            npm install --production
-            echo "${GREEN}Production dependencies installed.${RESET}"
-        else
-            echo "${RED}Invalid environment in .env file. APP_ENV should be 'local' or 'production'.${RESET}"
-            exit 1
-        fi
+        echo "${RED}Invalid environment in .env file. APP_ENV should be 'local' or 'production'.${RESET}"
+        exit 1
     fi
 }
 
@@ -129,20 +109,9 @@ clean() {
     echo "${GREEN}Cleanup complete.${RESET}"
 }
 
-serve() {
-    if [[ $USE_SAIL == true ]]; then
-        ./vendor/bin/sail up
-    else
-        php artisan serve
-    fi
-}
-
 reset_app() {
-    if [[ $USE_SAIL == true ]]; then
-        ./vendor/bin/sail artisan app:reset
-    else
-        php artisan app:reset
-    fi
+    echo "${GREEN}Resetting the application using Docker...${RESET}"
+    ./vendor/bin/sail artisan app:reset
 }
 
 # Menú
@@ -152,14 +121,23 @@ show_menu() {
     echo ""
     echo "$DESCRIPTION"
     echo "${YELLOW}Select an option:${RESET}"
-    echo "1) Setup Development Environment"
-    echo "2) Setup Production Environment"
+
+    if [[ ! -f $ENV_FILE ]]; then
+        echo "1) Setup Development Environment"
+        echo "2) Setup Production Environment"
+    fi
+
     echo "3) Install Dependencies"
     echo "4) Clean Environment"
-    echo "5) Serve Application"
-    echo "6) Reset Application"
-    echo "7) Exit"
-    read -p "Enter choice [1-7]: " choice
+    echo "5) Reset Application"
+    echo "6) Exit"
+
+    if [[ ! -f $ENV_FILE ]]; then
+        read -p "Enter choice [1-6]: " choice
+    else
+        read -p "Enter choice [3-6]: " choice
+    fi
+
     case $choice in
         1)
             setup_dev
@@ -174,12 +152,9 @@ show_menu() {
             clean
             ;;
         5)
-            serve
-            ;;
-        6)
             reset_app
             ;;
-        7)
+        6)
             exit 0
             ;;
         *)
