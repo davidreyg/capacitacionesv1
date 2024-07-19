@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\ReporteAsistencia;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use Spatie\Browsershot\Browsershot;
@@ -14,14 +15,18 @@ use Spatie\Browsershot\Browsershot;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/asistencia', ReporteAsistencia::class)->name('asistencia');
 Route::get('/test', function () {
     $html = view('welcome')->render();
-
-    $pdf_content = Browsershot::html($html)
-        ->timeout(60)
+    $url = route('asistencia');
+    $pdf_content = Browsershot::url($url)
+        ->timeout(50)
+        ->ignoreHttpsErrors()
+        ->format('A4')
+        ->setOption('newHeadless', true)
         ->waitUntilNetworkIdle()
-        ->windowSize(502, 850)
+        ->showBackground()
+        ->noSandbox()
         ->noSandbox();
     if (config('app-pdf.node')) {
         $pdf_content = $pdf_content->setNodeBinary(config('app-pdf.node'));
