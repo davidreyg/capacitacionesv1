@@ -72,7 +72,7 @@ install_dependencies() {
 
     local env=$(grep "^APP_ENV=" $ENV_FILE | cut -d '=' -f 2)
 
-    if [[ $env == "local" ]]; then
+    if ([[ $env == "local" ]]); then
         echo "${GREEN}Installing development dependencies...${RESET}"
         install_composer_dependencies
         install_npm_dependencies
@@ -125,34 +125,51 @@ show_menu() {
     if [[ ! -f $ENV_FILE ]]; then
         echo "1) Setup Development Environment"
         echo "2) Setup Production Environment"
+        echo "6) Exit"
+        read -p "Enter choice [1-2, 6]: " choice
     else
         echo "3) Install Dependencies"
         echo "4) Clean Environment"
         echo "5) Reset Application"
-    fi
-    echo "6) Exit"
-
-    if [[ ! -f $ENV_FILE ]]; then
-        read -p "Enter choice [1-2, 6]: " choice
-    else
+        echo "6) Exit"
         read -p "Enter choice [3-6]: " choice
     fi
 
     case $choice in
         1)
-            setup_dev
+            if [[ ! -f $ENV_FILE ]]; then
+                setup_dev
+            else
+                echo "${RED}Invalid choice, please try again.${RESET}"
+            fi
             ;;
         2)
-            setup_prod
+            if [[ ! -f $ENV_FILE ]]; then
+                setup_prod
+            else
+                echo "${RED}Invalid choice, please try again.${RESET}"
+            fi
             ;;
         3)
-            install_dependencies
+            if [[ -f $ENV_FILE ]]; then
+                install_dependencies
+            else
+                echo "${RED}Invalid choice, please try again.${RESET}"
+            fi
             ;;
         4)
-            clean
+            if [[ -f $ENV_FILE ]]; then
+                clean
+            else
+                echo "${RED}Invalid choice, please try again.${RESET}"
+            fi
             ;;
         5)
-            reset_app
+            if [[ -f $ENV_FILE ]]; then
+                reset_app
+            else
+                echo "${RED}Invalid choice, please try again.${RESET}"
+            fi
             ;;
         6)
             exit 0
