@@ -125,15 +125,15 @@ show_menu() {
     if [[ ! -f $ENV_FILE ]]; then
         echo "1) Setup Development Environment"
         echo "2) Setup Production Environment"
+    else
+        echo "3) Install Dependencies"
+        echo "4) Clean Environment"
+        echo "5) Reset Application"
     fi
-
-    echo "3) Install Dependencies"
-    echo "4) Clean Environment"
-    echo "5) Reset Application"
     echo "6) Exit"
 
     if [[ ! -f $ENV_FILE ]]; then
-        read -p "Enter choice [1-6]: " choice
+        read -p "Enter choice [1-2, 6]: " choice
     else
         read -p "Enter choice [3-6]: " choice
     fi
