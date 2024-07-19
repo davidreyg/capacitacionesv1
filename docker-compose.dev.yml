@@ -6,8 +6,8 @@ services:
       args:
         WWWGROUP: "${WWWGROUP}"
         MYSQL_CLIENT: mariadb-client
-    container_name: app1
-    image: sail-8.2/app
+    container_name: app_dev
+    image: sail-8.2/app_dev
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
@@ -29,7 +29,7 @@ services:
     image: "mariadb:10"
     ports:
       - "${FORWARD_DB_PORT:-3306}:3306"
-    container_name: db1
+    container_name: db_dev
     environment:
       MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
       MYSQL_ROOT_HOST: "%"
