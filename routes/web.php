@@ -18,7 +18,11 @@ use Spatie\Browsershot\Browsershot;
 Route::get('/asistencia', ReporteAsistencia::class)->name('asistencia');
 Route::get('/test', function () {
     $html = view('welcome')->render();
-    $url = route('asistencia');
+    $route = route('asistencia', absolute: false);
+    // Obtener la IP del contenedor usando gethostbyname()
+    $containerIp = gethostbyname('laravel.test');
+    // Construir la URL completa con la IP del contenedor
+    $url = "http://{$containerIp}{$route}";
     $pdf_content = Browsershot::url($url)
         ->timeout(50)
         ->ignoreHttpsErrors()
