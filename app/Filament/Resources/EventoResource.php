@@ -174,7 +174,10 @@ class EventoResource extends Resource implements HasShieldPermissions
                                                         ->distinct()
                                                         ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                                         ->required(),
-                                                    TextInput::make('valor')->required()->maxLength(2),
+                                                    TextInput::make('valor')
+                                                        ->required()
+                                                        ->money('PEN')
+                                                        ->maxValue(500),
                                                 ])
                                                 ->collapsible()->columnSpanFull()
                                         ]),
@@ -193,7 +196,10 @@ class EventoResource extends Resource implements HasShieldPermissions
                                                         ->distinct()
                                                         ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                                         ->required(),
-                                                    TextInput::make('valor')->required()->maxLength(2),
+                                                    TextInput::make('valor')
+                                                        ->required()
+                                                        ->money('PEN')
+                                                        ->maxValue(100),
                                                 ])
                                                 ->collapsible()->columnSpanFull()
                                         ])

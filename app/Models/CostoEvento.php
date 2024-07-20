@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class CostoEvento extends Pivot
@@ -16,4 +17,8 @@ class CostoEvento extends Pivot
     {
         return $this->belongsTo(Evento::class);
     }
+
+    protected $casts = [
+        'valor' => MoneyCast::class,
+    ];
 }
