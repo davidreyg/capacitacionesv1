@@ -3,9 +3,11 @@
 namespace App\Filament\Clusters\Settings\Pages;
 
 use App\Filament\Clusters\Settings;
+use App\Settings\GeneralSettings;
 use App\Settings\ReportSettings;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -55,19 +57,46 @@ class ManageReport extends SettingsPage
                 Textarea::make('footer')
                     ->live()
                     ->nullable(),
+                // TODO: Mejorar el formato de image para cropear o ajustar.
+                FileUpload::make('logo')
+                    ->openable()
+                    ->maxSize(1024)
+                    ->visibility('public')
+                    ->disk('public')
+                    ->directory('logos/document')
+                    ->imageResizeMode('contain')
+                    ->imageCropAspectRatio('3:2')
+                    ->panelAspectRatio('3:2')
+                    ->panelLayout('integrated')
+                    ->removeUploadedFileButtonPosition('center bottom')
+                    ->uploadButtonPosition('center bottom')
+                    ->uploadProgressIndicatorPosition('center bottom')
+                    // ->getUploadedFileNameForStorageUsing(
+                    //     static fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
+                    //         ->prepend(Auth::user()->currentCompany->id . '_'),
+                    // )
+                    ->extraAttributes([
+                        'class' => 'aspect-[3/2] w-[9.375rem] max-w-full',
+                    ])
+                    ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/gif']),
             ])->columns();
     }
 
+    // TODO: Generar iframe para mostrar el pdf!
     protected function getTemplateSection(): Component
     {
         return Section::make('Template')
             ->description('Configure su template para los reportes.')
             ->schema([
-                ViewField::make('preview.default')
-                    // ->columnSpanFull()
-                    ->hiddenLabel()
-                    // ->visible(static fn(Get $get) => $get('template') === 'default')
-                    ->view('components.pdf.layouts.default'),
+                // ViewField::make('preview.default')
+                //     // ->columnSpanFull()
+                //     ->hiddenLabel()
+                //     // ->visible(static fn(Get $get) => $get('template') === 'default')
+                //     ->view('livewire.reporte-asistencia')
+                //     ->viewData([
+                //         'logo' => \Storage::url(app(ReportSettings::class)->logo),
+                //         'data' => ['hola ', 'xdxd']
+                //     ]),
             ]);
     }
 
