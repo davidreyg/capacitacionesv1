@@ -20,7 +20,7 @@
 </head>
 
 <body class="w-[21cm] h-[29.7cm] antialiased">
-    {{$slot}}
+    <livewire:dynamic-component :is="$current" :key="$current" :data="$data" />
 </body>
 
 </html>
