@@ -8,9 +8,9 @@
                 </div>
             </div>
             <div class="w-1/2">
-                {{-- @if($logo && $show_logo)
-                <x-pdf.logo :src="$logo" />
-                @endif --}}
+                @if($logo)
+                    <x-pdf.logo :src="$logo" />
+                @endif 
             </div>
         </div>
     </x-pdf.header>

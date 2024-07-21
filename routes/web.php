@@ -15,14 +15,14 @@ use Spatie\Browsershot\Browsershot;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/asistencia', ReporteAsistencia::class)->name('asistencia');
+Route::get('/asistencia', ReporteAsistencia::class)->name('asistencia')->middleware(['force.https']);
 Route::get('/test', function () {
     $html = view('welcome')->render();
     $route = route('asistencia', absolute: false);
     // Obtener la IP del contenedor usando gethostbyname()
     $containerIp = gethostbyname('laravel.test');
     // Construir la URL completa con la IP del contenedor
-    $url = "http://{$containerIp}{$route}";
+    $url = "http://laravel.test{$route}";
     $pdf_content = Browsershot::url($url)
         ->timeout(50)
         ->ignoreHttpsErrors()

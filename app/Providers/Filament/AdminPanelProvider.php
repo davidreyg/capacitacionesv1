@@ -6,8 +6,8 @@ use App\Filament\Pages\Auth\EmailVerification;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Auth\RequestPasswordReset;
 use App\Http\Middleware\ConfigureCurrentPanel;
+use App\Http\Middleware\ForceHttps;
 use App\Livewire\MyProfileExtended;
-use App\Settings\GeneralSettings;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -21,7 +21,6 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -34,14 +33,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('')
             ->login(Login::class)
             ->globalSearch(false)
-            // ->font(app(GeneralSettings::class)->font)
             ->passwordReset(RequestPasswordReset::class)
             ->emailVerification(EmailVerification::class)
-            // ->favicon(fn(GeneralSettings $settings) => Storage::url($settings->site_favicon))
-            // ->brandName(fn(GeneralSettings $settings) => $settings->brand_name)
-            // ->brandLogo(fn(GeneralSettings $settings) => Storage::url($settings->brand_logo))
-            // ->brandLogoHeight(fn(GeneralSettings $settings) => $settings->brand_logoHeight)
-            // ->colors(fn(GeneralSettings $settings) => $settings->site_theme)
             ->databaseNotifications()->databaseNotificationsPolling('30s')
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->sidebarCollapsibleOnDesktop()
@@ -74,6 +67,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->middleware([
                 ConfigureCurrentPanel::class,
+                ForceHttps::class,
             ], isPersistent: true)
             ->authMiddleware([
                 Authenticate::class,

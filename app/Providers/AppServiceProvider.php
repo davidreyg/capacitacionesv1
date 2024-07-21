@@ -29,11 +29,5 @@ class AppServiceProvider extends ServiceProvider
         FilamentAsset::register([
             Js::make('TopNavigation', __DIR__ . '/../../resources/js/TopNavigation.js'),
         ]);
-
-        /* Para que funcione el SPA. y para que carguen los ASSETS */
-        if (config('app.env') === 'production') {
-            $this->app['request']->server->set('HTTPS', 'on');
-            \URL::forceScheme('https');
-        }
     }
 }
