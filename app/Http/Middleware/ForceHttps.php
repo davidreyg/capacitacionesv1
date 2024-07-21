@@ -16,8 +16,8 @@ class ForceHttps
     public function handle(Request $request, Closure $next): Response
     {
         /* Para que funcione el SPA. y para que carguen los ASSETS */
-        if (app()->isProduction() && !$request->is('asistencia')) {
-            // $this->app['request']->server->set('HTTPS', 'on');
+        if (app()->isProduction()) {
+            $request->server->set('HTTPS', 'on');
             \URL::forceScheme('https');
         }
 
