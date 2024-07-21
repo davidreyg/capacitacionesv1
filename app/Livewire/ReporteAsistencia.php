@@ -2,19 +2,19 @@
 
 namespace App\Livewire;
 
-use App\Settings\GeneralSettings;
-use Livewire\Attributes\Layout;
+use App\Settings\ReportSettings;
 use Livewire\Component;
 
-#[Layout('components.layouts.pdf')]
 class ReporteAsistencia extends Component
 {
 
     public string $logo;
+    public array $data;
 
-    function mount(GeneralSettings $generalSettings)
+    function mount(array $data, ReportSettings $reportSettings)
     {
-        $this->logo = \Storage::url($generalSettings->brand_logo);
+        $this->logo = \Storage::url($reportSettings->logo);
+        $this->data = $data;
     }
     public function render()
     {
