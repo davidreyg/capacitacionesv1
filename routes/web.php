@@ -2,6 +2,8 @@
 
 use App\Actions\GenerarPdf;
 use App\Enums\Setting\ReportType;
+use App\Services\EmpleadoSesionDataSource\EmpleadoSesionDataSourceFactory;
+use App\Enums\Services\EmpleadoSesionDataSourceType;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,5 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 // Route::get('/asistencia', ReporteAsistencia::class)->name('asistencia')->middleware(['force.https']);
 Route::get('/preview-pdf', function () {
-    return GenerarPdf::make()->handle(ReportType::ASISTENCIA, ['nombre' => 'david', 'perro' => 'loco gallo']);
+    $dataSource = EmpleadoSesionDataSourceFactory::make(EmpleadoSesionDataSourceType::FAKE);
+    // dd($dataSource->getData());
+
+    return GenerarPdf::make()->handle(ReportType::ASISTENCIA, $dataSource->getData());
 });
