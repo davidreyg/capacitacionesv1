@@ -216,6 +216,7 @@ class EventoResource extends Resource implements HasShieldPermissions
                                             })->toArray()
                                             :
                                             Solicitud::whereState('estado', [Solicitado::class, Aprobado::class])
+                                                ->with('establecimiento')
                                                 ->where(function ($query) use ($get) {
                                                     $query->where('evento_id', $get('id'))
                                                         ->orWhereNull('evento_id');

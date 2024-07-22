@@ -37,10 +37,8 @@ class EditEvento extends EditRecord
         $record->update($data);
         foreach ($data['solicitud_ids'] as $value) {
             $solcitud = Solicitud::find($value);
-            $solcitud->evento_id = $record->id;
-            $solcitud->save();
-            if ($solcitud->estado->canTransitionTo(Aprobado::class)) {
-                $solcitud->estado->transitionTo(Aprobado::class);
+            if ($solcitud->estado->canTransitionTo(Aprobado::class, $record->id)) {
+                $solcitud->estado->transitionTo(Aprobado::class, $record->id);
             }
         }
         return $record;

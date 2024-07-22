@@ -27,9 +27,7 @@ class CreateEvento extends CreateRecord
         $evento = static::getModel()::create($data);
         foreach ($data['solicitud_ids'] as $value) {
             $solcitud = Solicitud::find($value);
-            $solcitud->evento_id = $evento->id;
-            $solcitud->save();
-            $solcitud->estado->transitionTo(Aprobado::class);
+            $solcitud->estado->transitionTo(Aprobado::class, $evento->id);
         }
         return $evento;
     }

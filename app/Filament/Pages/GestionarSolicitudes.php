@@ -10,6 +10,7 @@ use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\IconSize;
@@ -39,7 +40,7 @@ class GestionarSolicitudes extends Page implements HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Solicitud::query()->whereHas('evento')->whereIn('establecimiento_id', $this->establecimiento_ids))
+            ->query(Solicitud::query()->whereIn('establecimiento_id', $this->establecimiento_ids))
             ->columns([
                 TextColumn::make('establecimiento.nombre')->searchable(),
                 TextColumn::make('evento.capacitacion.nombre')->wrap()->searchable(),
@@ -59,11 +60,20 @@ class GestionarSolicitudes extends Page implements HasTable
                     ->hiddenLabel()
                     ->iconSize(IconSize::Large)
                     ->tooltip(fn(Solicitud $record): string => (new Aprobado($record))->action())
-                    ->visible(fn(Solicitud $record): bool => $record->estado->canTransitionTo(Aprobado::class))
+                    ->visible(fn(Solicitud $record): bool => $record->estado->canTransitionTo(Aprobado::class, null))
                     ->color(fn(Solicitud $record): string => (new Aprobado($record))->color())
                     ->icon(fn(Solicitud $record): string => (new Aprobado($record))->icon())
                     ->requiresConfirmation()
-                    ->action(fn(Solicitud $record): string => $record->estado->transitionTo(Aprobado::class)),
+                    ->action(function (Solicitud $record) {
+                        try {
+                            $record->estado->transitionTo(Aprobado::class, null);
+                        } catch (\Throwable $th) {
+                            Notification::make('Error')
+                                ->danger()
+                                ->body($th->getMessage())
+                                ->send();
+                        }
+                    }),
                 Action::make('Habilitar')
                     ->hiddenLabel()
                     ->iconSize(IconSize::Large)

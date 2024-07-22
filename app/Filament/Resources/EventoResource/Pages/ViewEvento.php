@@ -15,7 +15,7 @@ class ViewEvento extends ViewRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $data['solicitud_ids'] = $this->getRecord()->solicituds()->pluck('id');
+        $data['solicitud_ids'] = $this->getRecord()->load('solicituds')->solicituds()->pluck('id');
         return $data;
     }
 }
