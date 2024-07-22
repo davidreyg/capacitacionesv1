@@ -1,5 +1,5 @@
 @php
-    $logo = \Storage::url($reportSettings->logo);
+    $logo = \Storage::url($generalSettings->brand_logo)
 @endphp
 <x-pdf.container class="default-template-container">
 
