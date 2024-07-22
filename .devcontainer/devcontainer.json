@@ -23,7 +23,8 @@
 				"ms-azuretools.vscode-docker",
 				"onecentlin.laravel-blade",
 				"codingyu.laravel-goto-view",
-				"ahinkle.laravel-model-snippets"
+				"ahinkle.laravel-model-snippets",
+				"shufo.vscode-blade-formatter"
 			],
 			"settings": {}
 		}
