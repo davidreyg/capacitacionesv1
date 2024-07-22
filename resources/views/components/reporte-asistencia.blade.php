@@ -68,7 +68,7 @@
                 </tr>
             </thead>
             <tbody class="text-xs border-gray-300 leading-8">
-                @foreach ($asistenciaData->empleados as $empleado)
+                @foreach ($datos->empleados as $empleado)
                 <tr class="hover:bg-gray-50">
                     <td class="text-left font-semibold px-3">{{$loop->iteration}}</td>
                     <td class="whitespace-nowrap max-w-xs truncate text-wrap px-3">

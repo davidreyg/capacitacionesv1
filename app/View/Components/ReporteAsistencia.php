@@ -11,12 +11,12 @@ use Illuminate\View\Component;
 class ReporteAsistencia extends Component
 {
     public ReportSettings $reportSettings;
-    public AsistenciaData $asistenciaData;
+    public AsistenciaData $datos;
 
-    public function __construct(AsistenciaData $asistenciaData, ReportSettings $reportSettings)
+    public function __construct(AsistenciaData $datos, ReportSettings $reportSettings)
     {
         $this->reportSettings = $reportSettings;
-        $this->asistenciaData = $asistenciaData;
+        $this->datos = $datos;
     }
 
     /**

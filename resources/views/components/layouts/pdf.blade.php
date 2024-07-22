@@ -20,7 +20,7 @@
 </head>
 
 <body class="antialiased">
-    <x-dynamic-component :component="$current" :asistencia-data="$datos" />
+    <x-dynamic-component :component="$current" :datos="$datos" />
 </body>
 
 </html>
