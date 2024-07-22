@@ -2,8 +2,8 @@
 
 use App\Actions\GenerarPdf;
 use App\Enums\Setting\ReportType;
-use App\Services\EmpleadoSesionDataSource\EmpleadoSesionDataSourceFactory;
-use App\Enums\Services\EmpleadoSesionDataSourceType;
+use App\Services\AsistenciaDataSource\AsistenciaDataSourceFactory;
+use App\Enums\Services\AsistenciaDataSourceType;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// Route::get('/asistencia', ReporteAsistencia::class)->name('asistencia')->middleware(['force.https']);
 Route::get('/preview-pdf', function () {
-    $dataSource = EmpleadoSesionDataSourceFactory::make(EmpleadoSesionDataSourceType::FAKE);
-    // dd($dataSource->getData());
+    $dataSource = AsistenciaDataSourceFactory::make(AsistenciaDataSourceType::FAKE);
+    return GenerarPdf::make()->handle(ReportType::ASISTENCIA, $dataSource->getData(1));
+});
 
-    return GenerarPdf::make()->handle(ReportType::ASISTENCIA, $dataSource->getData());
+Route::get('/asistencia', function () {
+    $dataSource = AsistenciaDataSourceFactory::make(AsistenciaDataSourceType::FAKE);
+    return view('components.layouts.pdf', ['current' => ReportType::ASISTENCIA->value, 'datos' => $dataSource->getData(1)])->render();
 });

@@ -1,8 +1,7 @@
 <?php
-// app/Enums/EmpleadoSesionDataSourceType.php
 namespace App\Enums\Services;
 
-enum EmpleadoSesionDataSourceType: string
+enum AsistenciaDataSourceType: string
 {
     case FAKE = 'fake';
     case DATABASE = 'database';
