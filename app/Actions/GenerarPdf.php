@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\DTO\AsistenciaData;
 use App\Enums\Setting\ReportType;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Spatie\Browsershot\Browsershot;
@@ -10,13 +11,14 @@ class GenerarPdf
 {
     use AsAction;
 
-    public function handle(ReportType $tipoReporte, array $data)
+    public function handle(ReportType $tipoReporte, AsistenciaData $data)
     {
-        $html = view('components.layouts.pdf', ['current' => $tipoReporte->value, 'data' => $data])->render();
+        $html = view('components.layouts.pdf', ['current' => $tipoReporte->value, 'datos' => $data])->render();
         $pdf_content = Browsershot::html($html)
             ->timeout(50)
             ->ignoreHttpsErrors()
-            ->format('A4')
+            ->landscape()
+            ->margins(5, 0, 5, 0)
             ->setOption('newHeadless', true)
             ->waitUntilNetworkIdle()
             ->showBackground()

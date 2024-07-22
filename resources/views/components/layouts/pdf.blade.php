@@ -19,8 +19,8 @@
     @vite('resources/css/pdf/pdf.css')
 </head>
 
-<body class="w-[21cm] h-[29.7cm] antialiased">
-    <livewire:dynamic-component :is="$current" :key="$current" :data="$data" />
+<body class="antialiased">
+    <x-dynamic-component :component="$current" :asistencia-data="$datos" />
 </body>
 
 </html>
