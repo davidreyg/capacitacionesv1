@@ -18,7 +18,7 @@ abstract class SolicitudState extends State
     {
         return parent::config()
             ->default(Solicitado::class)
-            ->allowTransition(Solicitado::class, Aprobado::class)
+            ->allowTransition(Solicitado::class, Aprobado::class, SolicitadoToAprobado::class)
             ->allowTransition(Solicitado::class, Evaluado::class)
 
             ->allowTransition(Aprobado::class, Habilitado::class)
