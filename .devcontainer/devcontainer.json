@@ -19,7 +19,11 @@
 				"shardulm94.trailing-spaces",
 				"redhat.vscode-yaml",
 				"ctf0.php-array-symbols",
-				"usernamehw.errorlens"
+				"usernamehw.errorlens",
+				"ms-azuretools.vscode-docker",
+				"onecentlin.laravel-blade",
+				"codingyu.laravel-goto-view",
+				"ahinkle.laravel-model-snippets"
 			],
 			"settings": {}
 		}
