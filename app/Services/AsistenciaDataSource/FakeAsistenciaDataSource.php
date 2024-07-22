@@ -13,9 +13,15 @@ class FakeAsistenciaDataSource implements AsistenciaSourceInterface
     {
         $sesion1 = new SesionData(1, 'Fake Session 1', '05-30-1998');
         $evento1 = new EventoData('EVENTO1', 'Evento 1', '05-30-1998');
-        $empleadoSesion1 = new EmpleadoSesionData('Unidad organica 1', 'Empleado 1', true);
-        $empleadoSesion2 = new EmpleadoSesionData('Unidad organica 2', 'Empleado 2', false);
+        $empleados = [];
+        for ($i = 0; $i <= 20; $i++) {
+            $empleados[] = new EmpleadoSesionData(
+                fake()->company,
+                fake()->lastName() . ',' . fake()->name,
+                fake()->boolean
+            );
+        }
 
-        return new AsistenciaData($evento1, $sesion1, collect([$empleadoSesion1, $empleadoSesion2]));
+        return new AsistenciaData($evento1, $sesion1, collect($empleados));
     }
 }
