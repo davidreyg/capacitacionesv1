@@ -1,3 +1,3 @@
-<section {{ $attributes->class(['inv-metadata px-6 pt-4']) }}>
+<section {{ $attributes->class(['inv-metadata']) }}>
     {{ $slot }}
 </section>

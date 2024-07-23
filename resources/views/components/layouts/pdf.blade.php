@@ -17,6 +17,8 @@
     </style>
 
     @vite('resources/css/pdf/pdf.css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.7/dist/css/uikit.min.css" />
+
 </head>
 
 <body class="antialiased">
