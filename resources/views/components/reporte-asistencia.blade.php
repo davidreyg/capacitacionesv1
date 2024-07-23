@@ -52,32 +52,34 @@
         <div class="divider px-6">
             <x-tabler-inner-shadow-bottom-right class="h-16 w-16" />
         </div>
-        <div class="w-full grid grid-cols-3 items-start gap-x-3 ">
-            <div class="stats shadow text-center">
-                <div class="stat">
-                    <div class="stat-figure text-amber-400">
-                        <x-tabler-users class="inline-block h-8 w-8 stroke-current" />
+        <div class="flex justify-center">
+            <div class="w-9/12 grid grid-cols-3 items-center gap-x-3 ">
+                <div class="stats shadow text-center">
+                    <div class="stat">
+                        <div class="stat-figure text-amber-400">
+                            <x-tabler-users class="inline-block h-8 w-8 stroke-current" />
+                        </div>
+                        <div class="stat-title">N° de participantes</div>
+                        <div class="stat-value text-amber-400">{{ count($datos->empleados) }}</div>
                     </div>
-                    <div class="stat-title">N° de participantes</div>
-                    <div class="stat-value text-amber-400">{{ count($datos->empleados) }}</div>
                 </div>
-            </div>
-            <div class="stats shadow text-center">
-                <div class="stat">
-                    <div class="stat-figure text-green-400">
-                        <x-tabler-building class="inline-block h-8 w-8 stroke-current" />
+                <div class="stats shadow text-center">
+                    <div class="stat">
+                        <div class="stat-figure text-green-400">
+                            <x-tabler-building class="inline-block h-8 w-8 stroke-current" />
+                        </div>
+                        <div class="stat-title">N° de Unidades Organicas</div>
+                        <div class="stat-value text-green-400">{{ count($datos->empleados) }}</div>
                     </div>
-                    <div class="stat-title">N° de Unidades Organicas</div>
-                    <div class="stat-value text-green-400">{{ count($datos->empleados) }}</div>
                 </div>
-            </div>
-            <div class="stats shadow text-center">
-                <div class="stat">
-                    <div class="stat-figure text-blue-400">
-                        <x-tabler-building class="inline-block h-8 w-8 stroke-current" />
+                <div class="stats shadow text-center">
+                    <div class="stat">
+                        <div class="stat-figure text-blue-400">
+                            <x-tabler-briefcase class="inline-block h-8 w-8 stroke-current" />
+                        </div>
+                        <div class="stat-title">N° de Unidades Organicas</div>
+                        <div class="stat-value text-blue-400">{{ count($datos->empleados) }}</div>
                     </div>
-                    <div class="stat-title">N° de Unidades Organicas</div>
-                    <div class="stat-value text-blue-400">{{ count($datos->empleados) }}</div>
                 </div>
             </div>
         </div>
@@ -90,7 +92,7 @@
                 <tr class="">
                     <th class="p-2 text-center w-16">N°</th>
                     <th class="p-2 text-left">Apellidos y Nombres</th>
-                    <th class="p-2 text-right w-72">Unidad Orgánica</th>
+                    <th class="p-2 text-right w-72 pr-10">Unidad Orgánica</th>
                     <th class="p-2 text-center w-52">Firma</th>
                 </tr>
             </thead>
@@ -101,7 +103,7 @@
                         <td class="text-left p-2">
                             {{ $empleado->nombres }}
                         </td>
-                        <td class="text-right p-2">{{ $empleado->unidadOrganica }} </td>
+                        <td class="text-right p-2 pr-10">{{ $empleado->unidadOrganica }} </td>
                         <td class="text-center whitespace-nowrap p-2 relative">
                             <div class="absolute bottom-2 left-0 w-full border-b-2 "></div>
                         </td>
@@ -110,12 +112,4 @@
             </tbody>
         </table>
     </x-pdf.line-items>
-
-    <!-- Footer Notes -->
-    <x-pdf.bottom class="default-template-footer">
-        <p class="px-6">{{ $reportSettings->footer }}</p>
-        <span class="border-t-2 my-2 border-gray-300 block w-full"></span>
-        <h4 class="font-semibold px-6 mb-2">Observaciones</h4>
-        <p class="px-6 break-words line-clamp-4">dummy</p>
-    </x-pdf.bottom>
 </x-pdf.container>

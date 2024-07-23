@@ -1,3 +1,3 @@
-<div {{ $attributes->class(['inv-line-items my-6']) }}>
+<div {{ $attributes->class(['inv-line-items mt-6']) }}>
     {{ $slot }}
 </div>
