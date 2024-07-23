@@ -1,3 +1,5 @@
-<footer {{ $attributes->class(['inv-footer text-xs text-gray-600 dark:text-gray-300']) }}>
-    {{ $slot }}
-</footer>
+<!DOCTYPE html>
+<meta charset="utf-8">
+<div>
+    asds
+</div>
