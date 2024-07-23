@@ -1,6 +1,3 @@
-@php
-    $logo = \Storage::url($generalSettings->brand_logo);
-@endphp
 {!! $fontHtml !!}
 <style>
     .default-template-container * {
@@ -8,83 +5,89 @@
         /* margin-top: 1rem; */
         font-family: '{{ $fontFam }}', sans-serif;
     }
-
-    .tabla-metadata,
-    .tabla-metadata tr,
-    .tabla-metadata tbody,
-    .tabla-metadata td {
-        border: none;
-        font-size: 1.2rem;
-    }
-
-    .tabla-sesion,
-    .tabla-sesion tr,
-    .tabla-sesion tbody,
-    .tabla-sesion td {
-        border: none;
-        font-size: 1.2rem;
-    }
-
-    .tabla-datos td,
-    .tabla-datos th {
-        font-size: 1.2rem;
-        /* text-align: center; */
-        vertical-align: middle;
-        word-wrap: break-word;
-        /* Permite el ajuste de palabras largas */
-        word-break: break-all;
-        /* Permite el ajuste de palabras largas */
-        white-space: normal;
-        /* Permite el ajuste de texto */
-    }
 </style>
 <x-pdf.container class="default-template-container">
+    <x-pdf.metadata class="">
+        {{-- TITULO --}}
+        <div class="flex justify-center items-center">
+            <div class="text-center max-w-2xl">
+                <span class="text-3xl font-bold uppercase">{{ $reportSettings->header }}</span>
+                @if ($reportSettings->sub_header)
+                    <p>{{ $reportSettings->sub_header }}</p>
+                @endif
+            </div>
 
-    <x-pdf.metadata class="default-template-metadata">
-        <table class="tabla-metadata  w-full table-fixed">
-            <tbody>
-                <tr>
-                    <td class="py-2">
-                        <span class="text-3xl font-bold uppercase">{{ $reportSettings->header }}</span>
+        </div>
+        {{-- <!-- Datos de la capacitacion y el proveedor --> --}}
+        <div class="grid grid-cols-3 items-start mt-8 gap-x-3">
+            <div>
+                <p class="font-bold text-gray-800">
+                    Código :
+                </p>
+                <p class="">
+                    CODIGO1
+                </p>
+            </div>
 
-                    </td>
+            <div>
+                <p class="font-bold text-gray-800">
+                    Acción de la capacitacion:
+                </p>
+                <p class="">
+                    {{ $datos->evento->nombre_capacitacion }}
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores officia odit corporis nesciunt at
+                </p>
+            </div>
+            <div class="text-right">
+                <p class="font-bold text-gray-800">
+                    Proveedor :
+                </p>
+                <p class="">
+                    {{ $datos->evento->proveedor }}
+                </p>
+            </div>
+        </div>
 
-                    <td class="py-2 text-right">Fecha de la Sesión: {{ $datos->sesion->fecha }}</td>
-                </tr>
-                <tr>
-                    @if ($reportSettings->sub_header)
-                        <td class="py-2">
-                            <h2 class="text-sm text-gray-600 dark:text-gray-400">{{ $reportSettings->sub_header }}</h2>
-                        </td>
-                    @endif
-                </tr>
-            </tbody>
-        </table>
-        <hr class="uk-divider-icon">
-        {{-- DATOS DE LA SESION --}}
-        <table class="tabla-sesion table-fixed w-full">
-            <tbody>
-                <tr class="text-xl">
-                    <td class="py-2 font-semibold">Acción de la capacitacion:
-                        <span class="font-normal">{{ $datos->evento->nombre_capacitacion }}</span>
-                    </td>
-                    <td class="py-2 text-right font-semibold">Proveedor:
-                        <span class="font-normal"> {{ $datos->evento->proveedor }}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="py-2 font-semibold">Nro. de asistentes: <span class="font-normal"
-                            style="color: red">{{ count($datos->empleados) }}</span></td>
-                </tr>
-            </tbody>
-        </table>
+        {{-- STATS --}}
+        <div class="divider px-6">
+            <x-tabler-inner-shadow-bottom-right class="h-16 w-16" />
+        </div>
+        <div class="w-full grid grid-cols-3 items-start gap-x-3 ">
+            <div class="stats shadow text-center">
+                <div class="stat">
+                    <div class="stat-figure text-amber-400">
+                        <x-tabler-users class="inline-block h-8 w-8 stroke-current" />
+                    </div>
+                    <div class="stat-title">N° de participantes</div>
+                    <div class="stat-value text-amber-400">{{ count($datos->empleados) }}</div>
+                </div>
+            </div>
+            <div class="stats shadow text-center">
+                <div class="stat">
+                    <div class="stat-figure text-green-400">
+                        <x-tabler-building class="inline-block h-8 w-8 stroke-current" />
+                    </div>
+                    <div class="stat-title">N° de Unidades Organicas</div>
+                    <div class="stat-value text-green-400">{{ count($datos->empleados) }}</div>
+                </div>
+            </div>
+            <div class="stats shadow text-center">
+                <div class="stat">
+                    <div class="stat-figure text-blue-400">
+                        <x-tabler-building class="inline-block h-8 w-8 stroke-current" />
+                    </div>
+                    <div class="stat-title">N° de Unidades Organicas</div>
+                    <div class="stat-value text-blue-400">{{ count($datos->empleados) }}</div>
+                </div>
+            </div>
+        </div>
     </x-pdf.metadata>
 
     <!-- Line Items Table -->
     <x-pdf.line-items class="default-template-line-items">
-        <table class="tabla-datos w-full text-left table-fixed">
-            <thead class="text-sm leading-8 bg-purple-300">
-                <tr class="text-red">
+        <table class="table-fixed w-full">
+            <thead class="text-sm border-b-2">
+                <tr class="">
                     <th class="p-2 text-center w-16">N°</th>
                     <th class="p-2 text-left">Apellidos y Nombres</th>
                     <th class="p-2 text-right w-72">Unidad Orgánica</th>
@@ -99,7 +102,8 @@
                             {{ $empleado->nombres }}
                         </td>
                         <td class="text-right p-2">{{ $empleado->unidadOrganica }} </td>
-                        <td class="text-center whitespace-nowrap p-2" style="vertical-align: bottom">________________
+                        <td class="text-center whitespace-nowrap p-2 relative">
+                            <div class="absolute bottom-2 left-0 w-full border-b-2 "></div>
                         </td>
                     </tr>
                 @endforeach

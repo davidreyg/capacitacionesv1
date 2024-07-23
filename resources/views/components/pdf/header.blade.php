@@ -39,7 +39,7 @@
                 <td style="width: 350px">
                 </td>
                 <td class="text-left">
-                    <span style="font-size: 0.8rem">{{ $establecimiento }}</span>
+                    <span style="font-size: 15px"> {{ $establecimiento }}</span>
                 </td>
             </tr>
         </tbody>
