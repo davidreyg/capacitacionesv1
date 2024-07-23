@@ -2,6 +2,7 @@
 
 namespace App\Filament\Clusters\Settings\Pages;
 
+use App\Enums\Setting\Font;
 use App\Filament\Clusters\Settings;
 use App\Settings\GeneralSettings;
 use App\Settings\ReportSettings;
@@ -9,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
@@ -57,6 +59,16 @@ class ManageReport extends SettingsPage
                 Textarea::make('footer')
                     ->live()
                     ->nullable(),
+                Select::make('font')
+                    ->label('Tipo de letra')
+                    ->allowHtml()
+                    ->native(false)
+                    ->options(
+                        collect(Font::cases())
+                            ->mapWithKeys(static fn($case) => [
+                                $case->value => "<span style='font-family:{$case->getLabel()}'>{$case->getLabel()}</span>",
+                            ]),
+                    ),
                 // TODO: Mejorar el formato de image para cropear o ajustar.
                 FileUpload::make('logo')
                     ->openable()
