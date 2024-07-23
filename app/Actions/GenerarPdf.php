@@ -4,8 +4,8 @@ namespace App\Actions;
 
 use App\DTO\AsistenciaData;
 use App\Enums\Setting\ReportType;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Spatie\Browsershot\Browsershot;
 
 class GenerarPdf
 {
@@ -13,39 +13,35 @@ class GenerarPdf
 
     public function handle(ReportType $tipoReporte, AsistenciaData $data)
     {
+
         $html = view('components.layouts.pdf', ['current' => $tipoReporte->value, 'datos' => $data])->render();
-        $pdf_content = Browsershot::html($html)
-            ->timeout(50)
-            ->ignoreHttpsErrors()
-            ->landscape()
-            ->margins(5, 0, 5, 0)
-            ->setOption('newHeadless', true)
-            ->waitUntilNetworkIdle()
-            ->showBackground()
-            ->noSandbox();
-        if (config('app-pdf.node')) {
-            $pdf_content = $pdf_content->setNodeBinary(config('app-pdf.node'));
-        }
+        $pdf = SnappyPdf::loadView('components.layouts.pdf', ['current' => $tipoReporte->value, 'datos' => $data])
+            ->setPaper('A4', 'landscape')
+            ->setOption('encoding', 'UTF-8')
+            ->setOption('enable-javascript', true)
+            ->setOption('header-html', $this->header())
+            ->setOption('footer-html', $this->footer());
 
-        if (config('app-pdf.npm')) {
-            $pdf_content = $pdf_content->setNpmBinary(config('app-pdf.npm'));
-        }
+        return $pdf->inline('reporteasistencia');
+    }
 
-        if (config('app-pdf.modules')) {
-            $pdf_content = $pdf_content->setIncludePath(config('app-pdf.modules'));
-        }
+    private function header()
+    {
+        $logoPath = public_path('images/diris.png'); // Ruta a la imagen en el sistema de archivos
+        $logoData = base64_encode(file_get_contents($logoPath));
+        $logoBase64 = "data:image/jpg;base64,$logoData";
 
-        if (config('app-pdf.chrome')) {
-            $pdf_content = $pdf_content->setChromePath(config('app-pdf.chrome'));
-        }
+        $establecimiento = auth()->user()->load('establecimiento')->establecimiento->nombre;
+        return view('components.pdf.header', ['logoBase64' => $logoBase64, 'establecimiento' => $establecimiento])->render();
+    }
 
-        if (config('app-pdf.chrome_arguments')) {
-            $pdf_content = $pdf_content->addChromiumArguments(config('app-pdf.chrome_arguments'));
-        }
+    private function footer()
+    {
+        $logoPath = public_path('images/diris.png'); // Ruta a la imagen en el sistema de archivos
+        $logoData = base64_encode(file_get_contents($logoPath));
+        $logoBase64 = "data:image/jpg;base64,$logoData";
 
-        return response($pdf_content->pdf(), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="example.pdf"'
-        ]);
+        $establecimiento = auth()->user()->load('establecimiento')->establecimiento->nombre;
+        return view('components.pdf.footer', ['logoBase64' => $logoBase64, 'establecimiento' => $establecimiento])->render();
     }
 }
