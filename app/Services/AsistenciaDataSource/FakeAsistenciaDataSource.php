@@ -12,7 +12,7 @@ class FakeAsistenciaDataSource implements AsistenciaSourceInterface
     public function getData(int $sesionId): AsistenciaData
     {
         $sesion1 = new SesionData(1, 'Fake Session 1', '05-30-1998');
-        $evento1 = new EventoData('EVENTO1', 'Evento 1', '05-30-1998');
+        $evento1 = new EventoData('EVENTO1', 'Evento 1', 'Proveedor 1');
         $empleados = [];
         for ($i = 0; $i <= 20; $i++) {
             $empleados[] = new EmpleadoSesionData(
