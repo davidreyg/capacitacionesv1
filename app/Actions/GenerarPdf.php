@@ -4,7 +4,6 @@ namespace App\Actions;
 
 use App\DTO\AsistenciaData;
 use App\Enums\Setting\ReportType;
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use Gotenberg\Exceptions\GotenbergApiErrored;
 use Gotenberg\Gotenberg;
 use Gotenberg\Stream;
@@ -14,19 +13,10 @@ class GenerarPdf
 {
     use AsAction;
 
-    // TODO: ELIMINAR SNAPPY
+    // TODO: Al acceder con un usuario no autenticado debe botar error
     public function handle(ReportType $tipoReporte, AsistenciaData $data)
     {
-        // dd(vite('resources/css/pdf/pdf.css', hotServer: false, relative: false));
         $html = view('components.layouts.pdf', ['current' => $tipoReporte->value, 'datos' => $data])->render();
-        $pdf = SnappyPdf::loadView('components.layouts.pdf', ['current' => $tipoReporte->value, 'datos' => $data])
-            ->setPaper('A4', 'landscape')
-            ->setOption('encoding', 'UTF-8')
-            ->setOption('enable-javascript', true)
-            ->setOption('header-html', $this->header())
-            ->setOption('footer-html', $this->footer());
-
-
         $request = Gotenberg::chromium('http://gotenberg:3000')
             ->pdf()
             ->header(Stream::string('header.html', $this->header()))
@@ -54,7 +44,6 @@ class GenerarPdf
             echo $e->getTraceAsString();
             throw new \Exception($e->getMessage());
         }
-        // return $pdf->inline('reporteasistencia');
     }
 
     private function header()
@@ -69,11 +58,6 @@ class GenerarPdf
 
     private function footer()
     {
-        $logoPath = public_path('images/diris.png'); // Ruta a la imagen en el sistema de archivos
-        $logoData = base64_encode(file_get_contents($logoPath));
-        $logoBase64 = "data:image/jpg;base64,$logoData";
-
-        $establecimiento = auth()->user()->load('establecimiento')->establecimiento->nombre;
-        return view('components.pdf.footer', ['logoBase64' => $logoBase64, 'establecimiento' => $establecimiento])->render();
+        return view('components.pdf.footer')->render();
     }
 }

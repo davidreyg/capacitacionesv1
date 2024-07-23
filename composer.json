@@ -22,7 +22,6 @@
         "akaunting/laravel-money": "^5.2",
         "awcodes/filament-table-repeater": "^3.0",
         "aymanalhattami/filament-slim-scrollbar": "^2.0",
-        "barryvdh/laravel-snappy": "^1.0",
         "bezhansalleh/filament-exceptions": "^2.1",
         "bezhansalleh/filament-shield": "^3.2",
         "codeat3/blade-fluentui-system-icons": "^1.32",
