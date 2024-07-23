@@ -50,7 +50,7 @@ class ManageReport extends SettingsPage
                 TextInput::make('header')
                     ->live()
                     ->required(),
-                TextInput::make('subheader')
+                TextInput::make('sub_header')
                     ->live()
                     ->nullable(),
                 Textarea::make('terms')
