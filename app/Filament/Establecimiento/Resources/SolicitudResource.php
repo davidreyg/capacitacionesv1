@@ -23,6 +23,7 @@ class SolicitudResource extends Resource
     protected static ?string $pluralModelLabel = 'Mis Solicitudes';
     protected static ?string $navigationIcon = 'tabler-folder-open';
 
+    //TODO: Arreglar el dehydrated o simplemente cambiar la logica de guardado
     public static function form(Form $form): Form
     {
         return $form
@@ -30,6 +31,8 @@ class SolicitudResource extends Resource
                 Select::make('establecimiento_id')
                     ->default(auth()->user()->establecimiento_id)
                     ->relationship('establecimiento', 'nombre')
+                    ->disabled()
+                    ->dehydrated()
                     ->required()->columnSpanFull(),
                 ...static::buildCheckboxLists(),
                 Hidden::make('estado'),
