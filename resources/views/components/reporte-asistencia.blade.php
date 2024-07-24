@@ -51,37 +51,37 @@
         <div class="divider px-6">
             <x-tabler-inner-shadow-bottom-right class="h-16 w-16" />
         </div>
-        <div class="flex justify-center">
-            <div class="w-9/12 grid grid-cols-3 items-center gap-x-3 ">
-                <div class="stats shadow text-center">
-                    <div class="stat">
-                        <div class="stat-figure text-amber-400">
-                            <x-tabler-users class="inline-block h-8 w-8 stroke-current" />
-                        </div>
-                        <div class="stat-title">N° de participantes</div>
-                        <div class="stat-value text-amber-400">{{ count($datos->empleados) }}</div>
+        {{-- <div class="flex justify-center"> --}}
+        <div class="w-full grid grid-cols-3 items-center gap-x-3 ">
+            <div class="stats shadow text-center">
+                <div class="stat">
+                    <div class="stat-figure text-amber-400">
+                        <x-tabler-users class="inline-block h-8 w-8 stroke-current" />
                     </div>
+                    <div class="stat-title">N° de participantes</div>
+                    <div class="stat-value text-amber-400">{{ count($datos->empleados) }}</div>
                 </div>
-                <div class="stats shadow text-center">
-                    <div class="stat">
-                        <div class="stat-figure text-green-400">
-                            <x-tabler-building class="inline-block h-8 w-8 stroke-current" />
-                        </div>
-                        <div class="stat-title">N° de Unidades Organicas</div>
-                        <div class="stat-value text-green-400">{{ count($datos->empleados) }}</div>
+            </div>
+            <div class="stats shadow text-center">
+                <div class="stat">
+                    <div class="stat-figure text-green-400">
+                        <x-tabler-building class="inline-block h-8 w-8 stroke-current" />
                     </div>
+                    <div class="stat-title">N° de Unidades Organicas</div>
+                    <div class="stat-value text-green-400">{{ count($datos->empleados) }}</div>
                 </div>
-                <div class="stats shadow text-center">
-                    <div class="stat">
-                        <div class="stat-figure text-blue-400">
-                            <x-tabler-briefcase class="inline-block h-8 w-8 stroke-current" />
-                        </div>
-                        <div class="stat-title">N° de Unidades Organicas</div>
-                        <div class="stat-value text-blue-400">{{ count($datos->empleados) }}</div>
+            </div>
+            <div class="stats shadow text-center">
+                <div class="stat">
+                    <div class="stat-figure text-blue-400">
+                        <x-tabler-briefcase class="inline-block h-8 w-8 stroke-current" />
                     </div>
+                    <div class="stat-title">N° de Unidades Organicas</div>
+                    <div class="stat-value text-blue-400">{{ count($datos->empleados) }}</div>
                 </div>
             </div>
         </div>
+        {{-- </div> --}}
     </x-pdf.metadata>
 
     <!-- Line Items Table -->
