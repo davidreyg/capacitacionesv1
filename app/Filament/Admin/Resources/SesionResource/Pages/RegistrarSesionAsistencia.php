@@ -49,6 +49,7 @@ class RegistrarSesionAsistencia extends CustomPageRecord
         }
     }
 
+    // TODO: ESte boton debe ser visible solo con permiso!
     protected function generarAsistenciaAction(): Action
     {
         return Action::make('generarAsistencia')
