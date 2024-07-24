@@ -99,6 +99,7 @@ class EventoResource extends Resource
         return [
             'index' => Pages\ListEventos::route('/'),
             'view' => Pages\ViewEvento::route('/{record}'),
+            'sesions' => Pages\GestionarEventoSesions::route('/{record}/sesions'),
         ];
     }
 
@@ -116,7 +117,7 @@ class EventoResource extends Resource
     {
         return $page->generateNavigationItems([
             Pages\ViewEvento::class,
-            // Pages\GestionarMisEventosSesions::class,
+            Pages\GestionarEventoSesions::class,
         ]);
     }
 
