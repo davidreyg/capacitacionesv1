@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\SolicitudResource\Pages;
 
+use App\Actions\Solicitud\RegistrarSolicitudes;
 use App\Filament\Admin\Resources\SolicitudResource;
 use App\Models\Solicitud;
 use Filament\Actions;
@@ -17,13 +18,7 @@ class ManageSolicituds extends ManageRecords
             Actions\CreateAction::make()
                 ->databaseTransaction()
                 ->using(function (array $data, string $model): Solicitud {
-                    foreach ($data['capacitacion_ids'] as $capacitacion) {
-                        $model::create([
-                            'establecimiento_id' => $data['establecimiento_id'],
-                            'capacitacion_id' => $capacitacion,
-                            'estado' => $data['estado'],
-                        ]);
-                    }
+                    RegistrarSolicitudes::make()->handle($data, $model);
                     return $model::make();
                 })
         ];
