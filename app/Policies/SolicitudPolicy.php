@@ -4,6 +4,8 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Solicitud;
+use App\States\Solicitud\Aprobado;
+use App\States\Solicitud\Habilitado;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SolicitudPolicy
@@ -47,6 +49,9 @@ class SolicitudPolicy
      */
     public function delete(User $user, Solicitud $solicitud): bool
     {
+        if ($solicitud->estado->equals(Habilitado::class, Aprobado::class)) {
+            return false;
+        }
         return $user->can('delete_solicitud');
     }
 
