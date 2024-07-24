@@ -47,7 +47,7 @@ class GestionarEventoSesions extends ManageRelatedRecords
         return $table
             ->recordTitleAttribute('nombre')
             ->columns([
-                Tables\Columns\TextColumn::make('nombre'),
+                Tables\Columns\TextColumn::make('nombre')->wrap(),
             ])
             ->filters([
                 //

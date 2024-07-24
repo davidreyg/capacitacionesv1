@@ -21,6 +21,7 @@ class GenerarPdf
             ->pdf()
             ->header(Stream::string('header.html', $this->header()))
             ->footer(Stream::string('footer.html', $this->footer()))
+            ->paperSize(8.27, 11.7)
             ->landscape()
             ->margins('90px', '50px', '30px', '30px')
             ->printBackground()
@@ -35,7 +36,7 @@ class GenerarPdf
                 200,
                 [
                     'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => "attachment; filename=$FILENAME",
+                    'Content-Disposition' => "inline; filename=$FILENAME",
                 ]
             );
 
