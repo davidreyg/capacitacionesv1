@@ -53,7 +53,7 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
             ])
-            ->navigationGroups(['Gestion de Capacitaciones', 'Gestion de empleados'])
+            ->navigationGroups(['Gestion de capacitaciones', 'Gestion de empleados'])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
