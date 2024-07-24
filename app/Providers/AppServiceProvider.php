@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
+use BezhanSalleh\PanelSwitch\PanelSwitch;
 use Filament\Notifications\Notification;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
@@ -29,5 +30,10 @@ class AppServiceProvider extends ServiceProvider
         FilamentAsset::register([
             Js::make('TopNavigation', __DIR__ . '/../../resources/js/TopNavigation.js'),
         ]);
+        PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
+            $panelSwitch
+                ->excludes(fn() => (auth()->user()->isSuperAdmin()) ? [] : ['admin']);
+
+        });
     }
 }
