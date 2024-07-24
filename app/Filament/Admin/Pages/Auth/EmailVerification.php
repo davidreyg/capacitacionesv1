@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages\Auth;
+namespace App\Filament\Admin\Pages\Auth;
 
 use App\Settings\MailSettings;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
@@ -46,7 +46,7 @@ class EmailVerification extends EmailVerificationPrompt
 
                 $user = Filament::auth()->user();
 
-                if (! method_exists($user, 'notify')) {
+                if (!method_exists($user, 'notify')) {
                     $userClass = $user::class;
 
                     throw new Exception("Model [{$userClass}] does not have a [notify()] method.");
@@ -66,12 +66,12 @@ class EmailVerification extends EmailVerificationPrompt
             });
     }
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         return __('filament-panels::pages/auth/email-verification/email-verification-prompt.title');
     }
 
-    public function getHeading(): string | Htmlable
+    public function getHeading(): string|Htmlable
     {
         return __('filament-panels::pages/auth/email-verification/email-verification-prompt.heading');
     }

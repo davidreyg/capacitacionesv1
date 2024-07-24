@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages\Auth;
+namespace App\Filament\Admin\Pages\Auth;
 
 use App\Settings\MailSettings;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;

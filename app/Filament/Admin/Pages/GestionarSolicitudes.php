@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages;
+namespace App\Filament\Admin\Pages;
 
 use App\Models\Solicitud;
 use App\States\Solicitud\Aprobado;
