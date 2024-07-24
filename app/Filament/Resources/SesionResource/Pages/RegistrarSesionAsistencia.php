@@ -2,10 +2,14 @@
 
 namespace App\Filament\Resources\SesionResource\Pages;
 
+use App\Actions\GenerarPdf;
 use App\Actions\Sesion\GenerarAsistenciaPorSesion;
 use App\Concerns\CustomPageRecord;
+use App\Enums\Services\AsistenciaDataSourceType;
+use App\Enums\Setting\ReportType;
 use App\Filament\Resources\SesionResource;
 use App\Models\Sesion;
+use App\Services\AsistenciaDataSource\AsistenciaDataSourceFactory;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Guava\FilamentNestedResources\Concerns\NestedPage;
@@ -68,6 +72,19 @@ class RegistrarSesionAsistencia extends CustomPageRecord
         // dd($data, $this->asistencia);
         $this->record->empleados()->sync($this->asistencia);
         return $record;
+    }
+
+    function getHeaderActions(): array
+    {
+        return [
+            Action::make('imprimir')
+                ->label('Imprimir Formato')
+                ->url(fn(Sesion $record): string => route('preview-pdf', [
+                    'tipo_reporte' => AsistenciaDataSourceType::DATABASE,
+                    'sesion_id' => $record->id
+                ]))
+                ->openUrlInNewTab()
+        ];
     }
 
 

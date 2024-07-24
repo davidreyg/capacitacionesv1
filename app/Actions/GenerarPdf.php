@@ -13,7 +13,6 @@ class GenerarPdf
 {
     use AsAction;
 
-    // TODO: Al acceder con un usuario no autenticado debe botar error
     public function handle(ReportType $tipoReporte, AsistenciaData $data)
     {
         $html = view('components.layouts.pdf', ['current' => $tipoReporte->value, 'datos' => $data])->render();
