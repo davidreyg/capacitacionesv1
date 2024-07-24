@@ -74,12 +74,11 @@ class ResetApp extends Command
                     Artisan::call('cache:clear');
                     Artisan::call('clear-compiled');
                     Artisan::call('filament:clear-cached-components');
-                    if ($this->mediaTableExists()) {
-                        Artisan::call('media-library:clean --force');
-                    }
                     Artisan::call('settings:clear-discovered');
                     Artisan::call('settings:clear-cache');
-
+                    Artisan::call('db:wipe --force');
+                    Artisan::call('migrate --force');
+                    Artisan::call('media-library:clean --force');
                 },
                 'info' => '2. App clear successfully',
             ],
@@ -94,7 +93,7 @@ class ResetApp extends Command
             [
                 'message' => 'Wiping DB Data............',
                 'function' => function () {
-                    Artisan::call('db:wipe --force');
+                    // Artisan::call('db:wipe --force');
                 },
                 'info' => '4. Data wiped successfully',
             ],
@@ -120,35 +119,6 @@ class ResetApp extends Command
             ],
 
         );
-    }
-
-    /**
-     * Verificar si hay conexión a la base de datos.
-     *
-     * @return bool
-     */
-    function isDatabaseConnected()
-    {
-        try {
-            // Intentar obtener la instancia PDO
-            \DB::connection()->getPdo();
-            return true;
-        } catch (\Exception $ex) {
-            return false;
-        }
-    }
-
-    public function mediaTableExists(): bool
-    {
-        // Verificar la conexión a la base de datos
-        if (!$this->isDatabaseConnected()) {
-            // Verificar si la tabla 'media' existe
-            return false;
-        }
-        if (\Schema::hasTable('media')) {
-            return true;
-        }
-        return false;
     }
 }
 
