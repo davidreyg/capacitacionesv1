@@ -35,7 +35,6 @@
                 </p>
                 <p class="">
                     {{ $datos->evento->nombre_capacitacion }}
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores officia odit corporis nesciunt at
                 </p>
             </div>
             <div class="text-right">
