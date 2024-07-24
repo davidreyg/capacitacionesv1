@@ -6,6 +6,7 @@ use App\Enums\Setting\Font;
 use App\Filament\Clusters\Settings;
 use App\Settings\GeneralSettings;
 use App\Settings\ReportSettings;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
@@ -23,6 +24,7 @@ use Illuminate\Contracts\Support\Htmlable;
 
 class ManageReport extends SettingsPage
 {
+    use HasPageShield;
     protected static ?string $navigationIcon = 'tabler-file-type-pdf';
     protected static ?int $navigationSort = 2;
 
