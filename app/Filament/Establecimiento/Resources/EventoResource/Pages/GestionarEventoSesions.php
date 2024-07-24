@@ -57,7 +57,7 @@ class GestionarEventoSesions extends ManageRelatedRecords
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('asistencia')
                     ->icon('tabler-list-search')
                     ->visible(fn() => auth()->user()->can('attendance_sesion'))
