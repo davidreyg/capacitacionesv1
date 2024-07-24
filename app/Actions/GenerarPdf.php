@@ -17,6 +17,7 @@ class GenerarPdf
     public function handle(ReportType $tipoReporte, AsistenciaData $data)
     {
         $html = view('components.layouts.pdf', ['current' => $tipoReporte->value, 'datos' => $data])->render();
+        $FILENAME = 'formato_asistencia_' . now()->format('d_m_Y') . '.pdf';
         $request = Gotenberg::chromium('http://gotenberg:3000')
             ->pdf()
             ->header(Stream::string('header.html', $this->header()))
@@ -31,11 +32,11 @@ class GenerarPdf
         try {
             $response = Gotenberg::send($request);
             return response(
-                $response->getBody(),
+                $response->getBody()->getContents(),
                 200,
                 [
                     'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => 'inline; filename="xd"',
+                    'Content-Disposition' => "attachment; filename=$FILENAME",
                 ]
             );
 
