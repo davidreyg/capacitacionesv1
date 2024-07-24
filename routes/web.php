@@ -4,6 +4,7 @@ use App\Actions\GenerarPdf;
 use App\Enums\Setting\ReportType;
 use App\Services\AsistenciaDataSource\AsistenciaDataSourceFactory;
 use App\Enums\Services\AsistenciaDataSourceType;
+use Filament\Facades\Filament;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/preview-pdf', function (Request $request) {
+    if (!Filament::auth()->check()) {
+        abort(401, 'No estas autenticado con filament.');
+    }
     $sourceType = $request->query('tipo_reporte');
     $sesionId = $request->query('sesion_id');
     // Verifica si ambos parámetros están presentes
@@ -40,7 +44,7 @@ Route::get('/preview-pdf', function (Request $request) {
     // Genera el PDF y retorna la respuesta de descarga
     return GenerarPdf::make()->handle(ReportType::ASISTENCIA, $data);
 })
-    ->middleware(['auth.filament'])
+    // ->middleware(['auth.filament'])
     ->name('preview-pdf');
 
 Route::get('/asistencia', function () {
