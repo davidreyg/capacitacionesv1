@@ -9,4 +9,10 @@ use Filament\Resources\Pages\ViewRecord;
 class ViewEvento extends ViewRecord
 {
     protected static string $resource = EventoResource::class;
+    protected ?string $heading = 'Ver Evento';
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Ver Evento';
+    }
 }

@@ -12,16 +12,20 @@ use Filament\Forms;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Form;
 use Filament\Pages\SubNavigationPosition;
+use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Guava\FilamentNestedResources\Ancestor;
+use Guava\FilamentNestedResources\Concerns\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EventoResource extends Resource
 {
+    use NestedResource;
     protected static ?string $model = Evento::class;
     protected static ?string $modelLabel = 'Mis eventos';
     protected static ?string $navigationIcon = 'tabler-calendar-event';
@@ -35,7 +39,7 @@ class EventoResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return EventoResource::form($form);
+        return $form->schema([]);
     }
 
     public static function table(Table $table): Table
@@ -106,5 +110,18 @@ class EventoResource extends Resource
                     ->where('establecimiento_id', auth()->user()->establecimiento_id)
                     ->whereState('estado', Habilitado::class);
             });
+    }
+
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+            Pages\ViewEvento::class,
+            // Pages\GestionarMisEventosSesions::class,
+        ]);
+    }
+
+    public static function getAncestor(): ?Ancestor
+    {
+        return null;
     }
 }
