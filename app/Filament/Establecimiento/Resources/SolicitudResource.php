@@ -3,7 +3,6 @@
 namespace App\Filament\Establecimiento\Resources;
 
 use App\Filament\Establecimiento\Resources\SolicitudResource\Pages;
-use App\Filament\Establecimiento\Resources\SolicitudResource\RelationManagers;
 use App\Models\Capacitacion;
 use App\Models\Solicitud;
 use App\Models\TipoCapacitacion;
@@ -17,7 +16,6 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SolicitudResource extends Resource
 {
@@ -75,23 +73,7 @@ class SolicitudResource extends Resource
 
     public static function buildCheckboxLists(): array
     {
-        $checkBoxLists = [];
-        $tipoCapacitaciones = TipoCapacitacion::get();
-        foreach ($tipoCapacitaciones as $key => $tipoCapacitacion) {
-            $checkBoxLists[$key] = CheckboxList::make('capacitacion_ids')
-                ->label(function () use ($tipoCapacitacion) {
-                    return $tipoCapacitacion->nombre;
-                })
-                ->options(function () use ($tipoCapacitacion) {
-                    return Capacitacion::whereTipoCapacitacionId($tipoCapacitacion->id)
-                        ->get()
-                        ->mapWithKeys(fn(Capacitacion $capacitacion) => [$capacitacion->id => $capacitacion->nombre])
-                        ->toArray();
-                })
-                ->required()
-                ->columns(2);
-        }
-        return $checkBoxLists;
+        return \App\Filament\Admin\Resources\SolicitudResource::buildCheckboxLists();
     }
 
     public static function getPages(): array
