@@ -237,8 +237,9 @@ class EventoResource extends Resource implements HasShieldPermissions
                             ->schema([
                                 SpatieMediaLibraryFileUpload::make('silabo')
                                     ->label('Silabo')
+                                    ->acceptedFileTypes(['application/pdf'])
                                     // ->avatar()
-                                    ->collection('sesiones')
+                                    ->collection('silabo')
                                     // ->multiple()
                                     ->alignCenter()
                                     ->columnSpanFull(),
