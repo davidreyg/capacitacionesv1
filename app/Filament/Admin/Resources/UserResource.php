@@ -125,7 +125,7 @@ class UserResource extends Resource
                                     ->getOptionLabelFromRecordUsing(fn(Model $record) => Str::headline($record->name))
                                     ->multiple()
                                     ->preload()
-                                    ->maxItems(1)
+                                    // ->maxItems(1)
                                     ->native(false),
                             ])
                             ->compact(),

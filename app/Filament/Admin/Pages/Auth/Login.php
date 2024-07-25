@@ -43,7 +43,8 @@ class Login extends BasePage
             ->required()
             ->exists('users')
             ->autocomplete()
-            ->autofocus();
+            ->autofocus()
+            ->extraInputAttributes(['tabindex' => 1]);
     }
 
     protected function getCredentialsFromFormData(array $data): array
