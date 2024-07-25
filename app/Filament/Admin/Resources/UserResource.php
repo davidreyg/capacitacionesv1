@@ -3,6 +3,8 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\UserResource\Pages;
+use App\Models\Empleado;
+use App\Models\Establecimiento;
 use App\Models\User;
 use App\Settings\MailSettings;
 use Exception;
@@ -19,9 +21,11 @@ use Filament\Tables;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Wallo\FilamentSelectify\Components\ToggleButton;
 
 class UserResource extends Resource
 {
@@ -46,9 +50,48 @@ class UserResource extends Resource
                                     ->collection('avatars')
                                     ->alignCenter()
                                     ->columnSpanFull(),
-                                Forms\Components\Select::make('establecimiento_id')
-                                    ->relationship('establecimiento', 'nombre')
+                                ToggleButton::make('tipo_usuario')
+                                    ->label('Tipo de Usuario')
+                                    ->offColor('danger')
+                                    ->onColor('primary')
+                                    ->offLabel('Proveedor')
+                                    ->onLabel('Empleado')
+                                    ->visibleOn('create')
+                                    ->afterStateUpdated(fn($state, Forms\Set $set) => $state ? $set('proveedor_id', null) : $set('establecimiento_id', null))
+                                    ->dehydrated(false)
+                                    ->live(),
+                                Forms\Components\Select::make('proveedor_id')
+                                    ->relationship('proveedor', 'razon_social')
                                     ->searchable()
+                                    ->unique(ignoreRecord: true)
+                                    ->visible(fn(Forms\Get $get, ?User $record) => $record ? isset ($record->proveedor_id) : !$get('tipo_usuario'))
+                                    ->disabledOn('edit')
+                                    ->lazy()
+                                    ->required(),
+                                Forms\Components\Select::make('establecimiento_id')
+                                    ->label('Establecimiento')
+                                    ->options(fn() => Establecimiento::get()->pluck('nombre', 'id'))
+                                    ->visible(fn(Forms\Get $get, ?User $record) => $record ? isset ($record->empleado_id) : $get('tipo_usuario'))
+                                    ->afterStateUpdated(function (Forms\Set $set) {
+                                        $set('empleado_id', null);
+                                    })
+                                    ->searchable()
+                                    ->disabledOn('edit')
+                                    ->live()
+                                    ->lazy(),
+                                Forms\Components\Select::make('empleado_id')
+                                    ->label('Empleado')
+                                    ->options(function (?User $record, Forms\Get $get, Forms\Set $set) {
+                                        if (!empty($record) && empty($get('establecimiento_id'))) {
+                                            $set('establecimiento_id', $record->empleado->establecimiento_id);
+                                        }
+
+                                        return Empleado::where('establecimiento_id', $get('establecimiento_id'))->pluck('nombres', 'id');
+                                    })
+                                    ->unique('users', 'empleado_id', ignoreRecord: true)
+                                    ->searchable()
+                                    ->disabledOn('edit')
+                                    ->visible(fn(Forms\Get $get, ?User $record) => $record ? isset ($record->empleado_id) : $get('tipo_usuario'))
                                     ->lazy()
                                     ->required(),
                                 Forms\Components\TextInput::make('username')
@@ -145,11 +188,10 @@ class UserResource extends Resource
                     ->formatStateUsing(fn($state): string => Str::headline($state))
                     ->colors(['info'])
                     ->badge(),
-                Tables\Columns\TextColumn::make('establecimiento.nombre')
-                    ->searchable()
+                Tables\Columns\TextColumn::make('empleado.establecimiento.nombre')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
+                // Tables\Columns\TextColumn::make('email')
+                //     ->searchable(),
                 // Tables\Columns\TextColumn::make('email_verified_at')->label('Verified at')
                 //     ->dateTime()
                 //     ->sortable(),

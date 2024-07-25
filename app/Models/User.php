@@ -110,4 +110,17 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName, 
     {
         return $this->belongsTo(Proveedor::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Esto nunca deberia pasar!
+        static::saving(function ($model) {
+            if ((is_null($model->empleado_id) && is_null($model->proveedor_id)) || (!is_null($model->empleado_id) && !is_null($model->proveedor_id))) {
+                throw new \Exception('Un usuario debe ser o proveedor o empleado, pero no ambos ni ninguno.');
+            }
+        });
+    }
+
 }
