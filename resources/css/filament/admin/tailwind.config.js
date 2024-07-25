@@ -7,6 +7,7 @@ export default {
         "./resources/views/filament/**/*.blade.php",
         "./resources/views/infolists/**/*.blade.php",
         "./vendor/filament/**/*.blade.php",
+        './vendor/andrewdwallo/filament-selectify/resources/views/**/*.blade.php', // The package's vendor directory
     ],
     theme: {
         extend: {
