@@ -53,8 +53,9 @@ class GenerarPdf
         $logoData = base64_encode(file_get_contents($logoPath));
         $logoBase64 = "data:image/jpg;base64,$logoData";
 
-        $establecimiento = auth()->user()->load('establecimiento')->establecimiento->nombre;
-        return view('components.pdf.header', ['logoBase64' => $logoBase64, 'establecimiento' => $establecimiento])->render();
+        //FIXME: Quitamos esto por la reestructuracion
+        // $establecimiento = auth()->user()->load('establecimiento')->establecimiento->nombre;
+        return view('components.pdf.header', ['logoBase64' => $logoBase64])->render();
     }
 
     private function footer()

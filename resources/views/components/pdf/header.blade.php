@@ -39,7 +39,7 @@
                 <td style="width: 350px">
                 </td>
                 <td class="text-left">
-                    <span style="font-size: 15px"> {{ $establecimiento }}</span>
+                    <span style="font-size: 15px"> DIRIS SEDE ADMINISTRATIVA</span>
                 </td>
             </tr>
         </tbody>
