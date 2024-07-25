@@ -4,11 +4,12 @@ namespace App\Providers;
 
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use BezhanSalleh\PanelSwitch\PanelSwitch;
-use Filament\Notifications\Notification;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
-use Filament\Tables\Table;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,5 +38,10 @@ class AppServiceProvider extends ServiceProvider
                 ->excludes(fn() => (auth()->user()->isSuperAdmin()) ? [] : [config('app-roles.roles.diris')]);
 
         });
+
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::GLOBAL_SEARCH_BEFORE,
+            fn(): View => view('filament.hooks.header'),
+        );
     }
 }
