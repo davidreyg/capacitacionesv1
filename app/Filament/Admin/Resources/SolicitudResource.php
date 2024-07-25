@@ -36,7 +36,7 @@ class SolicitudResource extends Resource implements HasShieldPermissions
         return $form
             ->schema([
                 Select::make('establecimiento_id')
-                    ->default(auth()->user()->establecimiento_id)
+                    ->default(auth()->user()->empleado->establecimiento->id)
                     ->relationship('establecimiento', 'nombre')
                     ->required()->columnSpanFull(),
                 ...static::buildCheckboxLists(),
@@ -76,9 +76,7 @@ class SolicitudResource extends Resource implements HasShieldPermissions
 
     public static function getEloquentQuery(): Builder
     {
-        return auth()->user()->hasRole('super_admin')
-            ? parent::getEloquentQuery()
-            : parent::getEloquentQuery()->where('establecimiento_id', auth()->user()->establecimiento_id);
+        return parent::getEloquentQuery()->establecimientoManageable();
     }
 
     public static function buildCheckboxLists(): array

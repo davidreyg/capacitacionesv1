@@ -29,7 +29,7 @@ class SolicitudResource extends Resource
         return $form
             ->schema([
                 Select::make('establecimiento_id')
-                    ->default(auth()->user()->establecimiento_id)
+                    ->default(auth()->user()->empleado->establecimiento->id)
                     ->relationship('establecimiento', 'nombre')
                     ->disabled()
                     ->dehydrated()
@@ -71,7 +71,7 @@ class SolicitudResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('establecimiento_id', auth()->user()->establecimiento_id);
+        return parent::getEloquentQuery()->fromAuthEstablecimiento();
     }
 
     public static function buildCheckboxLists(): array

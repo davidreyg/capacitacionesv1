@@ -63,12 +63,12 @@ class EventoResource extends Resource
                 Action::make('inscribirAlumnos')
                     ->visible(fn() => auth()->user()->can('enroll_students_evento'))
                     ->fillForm(fn(Evento $record): array => [
-                        'empleado_ids' => $record->empleados()->where('establecimiento_id', auth()->user()->establecimiento_id)->pluck('empleado_id'),
+                        'empleado_ids' => $record->empleados()->fromAuthEstablecimiento()->pluck('empleado_id'),
                     ])
                     ->form([
                         CheckboxList::make('empleado_ids')
                             ->label('Alumnos')
-                            ->options(fn() => Empleado::whereEstablecimientoId(auth()->user()->establecimiento_id)->get()->pluck('nombres', 'id'))
+                            ->options(fn() => Empleado::fromAuthEstablecimiento()->pluck('nombres', 'id'))
                             ->searchable()
                             ->bulkToggleable()
                             ->required()
@@ -79,7 +79,7 @@ class EventoResource extends Resource
                     ->action(function (Action $action, array $data, Evento $record): void {
                         // Obtener los IDs de empleados seleccionados
                         $empleadosSeleccionados = $data['empleado_ids'];
-                        InscribirEmpleados::make()->handle($record, $empleadosSeleccionados, auth()->user()->establecimiento_id);
+                        InscribirEmpleados::make()->handle($record, $empleadosSeleccionados, auth()->user()->empleado->establecimiento_id);
                     }),
             ])
             ->bulkActions([
@@ -108,7 +108,7 @@ class EventoResource extends Resource
         return parent::getEloquentQuery()->withCount('empleados')
             ->whereHas('solicituds', function (Builder $query) {
                 $query
-                    ->where('establecimiento_id', auth()->user()->establecimiento_id)
+                    ->fromAuthEstablecimiento()
                     ->whereState('estado', Habilitado::class);
             });
     }

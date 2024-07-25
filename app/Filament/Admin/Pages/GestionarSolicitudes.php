@@ -28,19 +28,11 @@ class GestionarSolicitudes extends Page implements HasTable
     protected ?string $subheading = 'Se muestran las solicitudes aprobadas y asignadas a un evento.';
     protected static string $view = 'filament.pages.gestionar-solicitudes';
 
-    public array $establecimiento_ids;
-
-    public function mount()
-    {
-        $this->establecimiento_ids = auth()->user()->establecimiento->tipo === config('app-establecimiento.tipo_establecimiento.DIRIS')
-            ? auth()->user()->establecimiento->descendantsAndSelf()->pluck('id')->toArray()
-            : auth()->user()->establecimiento->children()->pluck('id')->toArray();
-    }
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(Solicitud::query()->whereIn('establecimiento_id', $this->establecimiento_ids))
+            ->query(Solicitud::query()->establecimientoManageable())
             ->columns([
                 TextColumn::make('establecimiento.nombre')->searchable(),
                 TextColumn::make('capacitacion.nombre')->wrap()->searchable(),

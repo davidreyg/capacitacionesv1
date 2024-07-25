@@ -30,9 +30,11 @@ class AppServiceProvider extends ServiceProvider
         FilamentAsset::register([
             Js::make('TopNavigation', __DIR__ . '/../../resources/js/TopNavigation.js'),
         ]);
+
+        //FIXME: En excludes va los id de los paneles o los roles?
         PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
             $panelSwitch
-                ->excludes(fn() => (auth()->user()->isSuperAdmin()) ? [] : ['admin']);
+                ->excludes(fn() => (auth()->user()->isSuperAdmin()) ? [] : [config('app-roles.roles.diris')]);
 
         });
     }
