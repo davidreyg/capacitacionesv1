@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\States\Solicitud\SolicitudState;
+use App\Traits\CheckUserType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\ModelStates\HasStates;
 
 class Solicitud extends Model
 {
     use HasStates;
+    use CheckUserType;
     public $timestamps = false;
     protected $fillable = ['establecimiento_id', 'capacitacion_id', 'estado'];
     protected $casts = [
@@ -43,5 +46,44 @@ class Solicitud extends Model
                 throw new \Exception('Ya existe una solicitud de este curso para este establecimiento en estado "solicitado".');
             }
         });
+    }
+
+    // SCOPES
+    public function scopeEstablecimientoManageable(Builder $query): void
+    {
+        // Verificar si es empleado
+        if ($this->isEmpleado()) {
+            $user = $this->getUser()->loadMissing(['empleado', 'empleado.establecimiento']);
+            $empleado = $user->empleado;
+
+            $establecimiento = $empleado->establecimiento;
+            $establecimientoIds = match (true) {
+                // Es DIRIS
+                $establecimiento->parent_id === null &&
+                $establecimiento->tipo === config('app-establecimiento.tipo_establecimiento.DIRIS') => Establecimiento::pluck('id')->toArray(),
+                // Es RIS
+                $establecimiento->parent &&
+                $establecimiento->parent->parent_id === null &&
+                $establecimiento->tipo === config('app-establecimiento.tipo_establecimiento.RIS') => Establecimiento::where('parent_id', $establecimiento->id)
+                    ->pluck('id')
+                    ->toArray(),
+                // Es ESTABLECIMIENTO
+                default => [$establecimiento->id],
+            };
+            $query->whereIn('establecimiento_id', $establecimientoIds);
+        }
+    }
+
+    public function scopeEstablecimientoOwned(Builder $query): void
+    {
+        if ($this->isEmpleado()) {
+            // Verificar si es empleado
+            $user = $this->getUser()->loadMissing(['empleado', 'empleado.establecimiento']);
+            if ($user->empleado) {
+                $empleado = $user->empleado;
+                $query->where('establecimiento_id', $empleado->establecimiento_id);
+            }
+
+        }
     }
 }
