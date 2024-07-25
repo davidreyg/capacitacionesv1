@@ -81,4 +81,9 @@ class Empleado extends Model
     {
         return $this->hasMany(Evaluacion::class);
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }

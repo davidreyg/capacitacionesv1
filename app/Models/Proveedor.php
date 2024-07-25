@@ -28,4 +28,12 @@ class Proveedor extends Model
     {
         return $this->belongsTo(TipoDocumento::class);
     }
+
+    //TODO: Aun falta realizar esta relacion
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
+
 }

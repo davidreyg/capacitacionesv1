@@ -15,10 +15,8 @@ return new class extends Migration {
             $table->string('username')->unique();
             $table->string('nombre_completo');
             $table->string('cargo');
-            $table->foreignId('establecimiento_id')->constrained();
-            // $table->string('username')->unique();
-            // $table->string('firstname');
-            // $table->string('lastname');
+            $table->foreignId('empleado_id')->unique()->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('proveedor_id')->unique()->nullable()->constrained()->nullOnDelete();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

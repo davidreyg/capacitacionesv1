@@ -35,7 +35,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName, 
         'nombre_completo',
         'cargo',
         'password',
-        'establecimiento_id',
+        'empleado_id',
+        'proveedor_id',
     ];
 
     /**
@@ -66,9 +67,9 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName, 
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() === 'admin') {
-            return $this->isSuperAdmin();
+            return $this->isSuperAdmin() || $this->hasRole([config('app-roles.roles.diris'), config('app-roles.roles.ris')]);
         } else if ($panel->getId() === 'establecimiento') {
-            return $this->isSuperAdmin() || $this->hasRole('establecimiento');
+            return $this->isSuperAdmin() || $this->empleado !== null;
         } else {
             return false;
         }
@@ -100,8 +101,13 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName, 
     }
 
     // RELACIONES
-    public function establecimiento()
+    public function empleado()
     {
-        return $this->belongsTo(Establecimiento::class);
+        return $this->belongsTo(Empleado::class);
+    }
+
+    public function proveedor()
+    {
+        return $this->belongsTo(Proveedor::class);
     }
 }

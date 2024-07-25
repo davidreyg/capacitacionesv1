@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             InitSeeder::class,
             RolesTableSeeder::class,
-            UsersTableSeeder::class,
-            EmpleadoSeeder::class,
+            SuperAdminAndAdminUserSeeder::class,
+            EmpleadoAndUserSeeder::class,
         ]);
 
         Artisan::call('shield:generate --all --ignore-existing-policies');
