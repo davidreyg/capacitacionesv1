@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\States\Solicitud\SolicitudState;
 use App\Traits\CheckUserType;
+use App\Traits\IsEstablecimientoOwned;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\ModelStates\HasStates;
@@ -11,17 +12,12 @@ use Spatie\ModelStates\HasStates;
 class Solicitud extends Model
 {
     use HasStates;
-    use CheckUserType;
+    use CheckUserType, IsEstablecimientoOwned;
     public $timestamps = false;
     protected $fillable = ['establecimiento_id', 'capacitacion_id', 'estado'];
     protected $casts = [
         'estado' => SolicitudState::class,
     ];
-
-    public function establecimiento()
-    {
-        return $this->belongsTo(Establecimiento::class);
-    }
 
     public function capacitacion()
     {
@@ -71,19 +67,6 @@ class Solicitud extends Model
                 default => [$establecimiento->id],
             };
             $query->whereIn('establecimiento_id', $establecimientoIds);
-        }
-    }
-
-    public function scopeEstablecimientoOwned(Builder $query): void
-    {
-        if ($this->isEmpleado()) {
-            // Verificar si es empleado
-            $user = $this->getUser()->loadMissing(['empleado', 'empleado.establecimiento']);
-            if ($user->empleado) {
-                $empleado = $user->empleado;
-                $query->where('establecimiento_id', $empleado->establecimiento_id);
-            }
-
         }
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\IsEstablecimientoOwned;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Empleado extends Model
 {
     use HasFactory;
+    use IsEstablecimientoOwned;
 
     protected $fillable = [
         'numero_documento',
@@ -32,11 +34,6 @@ class Empleado extends Model
     ];
 
     // Relaciones
-    public function establecimiento()
-    {
-        return $this->belongsTo(Establecimiento::class);
-    }
-
     public function unidadOrganica()
     {
         return $this->belongsTo(UnidadOrganica::class);
