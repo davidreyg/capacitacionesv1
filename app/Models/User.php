@@ -69,7 +69,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName, 
         if ($panel->getId() === 'admin') {
             return $this->isSuperAdmin() || $this->hasRole([config('app-roles.roles.diris'), config('app-roles.roles.ris')]);
         } else if ($panel->getId() === 'establecimiento') {
-            return $this->isSuperAdmin() || $this->empleado !== null;
+            return $this->empleado !== null;
         } else {
             return false;
         }
