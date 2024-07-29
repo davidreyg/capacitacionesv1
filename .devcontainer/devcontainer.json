@@ -24,7 +24,8 @@
 				"onecentlin.laravel-blade",
 				"codingyu.laravel-goto-view",
 				"ahinkle.laravel-model-snippets",
-				"shufo.vscode-blade-formatter"
+				"shufo.vscode-blade-formatter",
+				"onecentlin.laravel5-snippets"
 			],
 			"settings": {}
 		}
