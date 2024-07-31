@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\SaludOcupacional\Resources;
 
 use App\Enums\Notificacion\TipoAfectacion;
 use App\Enums\Notificacion\TipoNotificacion;
-use App\Filament\Admin\Resources\NotificacionResource\Pages;
-use App\Filament\Admin\Resources\NotificacionResource\RelationManagers;
+use App\Filament\SaludOcupacional\Resources\NotificacionResource\Pages;
+use App\Filament\SaludOcupacional\Resources\NotificacionResource\RelationManagers;
 use App\Models\Empleado;
 use App\Models\Notificacion;
 use Filament\Forms;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
@@ -140,7 +141,7 @@ class NotificacionResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('codigo'),
+                TextColumn::make('codigo')->wrap(),
                 TextColumn::make('fecha')->date(),
                 TextColumn::make('tipo_notificacion')->badge(),
             ])
@@ -149,12 +150,18 @@ class NotificacionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->fromAuthEstablecimientoThroughEmpleado();
     }
 
     public static function getRelations(): array

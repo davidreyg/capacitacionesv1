@@ -17,22 +17,19 @@ return new class extends Migration {
             $table->date('fecha');
             $table->time('hora');
             $table->string('lugar', 100);
-            $table->text('descripcion_situacion')->nullable();
-            $table->text('descripcion_lesion')->nullable();
+            $table->string('codigo', 100);
+            $table->text('descripcion_situacion');
+            $table->text('descripcion_lesion');
             $table->enum('tipo_notificacion', [TipoNotificacion::ACCIDENTE->value, TipoNotificacion::INCIDENTE->value]);
             $table->enum('tipo_afectacion', [TipoAfectacion::AMBIENTE->value, TipoAfectacion::TRABAJADOR->value]);
 
             $table->foreignId('empleado_id')->constrained();
 
-            $table->unsignedBigInteger('responsable_id');
-            $table->foreign('responsable_id')->references('id')->on('empleados');
+            // $table->unsignedBigInteger('responsable_id');
+            // $table->foreign('responsable_id')->references('id')->on('empleados');
 
             $table->unsignedBigInteger('reportante_id');
             $table->foreign('reportante_id')->references('id')->on('empleados');
-            $table->unsignedBigInteger('testigo1_id')->nullable();
-            $table->foreign('testigo1_id')->references('id')->on('empleados');
-            $table->unsignedBigInteger('testigo2_id')->nullable();
-            $table->foreign('testigo2_id')->references('id')->on('empleados');
             $table->timestamps();
         });
     }
