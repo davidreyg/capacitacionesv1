@@ -13,7 +13,7 @@ class GenerarPdf
 {
     use AsAction;
 
-    public function handle(ReportType $tipoReporte, AsistenciaData $data)
+    public function handle(ReportType $tipoReporte, object $data)
     {
         $html = view('components.layouts.pdf', ['current' => $tipoReporte->value, 'datos' => $data])->render();
         $FILENAME = 'formato_asistencia_' . now()->format('d_m_Y') . '.pdf';
@@ -22,7 +22,7 @@ class GenerarPdf
             ->header(Stream::string('header.html', $this->header()))
             ->footer(Stream::string('footer.html', $this->footer()))
             ->paperSize(8.27, 11.7)
-            ->landscape()
+            // ->landscape()
             ->margins('90px', '50px', '30px', '30px')
             ->printBackground()
             ->preferCssPageSize()

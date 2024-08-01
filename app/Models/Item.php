@@ -9,10 +9,15 @@ class Item extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['nombre'];
+    protected $fillable = ['nombre', 'grupo_item_id'];
 
     public function respuestas()
     {
         return $this->hasMany(Respuesta::class);
+    }
+
+    public function grupoItem()
+    {
+        return $this->belongsTo(GrupoItem::class);
     }
 }

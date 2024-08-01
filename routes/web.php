@@ -2,6 +2,7 @@
 
 use App\Actions\GenerarPdf;
 use App\Enums\Setting\ReportType;
+use App\Models\Evento;
 use App\Services\AsistenciaDataSource\AsistenciaDataSourceFactory;
 use App\Enums\Services\AsistenciaDataSourceType;
 use Filament\Facades\Filament;
@@ -46,6 +47,24 @@ Route::get('/preview-pdf', function (Request $request) {
 })
     // ->middleware(['auth.filament'])
     ->name('preview-pdf');
+
+Route::get('/ficha-capacitacion-pdf', function (Request $request) {
+    if (!Filament::auth()->check()) {
+        abort(401, 'No estas autenticado con filament.');
+    }
+    $sourceType = $request->query('tipo_reporte');
+    $eventoId = $request->query('evento_id');
+    // Verifica si ambos parámetros están presentes
+    if (!$sourceType || !$eventoId) {
+        abort(400, 'El tipo de reporte y la ID del evento son obligatorios');
+    }
+
+    $evento = Evento::findOrFail($eventoId);
+    // return view('components.layouts.pdf', ['current' => ReportType::FICHA_CAPACITACION->value, 'datos' => $evento])->render();
+    // Genera el PDF y retorna la respuesta de descarga
+    return GenerarPdf::make()->handle(ReportType::FICHA_CAPACITACION, $evento);
+})
+    ->name('ficha-capacitacion');
 
 Route::get('/asistencia', function () {
     $dataSource = AsistenciaDataSourceFactory::make(AsistenciaDataSourceType::FAKE);

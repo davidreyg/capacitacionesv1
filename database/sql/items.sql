@@ -1,11 +1,17 @@
+-- Insertar grupos de items
+INSERT INTO grupo_items (id, nombre) VALUES
+    (1, 'Grupo 1'),
+    (2, 'Grupo 2'),
+    (3, 'Grupo 3'),
+    (4, 'Grupo 4');
 -- Insertar items
-INSERT INTO items (id, nombre) VALUES
-    (1, 'Tipo de accion de capacitación'),
-    (2, 'Código de prioridad'),
-    (3, 'Beneficio de la accion de la capacitación'),
-    (4, 'Funciones de la accion de la capacitación'),
-    (5, 'Objetivo de la capacitación'),
-    (6, 'Acciones para aplicar lo aprendido');
+INSERT INTO items (id, nombre,grupo_item_id) VALUES
+    (1, 'Tipo de accion de capacitación',1),
+    (2, 'Código de prioridad',2),
+    (3, 'Beneficio de la accion de la capacitación',3),
+    (4, 'Funciones de la accion de la capacitación',3),
+    (5, 'Objetivo de la capacitación',3),
+    (6, 'Acciones para aplicar lo aprendido',4);
 
 -- Insertar respuestas con valores y item asociado
 INSERT INTO respuestas (id, nombre, item_id, valor) VALUES

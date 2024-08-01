@@ -33,6 +33,11 @@ class Empleado extends Model
         'funcion_id',
     ];
 
+    public function getNombreCompletoAttribute(): string
+    {
+        return "$this->apellido_paterno $this->apellido_materno, $this->nombres";
+    }
+
     // Relaciones
     public function unidadOrganica()
     {

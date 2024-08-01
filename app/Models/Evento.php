@@ -50,6 +50,7 @@ class Evento extends Model implements HasMedia
         'estado' => EventoState::class,
         'evaluacion_simple' => 'boolean',
         'libre' => 'boolean',
+        'fecha_inicio' => 'date',
     ];
 
     public function modalidad()

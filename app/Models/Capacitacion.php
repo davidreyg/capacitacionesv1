@@ -39,6 +39,11 @@ class Capacitacion extends Model
         return $this->belongsToMany(Nivel::class);
     }
 
+    public function respuestas()
+    {
+        return $this->belongsToMany(Respuesta::class);
+    }
+
     public function capacitacionRespuestas()
     {
         return $this->hasMany(CapacitacionRespuesta::class);
