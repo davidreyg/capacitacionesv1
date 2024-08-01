@@ -293,6 +293,13 @@ class EventoResource extends Resource implements HasShieldPermissions
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make()->label('Reprogramar'),
                     Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\Action::make('imprimir')
+                        ->label('Imprimir Ficha de Capacitación')
+                        ->icon('heroicon-o-printer')
+                        ->url(fn(Evento $record): string => route('ficha-capacitacion', [
+                            'evento_id' => $record->id
+                        ]))
+                        ->openUrlInNewTab(),
                 ])
             ])
             ->bulkActions([

@@ -52,11 +52,11 @@ Route::get('/ficha-capacitacion-pdf', function (Request $request) {
     if (!Filament::auth()->check()) {
         abort(401, 'No estas autenticado con filament.');
     }
-    $sourceType = $request->query('tipo_reporte');
+    // $sourceType = $request->query('tipo_reporte');
     $eventoId = $request->query('evento_id');
     // Verifica si ambos parámetros están presentes
-    if (!$sourceType || !$eventoId) {
-        abort(400, 'El tipo de reporte y la ID del evento son obligatorios');
+    if (!$eventoId) {
+        abort(400, 'El ID del evento son obligatorios');
     }
 
     $evento = Evento::findOrFail($eventoId);
