@@ -1,7 +1,7 @@
 {!! $fontHtml !!}
 <style>
     .default-template-container * {
-        /* font-size: 1.2rem; */
+        font-size: 0.7rem;
         /* margin-top: 1rem; */
         font-family: '{{ $fontFam }}', sans-serif;
     }
