@@ -35,7 +35,15 @@ class AppServiceProvider extends ServiceProvider
         //FIXME: En excludes va los id de los paneles o los roles?
         PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
             $panelSwitch
-                ->excludes(fn() => (auth()->user()->isSuperAdmin()) ? [] : [config('app-roles.roles.diris')]);
+                ->excludes(function (): array {
+                    // SI ES PROVEEDOR SOLO VE ESE PANEL DE PROVEEDOR
+                    if (auth()->user()->isProveedor()) {
+                        return ['admin', 'establecimiento', 'salud-ocupacional'];
+                    } else {
+                        return ['proveedor'];
+                    };
+                })
+                ->visible(fn() => auth()->user()->isEmpleado());
 
         });
 

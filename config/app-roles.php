@@ -15,6 +15,7 @@ return [
         "diris" => "diris",
         "ris" => "ris",
         "establecimiento" => "establecimiento",
+        "proveedor" => "proveedor",
     ],
 
 ];

@@ -10,7 +10,7 @@ trait CheckUserType
     {
         return $this->getUser()?->empleado !== null;
     }
-    public function isProvedor(): bool
+    public function isProveedor(): bool
     {
         return $this->getUser()?->proveedor !== null;
     }
