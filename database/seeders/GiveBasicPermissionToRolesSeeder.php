@@ -42,6 +42,17 @@ class GiveBasicPermissionToRolesSeeder extends Seeder
             'create_solicitud',
             'delete_solicitud',
         ]);
+        $rol4 = Role::findByName(config('app-roles.roles.proveedor'), $guard);
+        $rol4->givePermissionTo([
+            'enroll_students_evento',
+            'view_own_evento',
+            'view_evento',
+            'gestionar_evaluaciones_evento',
+
+            'view_any_sesion',
+            'view_sesion',
+            'subir_recursos_sesion',
+        ]);
 
     }
 }

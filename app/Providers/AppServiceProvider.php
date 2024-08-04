@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
                 ->excludes(function (): array {
                     // SI ES PROVEEDOR SOLO VE ESE PANEL DE PROVEEDOR
                     if (auth()->user()->isProveedor()) {
-                        return ['admin', 'establecimiento', 'salud-ocupacional'];
+                        return ['admin', 'establecimiento'];
                     } else {
                         return ['proveedor'];
                     };
