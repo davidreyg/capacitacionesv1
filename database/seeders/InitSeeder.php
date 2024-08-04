@@ -30,6 +30,7 @@ class InitSeeder extends Seeder
         $desplazamientos = base_path('database/sql/desplazamientos.sql');
         $regimen_laborales = base_path('database/sql/regimen_laborales.sql');
         $funciones = base_path('database/sql/funciones.sql');
+        $empleados = base_path('database/sql/empleados.sql');
 
         if (file_exists($items)) {
             $sql = file_get_contents($items);
@@ -93,6 +94,10 @@ class InitSeeder extends Seeder
         }
         if (file_exists($funciones)) {
             $sql = file_get_contents($funciones);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($empleados)) {
+            $sql = file_get_contents($empleados);
             \DB::unprepared($sql);
         }
     }

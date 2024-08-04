@@ -18,15 +18,16 @@ class ProveedorAndUserSeeder extends Seeder
     {
 
         // Obtener todos los establecimientos con sus nombres y tipos
-        Proveedor::get()->each(function (Proveedor $proveedor) {
+        $password = \Hash::make('password');
+        Proveedor::get()->each(function (Proveedor $proveedor) use ($password) {
             $user = $proveedor->user()->create([
-                'id' => (string) Str::uuid(),
+                // 'id' => (string) Str::uuid(),
                 'username' => $proveedor->numero_documento,
                 'nombre_completo' => $proveedor->razon_social,
                 'cargo' => "Proveedor",
                 'email' => $proveedor->correo,
                 'email_verified_at' => now(),
-                'password' => \Hash::make('password'), // o usa bcrypt('password')
+                'password' => $password, // o usa bcrypt('password')
             ]);
             $user->assignRole(config('app-roles.roles.proveedor'));
         });
