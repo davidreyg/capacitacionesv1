@@ -9,7 +9,7 @@
     }
 </style>
 <x-dynamic-component :component="$getEntryWrapperView()" :entry="$entry">
-    <div class="file-viewer p-4 space-y-4">
+    <div class="file-viewer p-4 gap-4">
         @foreach ($getState() as $media)
             <div
                 class="file-entry flex items-center p-4 border rounded-lg shadow-md bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
