@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filament\SaludOcupacional\Resources;
+namespace App\Filament\Establecimiento\Resources;
 
 use App\Enums\Notificacion\TipoAfectacion;
 use App\Enums\Notificacion\TipoNotificacion;
-use App\Filament\SaludOcupacional\Resources\NotificacionResource\Pages;
-use App\Filament\SaludOcupacional\Resources\NotificacionResource\RelationManagers;
+use App\Filament\Establecimiento\Resources\NotificacionResource\Pages;
+use App\Filament\Establecimiento\Resources\NotificacionResource\RelationManagers;
 use App\Models\Empleado;
 use App\Models\Notificacion;
 use Filament\Forms;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\SaludOcupacional\Resources\NotificacionResource\Pages;
+namespace App\Filament\Establecimiento\Resources\NotificacionResource\Pages;
 
-use App\Filament\SaludOcupacional\Resources\NotificacionResource;
+use App\Filament\Establecimiento\Resources\NotificacionResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
