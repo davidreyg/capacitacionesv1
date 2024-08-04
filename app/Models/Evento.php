@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Jobs\ProgramarInicioEventoJob;
+use App\States\Evento\Creado;
 use App\States\Evento\EventoState;
 use App\States\Solicitud\Solicitado;
+use Carbon\Carbon;
+use Illuminate\Bus\Dispatcher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -39,6 +43,7 @@ class Evento extends Model implements HasMedia
         "user_id",
         "reprogramador_id",
         "fecha_reprogramacion",
+        "job_id",
     ];
 
     /**
@@ -138,12 +143,43 @@ class Evento extends Model implements HasMedia
         return ($this->libre || $this->vacantes === null) ? 0 : $this->vacantes - $this->empleados_count;
     }
 
+    function programarInicio(bool $deletePreviousJob = false): void
+    {
+        // Solo se ejecutara el job si es que el evento esta CREADO si no simplemente no hacer nada.
+        if (!$this->estado->equals(Creado::class)) {
+            return;
+        }
+
+        if ($deletePreviousJob) {
+            \DB::table('jobs')->where('id', $this->job_id)->delete();
+            $this->job_id = null;
+        }
+        // Combinar fecha y hora para calcular el momento exacto
+        $fechaHoraInicio = Carbon::parse($this->fecha_inicio->format('Y-m-d') . ' ' . $this->hora_inicio);
+
+        // Calcula el retraso en segundos hasta la fecha y hora de inicio
+        $delay = $fechaHoraInicio->diffInSeconds(now());
+
+        // Despacha el job con el retraso
+        $job = (new ProgramarInicioEventoJob($this))->delay($delay);
+        $id = app(Dispatcher::class)->dispatch($job);
+        $this->job_id = $id;
+        $this->save();
+    }
+
     protected static function boot()
     {
         parent::boot();
 
+        static::created(function (Evento $evento) {
+            $evento->programarInicio();
+        });
+
         static::deleting(function (Evento $evento) {
+
+            \DB::table('jobs')->where('id', $evento->job_id)->delete();
             // Actualizar el estado de las solicitudes relacionadas
+
             $evento->solicituds->each(function (Solicitud $solicitud) {
                 $solicitud->estado->transitionTo(Solicitado::class);
             });

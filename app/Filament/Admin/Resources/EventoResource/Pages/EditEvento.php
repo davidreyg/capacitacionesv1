@@ -41,6 +41,7 @@ class EditEvento extends EditRecord
                 $solcitud->estado->transitionTo(Aprobado::class, $record->id);
             }
         }
+        $record->programarInicio(true);
         return $record;
     }
     protected function getRedirectUrl(): string
