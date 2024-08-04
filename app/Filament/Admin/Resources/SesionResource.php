@@ -58,7 +58,7 @@ class SesionResource extends Resource implements HasShieldPermissions
                 SpatieMediaLibraryFileUpload::make('media')
                     ->label('Recursos')
                     // ->avatar()
-                    ->collection('sesiones')
+                    ->collection('recursos')
                     ->multiple()
                     ->alignCenter()
                     ->columnSpanFull(),
@@ -111,7 +111,13 @@ class SesionResource extends Resource implements HasShieldPermissions
 
     public static function getPermissionPrefixes(): array
     {
-        return array_merge(config('filament-shield.permission_prefixes.resource'), ['attendance']);
+        return array_merge(
+            config('filament-shield.permission_prefixes.resource'),
+            [
+                'attendance',
+                'subir_recursos'
+            ]
+        );
     }
 
     public static function getAncestor(): ?Ancestor
