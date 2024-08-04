@@ -113,4 +113,12 @@ class SesionPolicy
     {
         return $user->can('attendance_sesion');
     }
+
+    /**
+     * Determine whether the user can subir recursos.
+     */
+    public function subirRecursos(User $user): bool
+    {
+        return $user->can('subir_recursos_sesion');
+    }
 }
