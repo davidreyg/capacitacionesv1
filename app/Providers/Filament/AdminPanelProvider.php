@@ -8,6 +8,7 @@ use App\Filament\Admin\Pages\Auth\RequestPasswordReset;
 use App\Http\Middleware\ConfigureCurrentPanel;
 use App\Http\Middleware\ForceHttps;
 use App\Livewire\MyProfileExtended;
+use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -104,7 +105,8 @@ class AdminPanelProvider extends PanelProvider
                                 'personal_info' => MyProfileExtended::class,
                             ]
                         ),
-                    \Hasnayeen\Themes\ThemesPlugin::make()
+                    \Hasnayeen\Themes\ThemesPlugin::make(),
+                    FilamentJobsMonitorPlugin::make(),
                 ]
             )
             ->spa();

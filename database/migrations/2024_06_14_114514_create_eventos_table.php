@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->tinyInteger('numero_horas')->unsigned();
             $table->boolean('evaluacion_simple');
             $table->string('estado');
+            $table->string('job_id')->index()->nullable();
 
             // Auditar reprogramacion
             $table->uuid('user_id');
