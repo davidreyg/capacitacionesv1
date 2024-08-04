@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             RolesTableSeeder::class,
             SuperAdminAndAdminUserSeeder::class,
             EmpleadoAndUserSeeder::class,
+            ProveedorAndUserSeeder::class,
         ]);
 
         Artisan::call('shield:generate --all --ignore-existing-policies');
