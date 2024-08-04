@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\CheckUserType;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasName;
@@ -23,6 +24,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName, 
     use InteractsWithMedia;
     use HasUuids, HasRoles;
     use HasApiTokens, HasFactory, Notifiable;
+    use CheckUserType;
 
     /**
      * The attributes that are mass assignable.
@@ -72,11 +74,11 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName, 
             return $this->empleado !== null;
         } else if ($panel->getId() === 'salud-ocupacional') {
             return $this->empleado !== null;
+        } else if ($panel->getId() === 'proveedor') {
+            return $this->empleado === null && $this->proveedor !== null;
         } else {
             return false;
         }
-
-        // return true;
     }
 
     public function getFilamentAvatarUrl(): ?string
@@ -123,6 +125,11 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName, 
                 throw new \Exception('Un usuario debe ser o proveedor o empleado, pero no ambos ni ninguno.');
             }
         });
+    }
+
+    function getUser()
+    {
+        return $this;
     }
 
 }

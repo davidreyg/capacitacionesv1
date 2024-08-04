@@ -44,10 +44,9 @@ class GestionarEventoEvaluacions extends Page
         return $form->schema([])->model($this->record);
     }
 
-    // TODO: Falta realizar este permiso!
     public static function canAccess($parameters = []): bool
     {
-        return true;
+        return auth()->user()->can('gestionar_evaluaciones_evento');
     }
 
     protected function generarEvaluacionAction(): Action

@@ -335,7 +335,15 @@ class EventoResource extends Resource implements HasShieldPermissions
 
     public static function getPermissionPrefixes(): array
     {
-        return array_merge(config('filament-shield.permission_prefixes.resource'), ['enroll_students', 'view_own']);
+        return array_merge(
+            config('filament-shield.permission_prefixes.resource'),
+            [
+                'enroll_students',
+                'view_own',
+                'gestionar_evaluaciones',
+                'gestionar_criterios',
+            ]
+        );
     }
 
     public static function getRecordSubNavigation(Page $page): array

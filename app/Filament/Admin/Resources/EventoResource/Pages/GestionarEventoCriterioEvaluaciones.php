@@ -36,10 +36,9 @@ class GestionarEventoCriterioEvaluaciones extends CustomPageRecord
         return 'Criterios de evaluación';
     }
 
-    // TODO: Falta realizar este permiso!
     public static function canAccess($parameters = []): bool
     {
-        return true;
+        return auth()->user()->can('gestionar_criterios_evento');
     }
 
 

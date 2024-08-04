@@ -124,4 +124,20 @@ class EventoPolicy
     {
         return $user->can('view_own_evento');
     }
+
+    /**
+     * Determine whether the user can gestionar evaluaciones.
+     */
+    public function gestionarEvaluaciones(User $user): bool
+    {
+        return $user->can('gestionar_evaluaciones_evento');
+    }
+
+    /**
+     * Determine whether the user can gestionar criterios.
+     */
+    public function gestionarCriterios(User $user): bool
+    {
+        return $user->can('gestionar_criterios_evento');
+    }
 }
