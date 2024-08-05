@@ -41,6 +41,10 @@ class EventoPolicy
      */
     public function update(User $user, Evento $evento): bool
     {
+        if (!$evento->estado->equals(Creado::class)) {
+            return false;
+        }
+
         if (isset($evento->fecha_reprogramacion)) {
             return false;
         }

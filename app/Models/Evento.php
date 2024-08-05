@@ -56,6 +56,7 @@ class Evento extends Model implements HasMedia
         'evaluacion_simple' => 'boolean',
         'libre' => 'boolean',
         'fecha_inicio' => 'date',
+        'fecha_fin' => 'date',
     ];
 
     public function modalidad()

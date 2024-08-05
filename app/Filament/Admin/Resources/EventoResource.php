@@ -350,6 +350,7 @@ class EventoResource extends Resource implements HasShieldPermissions
     {
         return $page->generateNavigationItems([
             Pages\EditEvento::class,
+            Pages\ViewEvento::class,
             Pages\GestionarEventoCriterioEvaluaciones::class,
             Pages\GestionarEventoSesions::class,
             Pages\GestionarEventoEvaluacions::class,
