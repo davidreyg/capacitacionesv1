@@ -15,8 +15,8 @@ class Login extends BasePage
         parent::mount();
 
         $this->form->fill([
-            'username' => 'superadmin',
-            'password' => 'superadmin',
+            'username' => 'diris',
+            'password' => 'diris',
         ]);
     }
 
