@@ -61,7 +61,7 @@ class GestionarEventoSesions extends ManageRelatedRecords
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\Action::make('subirRecursos')
                     ->icon('heroicon-m-arrow-up-tray')
-                    ->visible(fn() => auth()->user()->can('subir_recursos_sesion'))
+                    ->visible(fn(Sesion $record) => static::can('subirRecursos', $record))
                     ->fillForm(fn(Sesion $record): array => [
                         'media' => $record->getMediaCollection('recursos'),
                     ])

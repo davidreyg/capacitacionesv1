@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources\EventoResource\Pages;
 
 use App\Concerns\CustomPageRecord;
 use App\Filament\Admin\Resources\EventoResource;
+use App\Models\Evento;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Blade;
@@ -36,11 +37,15 @@ class GestionarEventoCriterioEvaluaciones extends CustomPageRecord
         return 'Criterios de evaluación';
     }
 
-    public static function canAccess($parameters = []): bool
+    protected function authorizeAccess(): void
     {
-        return auth()->user()->can('gestionar_criterios_evento');
+        abort_unless(static::getResource()::can('gestionarCriterios', $this->record), 403);
     }
 
+    public static function shouldRegisterNavigation(array $parameters = []): bool
+    {
+        return static::getResource()::can('gestionarCriterios', $parameters['record']);
+    }
 
     public function form(Form $form): Form
     {

@@ -4,6 +4,9 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Sesion;
+use App\States\Evento\Creado;
+use App\States\Evento\Finalizado;
+use App\States\Evento\Iniciado;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SesionPolicy
@@ -39,6 +42,9 @@ class SesionPolicy
      */
     public function update(User $user, Sesion $sesion): bool
     {
+        if (!$sesion->evento->estado->equals(Iniciado::class)) {
+            return false;
+        }
         return $user->can('update_sesion');
     }
 
@@ -47,6 +53,9 @@ class SesionPolicy
      */
     public function delete(User $user, Sesion $sesion): bool
     {
+        if (!$sesion->evento->estado->equals(Creado::class)) {
+            return false;
+        }
         return $user->can('delete_sesion');
     }
 
@@ -109,16 +118,22 @@ class SesionPolicy
     /**
      * Determine whether the user can reorder.
      */
-    public function attendance(User $user): bool
+    public function attendance(User $user, Sesion $sesion): bool
     {
+        if (!$sesion->evento->estado->equals(Iniciado::class)) {
+            return false;
+        }
         return $user->can('attendance_sesion');
     }
 
     /**
      * Determine whether the user can subir recursos.
      */
-    public function subirRecursos(User $user): bool
+    public function subirRecursos(User $user, Sesion $sesion): bool
     {
+        if (!$sesion->evento->estado->equals(Iniciado::class)) {
+            return false;
+        }
         return $user->can('subir_recursos_sesion');
     }
 }

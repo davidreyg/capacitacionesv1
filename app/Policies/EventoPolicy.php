@@ -4,6 +4,8 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Evento;
+use App\States\Evento\Creado;
+use App\States\Evento\Iniciado;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class EventoPolicy
@@ -50,6 +52,9 @@ class EventoPolicy
      */
     public function delete(User $user, Evento $evento): bool
     {
+        if (!$evento->estado->equals(Creado::class)) {
+            return false;
+        }
         return $user->can('delete_evento');
     }
 
@@ -112,8 +117,11 @@ class EventoPolicy
     /**
      * Determine whether the user can enroll students.
      */
-    public function enrollStudents(User $user): bool
+    public function enrollStudents(User $user, Evento $evento): bool
     {
+        if (!$evento->estado->equals(Creado::class)) {
+            return false;
+        }
         return $user->can('enroll_students_evento');
     }
 
@@ -128,16 +136,22 @@ class EventoPolicy
     /**
      * Determine whether the user can gestionar evaluaciones.
      */
-    public function gestionarEvaluaciones(User $user): bool
+    public function gestionarEvaluaciones(User $user, Evento $evento): bool
     {
+        if (!$evento->estado->equals(Iniciado::class)) {
+            return false;
+        }
         return $user->can('gestionar_evaluaciones_evento');
     }
 
     /**
      * Determine whether the user can gestionar criterios.
      */
-    public function gestionarCriterios(User $user): bool
+    public function gestionarCriterios(User $user, Evento $evento): bool
     {
+        if (!$evento->estado->equals(Creado::class)) {
+            return false;
+        }
         return $user->can('gestionar_criterios_evento');
     }
 }

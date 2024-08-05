@@ -31,10 +31,9 @@ class EventoResource extends Resource
     protected static ?string $navigationIcon = 'tabler-calendar-event';
     protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
-    // Este permiso es para que solo los superusuarios puedan ver TODOS LOS EVENTOS.
     public static function canAccess(): bool
     {
-        return auth()->user()->can('view_own_evento');
+        return static::can('viewOwn');
     }
 
     public static function form(Form $form): Form
@@ -61,7 +60,7 @@ class EventoResource extends Resource
             ])
             ->actions([
                 Action::make('inscribirAlumnos')
-                    ->visible(fn() => auth()->user()->can('enroll_students_evento'))
+                    ->visible(fn(Evento $record) => static::can('enrollStudents', $record))
                     ->fillForm(fn(Evento $record): array => [
                         'empleado_ids' => $record->empleados()->fromAuthEstablecimiento()->pluck('empleado_id'),
                     ])

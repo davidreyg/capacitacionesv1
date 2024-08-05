@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources\EventoResource\Pages;
 use App\Filament\Admin\Resources\EventoResource;
 use App\Filament\Admin\Resources\SesionResource\Pages\RegistrarSesionAsistencia;
 use App\Models\Sesion;
+use App\States\Evento\Finalizado;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -60,7 +61,7 @@ class GestionarEventoSesions extends ManageRelatedRecords
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('asistencia')
                     ->icon('tabler-list-search')
-                    ->visible(fn() => auth()->user()->can('attendance_sesion'))
+                    ->visible(fn(Sesion $record) => static::can('attendance', $record))
                     ->url(fn(Sesion $record): string => RegistrarSesionAsistencia::getUrl(['record' => $record])),
 
             ])
@@ -69,6 +70,11 @@ class GestionarEventoSesions extends ManageRelatedRecords
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    protected function canCreate(): bool
+    {
+        return $this->can('create') && !$this->getRecord()->estado->equals(Finalizado::class);
     }
 
     public static function getEloquentQuery(): Builder

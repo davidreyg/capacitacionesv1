@@ -4,6 +4,7 @@ namespace App\Filament\Establecimiento\Resources\EventoResource\Pages;
 
 use App\Filament\Establecimiento\Resources\EventoResource;
 use App\Filament\Establecimiento\Resources\SesionResource\Pages\RegistrarSesionAsistencia;
+use App\Models\Evento;
 use App\Models\Sesion;
 use Filament\Actions;
 use Filament\Forms;
@@ -14,6 +15,7 @@ use Filament\Tables\Table;
 use Guava\FilamentNestedResources\Concerns\NestedPage;
 use Guava\FilamentNestedResources\Concerns\NestedRelationManager;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class GestionarEventoSesions extends ManageRelatedRecords
@@ -60,7 +62,7 @@ class GestionarEventoSesions extends ManageRelatedRecords
                 // Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('asistencia')
                     ->icon('tabler-list-search')
-                    ->visible(fn() => auth()->user()->can('attendance_sesion'))
+                    ->visible(fn(Sesion $record) => static::can('attendance', $record))
                     ->url(fn(Sesion $record): string => RegistrarSesionAsistencia::getUrl(['record' => $record])),
 
             ])
