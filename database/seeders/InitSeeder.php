@@ -31,6 +31,8 @@ class InitSeeder extends Seeder
         $regimen_laborales = base_path('database/sql/regimen_laborales.sql');
         $funciones = base_path('database/sql/funciones.sql');
         $empleados = base_path('database/sql/empleados.sql');
+        // NOTIFICACIONES
+        $scat = base_path('database/sql/SCAT.sql');
 
         if (file_exists($items)) {
             $sql = file_get_contents($items);
@@ -98,6 +100,10 @@ class InitSeeder extends Seeder
         }
         if (file_exists($empleados)) {
             $sql = file_get_contents($empleados);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($scat)) {
+            $sql = file_get_contents($scat);
             \DB::unprepared($sql);
         }
     }
