@@ -39,6 +39,7 @@
         "jeffgreco13/filament-breezy": "^2.2",
         "laravel/framework": "^10.10",
         "laravel/octane": "^2.4",
+        "laravel/reverb": "^1.0",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "league/commonmark": "^2.4",

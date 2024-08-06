@@ -36,7 +36,7 @@ class AdminPanelProvider extends PanelProvider
             ->globalSearch(false)
             ->passwordReset(RequestPasswordReset::class)
             ->emailVerification(EmailVerification::class)
-            ->databaseNotifications()->databaseNotificationsPolling('30s')
+            ->databaseNotifications()->databaseNotificationsPolling(null)
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->sidebarCollapsibleOnDesktop()
             ->viteTheme('resources/css/filament/admin/theme.css')

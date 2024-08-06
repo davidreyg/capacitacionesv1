@@ -6,6 +6,8 @@ use App\Models\Evento;
 use App\Services\AsistenciaDataSource\AsistenciaDataSourceFactory;
 use App\Enums\Services\AsistenciaDataSourceType;
 use Filament\Facades\Filament;
+use Filament\Notifications\Events\DatabaseNotificationsSent;
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -69,4 +71,15 @@ Route::get('/ficha-capacitacion-pdf', function (Request $request) {
 Route::get('/asistencia', function () {
     $dataSource = AsistenciaDataSourceFactory::make(AsistenciaDataSourceType::FAKE);
     return view('components.layouts.pdf', ['current' => ReportType::ASISTENCIA->value, 'datos' => $dataSource->getData(1)])->render();
+});
+Route::get('/test', function () {
+
+    $recipient = auth()->user();
+
+    Notification::make()
+        ->title('Saved successfully')
+        ->sendToDatabase($recipient);
+    event(new DatabaseNotificationsSent($recipient));
+    return dd(auth()->user());
+    // return view('components.layouts.pdf', ['current' => ReportType::ASISTENCIA->value, 'datos' => $dataSource->getData(1)])->render();
 });
