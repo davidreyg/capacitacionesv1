@@ -149,6 +149,7 @@ class NotificacionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('evaluar')->url(fn(Notificacion $record) => Pages\EvaluarNotificacion::getUrl(['record' => $record])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -170,6 +171,7 @@ class NotificacionResource extends Resource
             'index' => Pages\ListNotificacions::route('/'),
             'create' => Pages\CreateNotificacion::route('/create'),
             'edit' => Pages\EditNotificacion::route('/{record}/edit'),
+            'evaluar-notificacion' => Pages\EvaluarNotificacion::route('/{record}/evaluar'),
         ];
     }
 }
