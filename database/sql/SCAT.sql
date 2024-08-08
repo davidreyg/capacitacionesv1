@@ -207,6 +207,190 @@ INSERT INTO causa_basicas (id, nombre, parent_id) VALUES
 (159, 'Intencional', 158),
 (160, 'No Intencional', 158);
 
+-- Inserciones en la tabla nac con jerarquía
+INSERT INTO nacs (id, nombre, parent_id, level) VALUES 
+-- Nivel 1
+(1, 'Liderazgo y Administración', NULL, '1'),
+(2, 'Política General', 1, '1.1'),
+(3, 'Coordinador del Programa', 1, '1.2'),
+(4, 'Participación de Gerencia Superior y Media', 1, '1.3'),
+(5, 'Estándares de Desempeño Gerencial', 1, '1.4'),
+(6, 'Participación de Gerencia', 1, '1.5'),
+(7, 'Presentación en Reuniones de Gerencia', 1, '1.6'),
+(8, 'Manual de Referencia de Gerencia', 1, '1.7'),
+(9, 'Realización de Auditorías de Gerencia', 1, '1.8'),
+(10, 'Responsabilidad Individual de Seguridad y Salud/Control de Pérdidas en Descripciones de Puestos', 1, '1.9'),
+(11, 'Establecimiento de Objetivos Anuales de Seguridad y Salud/Control de Pérdidas', 1, '1.10'),
+(12, 'Comités Conjuntos de Seguridad y Salud y/o Delegados de Seguridad y Salud', 1, '1.11'),
+(13, 'Negativa a trabajar debido al Procedimiento de Peligros de Seguridad y Salud', 1, '1.12'),
+(14, 'Biblioteca de Referencia', 1, '1.13'),
+
+-- Nivel 2
+(15, 'Entrenamiento de Gerencia', NULL, '2'),
+(16, 'Programa de Orientación/ Inducción de Gerencia', 15, '2.1'),
+(17, 'Entrenamiento Formal Inicial del Personal de Gerencia Superior', 15, '2.2'),
+(18, 'Revisión Formal y Entrenamiento Actualizado del Personal de Gerencia Superior', 15, '2.3'),
+(19, 'Entrenamiento Inicial Formal para Personal de Gerencia Media y Supervisores', 15, '2.4'),
+(20, 'Revisión Formal y Entrenamiento Actualizado del Personal de Gerencia Media y Supervisores', 15, '2.5'),
+(21, 'Entrenamiento Formal del Coordinador del Programa', 15, '2.6'),
+
+-- Nivel 3
+(22, 'Inspecciones Planificadas', NULL, '3'),
+(23, 'Inspecciones Generales Planificadas', 22, '3.1'),
+(24, 'Procedimientos de Seguimiento', 22, '3.2'),
+(25, 'Análisis de Informe de Inspección', 22, '3.3'),
+(26, 'Programa de Inspección de Piezas/Rubros Críticos', 22, '3.4'),
+(27, 'Programa de Mantenimiento Preventivo', 22, '3.5'),
+(28, 'Inspección Previa al uso de Equipo Móvil y de Manipulación de Materiales', 22, '3.6'),
+(29, 'Sistema de Informe de Condiciones Alternas', 22, '3.7'),
+(30, 'Mantenimiento del Informe de Inspección General Planificada', 22, '3.8'),
+(31, 'Monitoreo Regular del Programa', 22, '3.9'),
+
+-- Nivel 4
+(32, 'Análisis y Procedimientos de Tareas', NULL, '4'),
+(33, 'Directiva de Gerencia sobre la Importancia', 32, '4.1'),
+(34, 'Inventario de Tareas Críticas', 32, '4.2'),
+(35, 'Objetivos de Análisis de Tareas y Procedimientos de Tareas', 32, '4.3'),
+(36, 'Análisis y Procedimientos de Tareas Efectuados para Tareas Críticas y Actualizados Periódicamente', 32, '4.4'),
+(37, 'Peligros de Seguridad y Salud en los Análisis y Procedimientos de Tareas Críticas', 32, '4.5'),
+(38, 'Monitoreo Regular del Programa', 32, '4.6'),
+
+-- Nivel 5
+(39, 'Investigación de Accidente / Incidente', NULL, '5'),
+(40, 'Procedimiento de investigación de Accidente/Incidente', 39, '5.1'),
+(41, 'Alcance e Investigaciones establecidos', 39, '5.2'),
+(42, 'Seguimiento y Medidas de Corrección', 39, '5.3'),
+(43, 'Utilización de Anuncio de Accidente Mayor', 39, '5.4'),
+(44, 'Uso de Información de Alto Potencial de Incidente', 39, '5.5'),
+(45, 'Participación de la Gerencia de Operaciones', 39, '5.6'),
+(46, 'Informe e Investigación de Incidentes', 39, '5.7'),
+(47, 'Mantenimiento de Informes de Accidente/Incidente', 39, '5.8'),
+(48, 'Monitoreo Periódico del Programa', 39, '5.9'),
+
+-- Nivel 6
+(49, 'Observación de Tareas', NULL, '6'),
+(50, 'Directiva de Gerencia sobre su Importancia', 49, '6.1'),
+(51, 'Programa Completo de Observación de Tareas', 49, '6.2'),
+(52, 'Nivel de Observación Completa de Tareas', 49, '6.3'),
+(53, 'Programa de Observación de Tareas Parciales', 49, '6.4'),
+(54, 'Análisis de Informe de Observación de Tareas', 49, '6.5'),
+(55, 'Monitoreo Periódico del Programa', 49, '6.6'),
+
+-- Nivel 7
+(56, 'Preparación para Emergencias', NULL, '7'),
+(57, 'Coordinador Designado', 56, '7.1'),
+(58, 'Plan de Emergencia por Escrito', 56, '7.2'),
+(59, 'Entrenamiento de Primeros Auxilios para Supervisor', 56, '7.3'),
+(60, 'Entrenamiento de Primeros Auxilios para el Personal (10%)', 56, '7.4'),
+(61, 'Iluminación y Energía de Emergencia Adecuadas', 56, '7.5'),
+(62, 'Controles Principales con Código de Color y Rotulados', 56, '7.6'),
+(63, 'Equipo de Protección y de Rescate', 56, '7.7'),
+(64, 'Entrenamiento y Ejercicios del Equipo de Emergencia', 56, '7.8'),
+(65, 'Asistentes de Primeros Auxilios Calificados', 56, '7.9'),
+(66, 'Ayuda Exterior y Auxilio Mutuo Organizados', 56, '7.10'),
+(67, 'Protección de Registros Vitales', 56, '7.11'),
+(68, 'Planificación para Etapa Posterior al Evento', 56, '7.12'),
+(69, 'Se provee Comunicación de Emergencia', 56, '7.13'),
+(70, 'Comunicaciones de Seguridad Pública Planificadas', 56, '7.14'),
+
+-- Nivel 8
+(71, 'Reglamentos de la Compañía', NULL, '8'),
+(72, 'Reglamento General de Seguridad y Salud', 71, '8.1'),
+(73, 'Reglamento de Trabajo Especializado', 71, '8.2'),
+(74, 'Sistemas de Permiso de Trabajo y Procedimientos Especiales', 71, '8.3'),
+(75, 'Programa de Educación y Revisión del Reglamento', 71, '8.4'),
+(76, 'Esfuerzo de Cumplimiento del Reglamento', 71, '8.5'),
+(77, 'Uso de Símbolos Educativos y Código de Colores', 71, '8.6'),
+(78, 'Monitoreo Periódico del Programa', 71, '8.7'),
+
+-- Nivel 9
+(79, 'Análisis de Accidente / Incidente', NULL, '9'),
+(80, 'Cálculo y Uso de Estadísticas de Desempeño', 79, '9.1'),
+(81, 'Análisis de Lesiones y Enfermedades Ocupacionales', 79, '9.2'),
+(82, 'Identificación y Análisis de Daños a la Propiedad y Equipo', 79, '9.3'),
+(83, 'Equipos de Proyecto para Solución de Problemas', 79, '9.4'),
+(84, 'Análisis de Incidentes (Cuasi accidentes)', 79, '9.5'),
+
+-- Nivel 10
+(85, 'Entrenamiento del Personal', NULL, '10'),
+(86, 'Análisis de Necesidades de Entrenamiento', 85, '10.1'),
+(87, 'Programa de Entrenamiento del Personal', 85, '10.2'),
+(88, 'Evaluación del Programa de Entrenamiento', 85, '10.3'),
+
+-- Nivel 11
+(89, 'Equipo de Protección Personal', NULL, '11'),
+(90, 'Estándares para Equipo de Protección Personal', 89, '11.1'),
+(91, 'Registros de Equipo de Protección Personal', 89, '11.2'),
+(92, 'Cumplimiento de Estándares', 89, '11.3'),
+(93, 'Monitoreo Periódico del Programa', 89, '11.4'),
+
+-- Nivel 12
+(94, 'Control de la Salud', NULL, '12'),
+(95, 'Identificación de Peligros para la Salud', 94, '12.1'),
+(96, 'Control de Peligros de la Salud', 94, '12.2'),
+(97, 'Información / Entrenamiento / Educación', 94, '12.3'),
+(98, 'Monitoreo de Higiene Industrial', 94, '12.4'),
+(99, 'Programa de Mantenimiento de la Salud', 94, '12.5'),
+(100, 'Asistencia Médica Profesional', 94, '12.6'),
+(101, 'Comunicaciones de Salud a los Trabajadores', 94, '12.7'),
+(102, 'Mantenimiento de Registros', 94, '12.8'),
+
+-- Nivel 13
+(103, 'Sistema de Evaluación del Programa', NULL, '13'),
+(104, 'Auditoría Completa del Cumplimiento de Estándares del Programa', 103, '13.1'),
+(105, 'Auditoría Completa del Cumplimiento de Estándares de Condiciones Físicas', 103, '13.2'),
+(106, 'Auditoría Completa del Cumplimiento de Estándares de Prevención y Control de Incendios', 103, '13.3'),
+(107, 'Auditoría Completa del Cumplimiento de Estándares de Salud Ocupacional', 103, '13.4'),
+(108, 'Registro de Sistemas de Evaluación de Programa', 103, '13.5'),
+
+-- Nivel 14
+(109, 'Controles de Ingeniería', NULL, '14'),
+(110, 'Consideraciones de Seguridad y Salud de Ingeniería de Diseño en la Concepción y el Diseño', 109, '14.1'),
+(111, 'Consideraciones de Seguridad y Salud de Ingeniería de Proceso en la Concepción y el Diseño', 109, '14.2'),
+(112, 'Monitoreo Periódico del Programa', 109, '14.3'),
+
+-- Nivel 15
+(113, 'Comunicaciones al Personal', NULL, '15'),
+(114, 'Entrenamiento en Técnicas de Comunicación al Personal', 113, '15.1'),
+(115, 'Orientación / Inducción de Trabajo para Personal Nuevo/Transferido', 113, '15.2'),
+(116, 'Entrenamiento y Uso Adecuado de Instrucción de Tarea', 113, '15.3'),
+
+-- Nivel 16
+(117, 'Reuniones Grupales', NULL, '16'),
+(118, 'Realización de Reuniones Grupales', 117, '16.1'),
+(119, 'Registro del Asunto, Ayudas Visuales, Asistencia y Problemas Tratados', 117, '16.2'),
+(120, 'Participación de la Gerencia Superior y Media', 117, '16.3'),
+(121, 'Monitoreo Periódico del Programa', 117, '16.4'),
+
+-- Nivel 17
+(122, 'Promoción General', NULL, '17'),
+(123, 'Programa de Periódico Mural de Seguridad', 122, '17.1'),
+(124, 'Uso de Estadísticas y Hechos del Programa', 122, '17.2'),
+(125, 'Promoción de Temas Críticos', 122, '17.3'),
+(126, 'Uso de Premios o Reconocimiento', 122, '17.4'),
+(127, 'Publicaciones de Información el Programa', 122, '17.5'),
+(128, 'Promoción del Desempeño en Grupo', 122, '17.6'),
+(129, 'Promoción del Orden y la Limpieza', 122, '17.7'),
+(130, 'Registros de Actividades de Promoción del Programa', 122, '17.8'),
+
+-- Nivel 18
+(131, 'Contratación y Colocación de Personal', NULL, '18'),
+(132, 'Análisis de la Capacidad Física', 131, '18.1'),
+(133, 'Examen Médico Pre-Ocupacional', 131, '18.2'),
+(134, 'Programa de Orientación / Inducción General', 131, '18.3'),
+(135, 'Verificación de Calificaciones Previa a la Contratación y Colocación', 131, '18.4'),
+
+-- Nivel 19
+(136, 'Controles de Compra', NULL, '19'),
+(137, 'Compras Incluyen la Seguridad y Salud en las Especificaciones y Logística', 136, '19.1'),
+(138, 'Selección y Control de Contratistas', 136, '19.2'),
+
+-- Nivel 20
+(139, 'Seguridad Fuera del Trabajo', NULL, '20'),
+(140, 'Establecimiento de Sistema de Informes y Análisis de Estadísticas', 139, '20.1'),
+(141, 'Comunicación de Información de Seguridad Fuera del Trabajo', 139, '20.2');
+
+
 -- Inserciones en la tabla intermedia tipo_contacto_causa_inmediata
 INSERT INTO tipo_contacto_causa_inmediata (tipo_contacto_id, causa_inmediata_id) VALUES
 (1, 1), (1, 2), (1, 4), (1, 5), (1, 12), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18), (1, 19), (1, 26),
@@ -221,31 +405,78 @@ INSERT INTO tipo_contacto_causa_inmediata (tipo_contacto_id, causa_inmediata_id)
 
 -- Inserciones en la tabla intermedia causa_inmediata_causa_basica
 INSERT INTO causa_inmediata_causa_basica (causa_inmediata_id, causa_basica_id) VALUES
-(1, 2), (1, 3), (1, 4), (1, 5), (1, 7), (1, 8), (1, 12), (1, 13), (1, 15),
-(2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 8), (2, 9), (2, 12), (2, 13), (2, 15),
-(3, 2), (3, 3), (3, 4), (3, 5), (3, 6), (3, 7), (3, 8), (3, 9), (3, 12), (3, 13), (3, 15),
-(4, 2), (4, 3), (4, 4), (4, 5), (4, 6), (4, 7), (4, 8), (4, 9), (4, 11), (4, 12), (4, 13), (4, 15),
-(5, 2), (5, 3), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (5, 12), (5, 13), (5, 15),
-(6, 2), (6, 3), (6, 4), (6, 5), (6, 6), (6, 7), (6, 8), (6, 9), (6, 10), (6, 11), (6, 12), (6, 13), (6, 14), (6, 15),
-(7, 2), (7, 3), (7, 4), (7, 5), (7, 7), (7, 8), (7, 10), (7, 12), (7, 13), (7, 14), (7, 15),
-(8, 2), (8, 3), (8, 4), (8, 5), (8, 6), (8, 7), (8, 9), (8, 11), (8, 12), (8, 13), (8, 14), (8, 15),
-(9, 1), (9, 2), (9, 3), (9, 4), (9, 5), (9, 6), (9, 7), (9, 8), (9, 9), (9, 11), (9, 12), (9, 13), (9, 15),
-(10, 1), (10, 2), (10, 3), (10, 4), (10, 5), (10, 6), (10, 7), (10, 8), (10, 9), (10, 11), (10, 12), (10, 13), (10, 15),
-(11, 1), (11, 2), (11, 3), (11, 4), (11, 5), (11, 6), (11, 7), (11, 8), (11, 9), (11, 12), (11, 13), (11, 15),
-(12, 2), (12, 3), (12, 4), (12, 5), (12, 6), (12, 7), (12, 8), (12, 9), (12, 12), (12, 13), (12, 15),
-(13, 2), (13, 3), (13, 4), (13, 5), (13, 7), (13, 8), (13, 13), (13, 15),
-(14, 2), (14, 3), (14, 4), (14, 5), (14, 7), (14, 8), (14, 13), (14, 15),
-(15, 1), (15, 2), (15, 3), (15, 4), (15, 5), (15, 6), (15, 7), (15, 8), (15, 9), (15, 10), (15, 12), (15, 13), (15, 15),
-(16, 5), (16, 7), (16, 8), (16, 9), (16, 10), (16, 11), (16, 12), (16, 13), (16, 15),
-(17, 5), (17, 7), (17, 8), (17, 9), (17, 10), (17, 12), (17, 13),
-(18, 8), (18, 9), (18, 10), (18, 11), (18, 12), (18, 13), (18, 14), (18, 15),
-(19, 8), (19, 9), (19, 13),
-(20, 8), (20, 9), (20, 10), (20, 11), (20, 12), (20, 13),
-(21, 5), (21, 6), (21, 7), (21, 8), (21, 9), (21, 10), (21, 11), (21, 12), (21, 13), (21, 15),
-(22, 5), (22, 6), (22, 7), (22, 8), (22, 9), (22, 10), (22, 11), (22, 12), (22, 13), (22, 15),
-(23, 5), (23, 6), (23, 7), (23, 8), (23, 9), (23, 10), (23, 11), (23, 12), (23, 13), (23, 14),
-(24, 5), (24, 6), (24, 7), (24, 8), (24, 9), (24, 10), (24, 11), (24, 12), (24, 13), (24, 14),
-(25, 1), (25, 2), (25, 3), (25, 8), (25, 9), (25, 11), (25, 12),
-(26, 8), (26, 9), (26, 10), (26, 11), (26, 12), (26, 13),
-(27, 8), (27, 9), (27, 10), (27, 11), (27, 12), (27, 13),
-(28, 8), (28, 9), (28, 10), (28, 11), (28, 12), (28, 13);
+(1, 13), (1, 37), (1, 48), (1, 60), (1, 75), (1, 122), (1, 130), (1, 154),
+(2, 1), (2, 13), (2, 25), (2, 37), (2, 48), (2, 54), (2, 60), (2, 75), (2, 89), (2, 122), (2, 130), (2, 154),
+(3, 13), (3, 25), (3, 37), (3, 48), (3, 54), (3, 60), (3, 75), (3, 89), (3, 122), (3, 130), (3, 154),
+(4, 13), (4, 25), (4, 37), (4, 48), (4, 54), (4, 60), (4, 75), (4, 89), (4, 111), (4, 122), (4, 130), (4, 154),
+(5, 13), (5, 25), (5, 37), (5, 48), (5, 54), (5, 60), (5, 75), (5, 89), (5, 122), (5, 130), (5, 154),
+(6, 13), (6, 25), (6, 37), (6, 48), (6, 54), (6, 60), (6, 75), (6, 89), (6, 98), (6, 111), (6, 122), (6, 130), (6, 146), (6, 154),
+(7, 13), (7, 25), (7, 37), (7, 48), (7, 60), (7, 75), (7, 98), (7, 122), (7, 130), (7, 154),
+(8, 1), (8, 13), (8, 25), (8, 37), (8, 48), (8, 60), (8, 75), (8, 89), (8, 122), (8, 130), (8, 154),
+(9, 1), (9, 13), (9, 25), (9, 37), (9, 48), (9, 54), (9, 60), (9, 75), (9, 89), (9, 98), (9, 111), (9, 122), (9, 130), (9, 154),
+(10, 1), (10, 13), (10, 25), (10, 37), (10, 48), (10, 54), (10, 60), (10, 75), (10, 89), (10, 98), (10, 111), (10, 122), (10, 130), (10, 154),
+(11, 1), (11, 13), (11, 25), (11, 37), (11, 48), (11, 54), (11, 60), (11, 75), (11, 89), (11, 111), (11, 122), (11, 130), (11, 154),
+(12, 13), (12, 25), (12, 37), (12, 48), (12, 54), (12, 60), (12, 75), (12, 89), (12, 122), (12, 130), (12, 154),
+(13, 13), (13, 25), (13, 37), (13, 75), (13, 89), (13, 130), (13, 154),
+(14, 13), (14, 25), (14, 37), (14, 75), (14, 89), (14, 130), (14, 154),
+(15, 1), (15, 13), (15, 25), (15, 37), (15, 48), (15, 54), (15, 60), (15, 75), (15, 89), (15, 98), (15, 111), (15, 122), (15, 130), (15, 154),
+(16, 13), (16, 60), (16, 75), (16, 89), (16, 98), (16, 111), (16, 122), (16, 130), (16, 154),
+(17, 13), (17, 60), (17, 75), (17, 89), (17, 98), (17, 111), (17, 122), (17, 130),
+(18, 1), (18, 13), (18, 25), (18, 75), (18, 89), (18, 98), (18, 111), (18, 122), (18, 130), (18, 146), (18, 154),
+(19, 75), (19, 89), (19, 98), (19, 122), (19, 130), (19, 154),
+(20, 75), (20, 89), (20, 98), (20, 111), (20, 122), (20, 130),
+(21, 1), (21, 13), (21, 25), (21, 37), (21, 48), (21, 54), (21, 60), (21, 75), (21, 89), (21, 98), (21, 111), (21, 122), (21, 130), (21, 154),
+(22, 1), (22, 13), (22, 25), (22, 37), (22, 48), (22, 54), (22, 60), (22, 75), (22, 89), (22, 98), (22, 111), (22, 122), (22, 130), (22, 154),
+(23, 1), (23, 13), (23, 25), (23, 37), (23, 48), (23, 54), (23, 60), (23, 75), (23, 89), (23, 98), (23, 111), (23, 122), (23, 130), (23, 146),
+(24, 1), (24, 13), (24, 25), (24, 37), (24, 48), (24, 54), (24, 60), (24, 75), (24, 89), (24, 98), (24, 111), (24, 122), (24, 130), (24, 146),
+(25, 1), (25, 75), (25, 89), (25, 111), (25, 122),
+(26, 75), (26, 89), (26, 98), (26, 111), (26, 122), (26, 130),
+(27, 75), (27, 89), (27, 98), (27, 111), (27, 122), (27, 130),
+(28, 75), (28, 89), (28, 98), (28, 111), (28, 122), (28, 130);
+
+-- Inserciones en la tabla intermedia causa_basica_nac
+INSERT INTO causa_basica_nac (causa_basica_id, nac_id) VALUES 
+-- Capacidad Física / Fisiológica Inadecuada
+(1, 1), (1, 49), (1, 79), (1, 94), (1, 113), (1, 139),
+
+-- Capacidad Mental/Psicológica Inadecuada
+(13, 49), (13, 79), (13, 85), (13, 113), (13, 139),
+
+-- Tensión Física o Fisiológica
+(25, 32), (25, 49), (25, 79), (25, 94), (25, 103), (25, 109), (25, 113), (25, 131), (25, 139),
+
+-- Tensión Mental o Psicológica
+(37, 1), (37, 32), (37, 39), (37, 49), (37, 85), (37, 94), (37, 103), (37, 113), (37, 117), (37, 131), (37, 139),
+
+-- Falta de Conocimientos
+(48, 15), (48, 32), (48, 39), (48, 49), (48, 56), (48, 71), (48, 79), (48, 85), (48, 94), (48, 103), (48, 109), (48, 113), (48, 117), (48, 131), (48, 139),
+
+-- Falta de Habilidad
+(54, 15), (54, 32), (54, 39), (54, 49), (54, 56), (54, 79), (54, 85), (54, 103), (54, 113), (54, 131),
+
+-- Motivación Incorrecta
+(60, 1), (60, 15), (60, 32), (60, 39), (60, 49), (60, 71), (60, 85), (60, 89), (60, 103), (60, 113), (60, 122), (60, 131),
+
+-- Liderazgo y/o Supervisión Inadecuados
+(75, 1), (75, 15), (75, 22), (75, 32), (75, 39), (75, 49), (75, 71), (75, 79), (75, 85), (75, 89), (75, 94), (75, 103), (75, 109), (75, 113), (75, 117), (75, 122), (75, 131),
+
+-- Ingeniería Inadecuada
+(89, 1), (89, 22), (89, 32), (89, 79), (89, 94), (89, 103), (89, 109),
+
+-- Compras Inadecuadas
+(98, 1), (98, 22), (98, 32), (98, 49), (98, 79), (98, 94), (98, 103), (98, 109), (98, 113), (98, 136),
+
+-- Mantenimiento Inadecuado
+(111, 1), (111, 22), (111, 32), (111, 49), (111, 79), (111, 85), (111, 103), (111, 113), (111, 136),
+
+-- Herramientas y Equipo Inadecuados
+(122, 1), (122, 22), (122, 32), (122, 49), (122, 56), (122, 79), (122, 89), (122, 94), (122, 103), (122, 109), (122, 113), (122, 136),
+
+-- Estándares de Trabajo Inadecuados
+(130, 1), (130, 15), (130, 22), (130, 32), (130, 39), (130, 49), (130, 56), (130, 71), (130, 79), (130, 85), (130, 89), (130, 103), (130, 109), (130, 113), (130, 117), (130, 136),
+
+-- Desgaste Excesivo
+(146, 22), (146, 32), (146, 49), (146, 79), (146, 85), (146, 103), (146, 109), (146, 113),
+
+-- Abuso o Mal Uso
+(154, 1), (154, 22), (154, 32), (154, 49), (154, 71), (154, 79), (154, 85), (154, 89), (154, 103), (154, 109), (154, 113), (154, 117), (154, 122), (154, 136);
