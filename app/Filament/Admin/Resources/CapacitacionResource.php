@@ -170,6 +170,7 @@ class CapacitacionResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nombre')
+                    ->wrap()
                     ->searchable(),
                 Tables\Columns\IconColumn::make('activo')
                     ->boolean(),
