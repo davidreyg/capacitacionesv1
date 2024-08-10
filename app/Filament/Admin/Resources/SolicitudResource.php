@@ -52,6 +52,7 @@ class SolicitudResource extends Resource implements HasShieldPermissions
 
             ->columns([
                 TextColumn::make('capacitacion.nombre')
+                    ->wrap()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('establecimiento.nombre')

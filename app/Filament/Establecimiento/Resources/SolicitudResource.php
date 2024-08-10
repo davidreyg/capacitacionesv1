@@ -45,6 +45,7 @@ class SolicitudResource extends Resource
 
             ->columns([
                 TextColumn::make('capacitacion.nombre')
+                    ->wrap()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('establecimiento.nombre')
