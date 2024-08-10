@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Jobs\ProgramarInicioEventoJob;
+use App\Jobs\IniciarEventoJob;
 use App\States\Evento\Creado;
 use App\States\Evento\EventoState;
 use App\States\Solicitud\Solicitado;
@@ -43,7 +43,7 @@ class Evento extends Model implements HasMedia
         "user_id",
         "reprogramador_id",
         "fecha_reprogramacion",
-        "job_id",
+        "inicio_job_id",
     ];
 
     /**
@@ -152,8 +152,8 @@ class Evento extends Model implements HasMedia
         }
 
         if ($deletePreviousJob) {
-            \DB::table('jobs')->where('id', $this->job_id)->delete();
-            $this->job_id = null;
+            \DB::table('jobs')->where('id', $this->inicio_job_id)->delete();
+            $this->inicio_job_id = null;
         }
         // Combinar fecha y hora para calcular el momento exacto
         $fechaHoraInicio = Carbon::parse($this->fecha_inicio->format('Y-m-d') . ' ' . $this->hora_inicio);
@@ -162,9 +162,9 @@ class Evento extends Model implements HasMedia
         $delay = $fechaHoraInicio->diffInSeconds(now());
 
         // Despacha el job con el retraso
-        $job = (new ProgramarInicioEventoJob($this))->delay($delay);
-        $id = app(Dispatcher::class)->dispatch($job);
-        $this->job_id = $id;
+        $inicio_job = (new IniciarEventoJob($this))->delay($delay);
+        $id = app(Dispatcher::class)->dispatch($inicio_job);
+        $this->inicio_job_id = $id;
         $this->save();
     }
 
@@ -178,7 +178,7 @@ class Evento extends Model implements HasMedia
 
         static::deleting(function (Evento $evento) {
 
-            \DB::table('jobs')->where('id', $evento->job_id)->delete();
+            \DB::table('jobs')->where('id', $evento->inicio_job_id)->delete();
             // Actualizar el estado de las solicitudes relacionadas
 
             $evento->solicituds->each(function (Solicitud $solicitud) {
