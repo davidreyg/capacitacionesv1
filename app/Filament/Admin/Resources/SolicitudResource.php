@@ -14,6 +14,7 @@ use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -24,6 +25,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\HtmlString;
 
 class SolicitudResource extends Resource implements HasShieldPermissions
 {
@@ -41,7 +43,7 @@ class SolicitudResource extends Resource implements HasShieldPermissions
                     ->required()->columnSpanFull(),
                 ...static::buildCheckboxLists(),
                 Hidden::make('estado'),
-            ]);
+            ])->columns(2);
     }
 
     public static function table(Table $table): Table
@@ -84,18 +86,19 @@ class SolicitudResource extends Resource implements HasShieldPermissions
         $checkBoxLists = [];
         $tipoCapacitaciones = TipoCapacitacion::get();
         foreach ($tipoCapacitaciones as $key => $tipoCapacitacion) {
-            $checkBoxLists[$key] = CheckboxList::make('capacitacion_ids')
-                ->label(function () use ($tipoCapacitacion) {
-                    return $tipoCapacitacion->nombre;
-                })
-                ->options(function () use ($tipoCapacitacion) {
-                    return Capacitacion::whereTipoCapacitacionId($tipoCapacitacion->id)
-                        ->get()
-                        ->mapWithKeys(fn(Capacitacion $capacitacion) => [$capacitacion->id => $capacitacion->nombre])
-                        ->toArray();
-                })
-                ->required()
-                ->columns(2);
+            $checkBoxLists[$key] = Section::make($tipoCapacitacion->nombre)
+                ->schema([
+                    CheckboxList::make('capacitacion_ids')
+                        ->hiddenLabel()
+                        ->options(function () use ($tipoCapacitacion) {
+                            return Capacitacion::whereTipoCapacitacionId($tipoCapacitacion->id)
+                                ->get()
+                                ->mapWithKeys(fn(Capacitacion $capacitacion) => [$capacitacion->id => new HtmlString("<span class='text-xs'>$capacitacion->nombre</span><br >")])
+                                ->toArray();
+                        })
+                        ->required()
+                ])
+                ->columnSpan(1);
         }
         return $checkBoxLists;
     }
