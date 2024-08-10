@@ -7,6 +7,10 @@
     @apply !h-10;
 }
 
+.fi-input  {
+    @apply read-only:cursor-not-allowed read-only:opacity-50 !important;
+}
+
 /* SIDEBAR */
 .fi-sidebar.fi-sidebar-open { @apply lg:!w-1/5 2xl:!w-1/5; }
 
