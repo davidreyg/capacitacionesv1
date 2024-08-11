@@ -31,6 +31,16 @@ class Establecimiento extends Model
         return $this->hasMany(User::class);
     }
 
+    public function solicituds()
+    {
+        return $this->hasMany(Solicitud::class);
+    }
+
+    public function empleados()
+    {
+        return $this->hasMany(Empleado::class);
+    }
+
     public static function obtenerPadre(string|null $establecimiento): string|null
     {
         $padre = null;
