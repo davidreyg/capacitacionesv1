@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Actions\Evento\ProgramarEventoAutomatico;
+use App\Jobs\FinalizarEventoJob;
 use App\Jobs\IniciarEventoJob;
 use App\States\Evento\Creado;
 use App\States\Evento\EventoState;
@@ -144,41 +146,18 @@ class Evento extends Model implements HasMedia
         return ($this->libre || $this->vacantes === null) ? 0 : $this->vacantes - $this->empleados_count;
     }
 
-    function programarInicio(bool $deletePreviousJob = false): void
-    {
-        // Solo se ejecutara el job si es que el evento esta CREADO si no simplemente no hacer nada.
-        if (!$this->estado->equals(Creado::class)) {
-            return;
-        }
-
-        if ($deletePreviousJob) {
-            \DB::table('jobs')->where('id', $this->inicio_job_id)->delete();
-            $this->inicio_job_id = null;
-        }
-        // Combinar fecha y hora para calcular el momento exacto
-        $fechaHoraInicio = Carbon::parse($this->fecha_inicio->format('Y-m-d') . ' ' . $this->hora_inicio);
-
-        // Calcula el retraso en segundos hasta la fecha y hora de inicio
-        $delay = $fechaHoraInicio->diffInSeconds(now());
-
-        // Despacha el job con el retraso
-        $inicio_job = (new IniciarEventoJob($this))->delay($delay);
-        $id = app(Dispatcher::class)->dispatch($inicio_job);
-        $this->inicio_job_id = $id;
-        $this->save();
-    }
-
     protected static function boot()
     {
         parent::boot();
 
         static::created(function (Evento $evento) {
-            $evento->programarInicio();
+            ProgramarEventoAutomatico::make()->handle($evento);
         });
 
         static::deleting(function (Evento $evento) {
 
             \DB::table('jobs')->where('id', $evento->inicio_job_id)->delete();
+            \DB::table('jobs')->where('id', $evento->fin_job_id)->delete();
             // Actualizar el estado de las solicitudes relacionadas
 
             $evento->solicituds->each(function (Solicitud $solicitud) {

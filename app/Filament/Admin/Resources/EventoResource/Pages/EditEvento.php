@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\EventoResource\Pages;
 
+use App\Actions\Evento\ProgramarEventoAutomatico;
 use App\Filament\Admin\Resources\EventoResource;
 use App\Models\Solicitud;
 use App\States\Solicitud\Aprobado;
@@ -41,7 +42,7 @@ class EditEvento extends EditRecord
                 $solcitud->estado->transitionTo(Aprobado::class, $record->id);
             }
         }
-        $record->programarInicio(true);
+        ProgramarEventoAutomatico::make()->handle($record, true);
         return $record;
     }
     protected function getRedirectUrl(): string
