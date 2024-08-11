@@ -11,7 +11,7 @@ WORKDIR /var/www/html
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=UTC
 ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
-ENV SUPERVISOR_PHP_WORKER="php /var/www/html/artisan queue:work database --sleep=3 --tries=3 --timeout=90"
+ENV SUPERVISOR_PHP_WORKER="php /var/www/html/artisan queue:work --sleep=3 --tries=3 --timeout=90"
 ENV SUPERVISOR_PHP_REVERB="php /var/www/html/artisan reverb:start --host=0.0.0.0 --port=8080"
 ENV SUPERVISOR_PHP_USER="sail"
 
