@@ -12,6 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Str;
 
 class IniciarEventoJob implements ShouldQueue
 {
@@ -40,7 +41,8 @@ class IniciarEventoJob implements ShouldQueue
             $this->evento->save();
 
             Notification::make()
-                ->title('El evento: ' . $this->evento->capacitacion->nombre . ' ha iniciado correctamente.')
+                ->title(Str::markdown('Evento **INICIADO** correctamente.'))
+                ->body(Str::markdown('*' . $this->evento->capacitacion->nombre . '*.'))
                 ->success()
                 ->sendToDatabase($this->users);
             foreach ($this->users as $user) {
