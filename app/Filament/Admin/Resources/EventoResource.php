@@ -141,7 +141,7 @@ class EventoResource extends Resource implements HasShieldPermissions
                                             ->seconds(false)
                                             ->required(),
                                         DatePicker::make('fecha_fin')
-                                            ->after('fecha_inicio')
+                                            ->afterOrEqual('fecha_inicio')
                                             ->required(),
                                         TimePicker::make('hora_fin')
                                             ->seconds(false)
