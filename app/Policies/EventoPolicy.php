@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\Evento;
 use App\States\Evento\Creado;
+use App\States\Evento\Finalizado;
 use App\States\Evento\Iniciado;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -142,7 +143,7 @@ class EventoPolicy
      */
     public function gestionarEvaluaciones(User $user, Evento $evento): bool
     {
-        if (!$evento->estado->equals(Iniciado::class)) {
+        if (!$evento->estado->equals(Finalizado::class)) {
             return false;
         }
         return $user->can('gestionar_evaluaciones_evento');
