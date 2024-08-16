@@ -11,6 +11,7 @@ use App\States\Solicitud\Solicitado;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Closure;
 use Filament\Forms;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
@@ -145,7 +146,19 @@ class EventoResource extends Resource implements HasShieldPermissions
                                             ->required(),
                                         TimePicker::make('hora_fin')
                                             ->seconds(false)
-                                            ->after('hora_inicio')
+                                            ->rule(
+                                                fn(Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
+                                                    $fechaInicio = $get('fecha_inicio');
+                                                    $fechaFin = $get('fecha_fin');
+                                                    $horaInicio = $get('hora_inicio');
+                                                    $horaFin = $value;
+
+                                                    // Solo si las fechas son iguales, validamos las horas
+                                                    if ($fechaInicio === $fechaFin && $horaFin <= $horaInicio) {
+                                                        $fail('La hora de finalización debe ser mayor que la hora de inicio cuando las fechas son iguales.');
+                                                    }
+                                                }
+                                            )
                                             ->required(),
                                     ]),
                             ])
