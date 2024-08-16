@@ -18,6 +18,7 @@ abstract class EventoState extends State
             ->default(Creado::class)
             ->allowTransition(Creado::class, Iniciado::class)
             ->allowTransition(Iniciado::class, Finalizado::class)
+            ->allowTransition(Finalizado::class, Evaluado::class)
         ;
     }
 
