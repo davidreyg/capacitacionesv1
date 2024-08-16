@@ -281,6 +281,7 @@ class EventoResource extends Resource implements HasShieldPermissions
                 Tables\Columns\TextColumn::make('vacantes')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('empleados_count')->label('Alumnos')->counts('empleados'),
                 Tables\Columns\TextColumn::make('estado')
                     ->badge()
                     ->formatStateUsing(fn(Evento $record): string => $record->estado->display())
