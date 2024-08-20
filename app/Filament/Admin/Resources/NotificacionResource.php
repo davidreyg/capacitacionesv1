@@ -140,7 +140,7 @@ class NotificacionResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('codigo'),
+                TextColumn::make('codigo')->wrap(),
                 TextColumn::make('fecha')->date(),
                 TextColumn::make('tipo_notificacion')->badge(),
             ])

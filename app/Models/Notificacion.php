@@ -44,4 +44,26 @@ class Notificacion extends Model implements HasMedia
         return $this->hasMany(Testigo::class);
     }
 
+    public function tipoContactos()
+    {
+        return $this->belongsToMany(TipoContacto::class, 'notificacion_tipo_contacto');
+    }
+
+    public function causaInmediatas()
+    {
+        return $this->belongsToMany(CausaInmediata::class, 'notificacion_causa_inmediata');
+    }
+
+    public function causaBasicas()
+    {
+        return $this->belongsToMany(CausaBasica::class, 'notificacion_causa_basica');
+    }
+
+    public function nacs()
+    {
+        return $this->belongsToMany(Nac::class, 'notificacion_nac')
+            ->withPivot(['P', 'E', 'C'])
+            ->using(NotificacionNac::class);
+    }
+
 }
