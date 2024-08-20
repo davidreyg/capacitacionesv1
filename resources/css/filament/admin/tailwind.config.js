@@ -6,6 +6,7 @@ export default {
         "./app/Filament/**/*.php",
         "./resources/views/filament/**/*.blade.php",
         "./resources/views/infolists/**/*.blade.php",
+        "./resources/views/components/forms/**/*.blade.php",
         "./vendor/filament/**/*.blade.php",
         './vendor/andrewdwallo/filament-selectify/resources/views/**/*.blade.php', // The package's vendor directory
     ],
