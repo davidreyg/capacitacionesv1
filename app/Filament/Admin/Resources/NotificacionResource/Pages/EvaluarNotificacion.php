@@ -3,6 +3,8 @@
 namespace App\Filament\Admin\Resources\NotificacionResource\Pages;
 
 use App\Filament\Admin\Resources\NotificacionResource;
+use App\Forms\Components\NestedCheckboxList;
+use App\Models\CausaBasica;
 use App\Models\CausaInmediata;
 use App\Models\TipoContacto;
 use App\Models\TipoContactoCausaInmediata;
@@ -31,7 +33,7 @@ class EvaluarNotificacion extends EditRecord
                             ->hiddenLabel()
                             ->options(fn() => TipoContacto::pluck('nombre', 'id')),
                     ]),
-                Wizard\Step::make('Causas Inmediatas')
+                Wizard\Step::make('Causas Inmediatas (CI)')
                     ->description('')
                     ->schema([
                         Placeholder::make('cd')->content(fn(Get $get) => implode(',', $get('tipo_contacto_ids'))),
@@ -49,21 +51,35 @@ class EvaluarNotificacion extends EditRecord
                                 return $causasInmediatas;
                             }),
                     ]),
-                Wizard\Step::make('Causas Básicas')
+                Wizard\Step::make('Causas Básicas (CB)')
                     ->description('')
                     ->schema([
-                        Placeholder::make('cd')->content(fn(Get $get) => implode(',', $get('causa_basica_ids'))),
-                        CheckboxList::make('causa_basica_ids')
+                        Placeholder::make('cdf')->content(fn(Get $get) => implode(',', $get('causa_inmediata_ids'))),
+                        NestedCheckboxList::make('causa_basica_ids')
                             ->options(function (Get $get) {
-                                $causasBasicas = CausaInmediata::whereIn('id', $get('causa_inmediata_ids'))
+                                $causasBasicasIds = CausaInmediata::whereIn('id', $get('causa_inmediata_ids'))
                                     ->with('causaBasicas')
                                     ->get()
                                     ->pluck('causaBasicas')
                                     ->flatten()
-                                    ->sortBy('id')
-                                    ->pluck('nombre', 'id');
-                                return $causasBasicas;
-                            }),
+                                    ->pluck('id');
+                                $causaBasicaWithChildren = CausaBasica::whereIn('id', $causasBasicasIds)
+                                    ->with('descendants')
+                                    ->get()
+                                    ->flatMap(function ($causa) {
+                                        return $causa->descendantsAndSelf()->get();
+                                    });
+                                // dd($causaBasicaWithChildren);
+                                return $causaBasicaWithChildren;
+                            })
+                            ->minItems(1)
+                            ->columns(2)
+                            ->columnSpanFull(),
+                    ]),
+                Wizard\Step::make('Necesidades de Acción de Control (NAC)')
+                    ->description('')
+                    ->schema([
+                        Placeholder::make('cdf')->content(fn(Get $get) => implode(',', $get('causa_basica_ids'))),
                     ]),
             ])->columnSpanFull(),
 
