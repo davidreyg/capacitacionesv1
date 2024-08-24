@@ -21,6 +21,6 @@ class Registrado extends NotificacionState
 
     public function icon(): string
     {
-        return 'tabler-file-ifno';
+        return 'tabler-file-info';
     }
 }

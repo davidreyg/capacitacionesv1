@@ -37,12 +37,12 @@ class NotificacionResource extends Resource implements HasShieldPermissions
                 // TextColumn::make('tipo_notificacion')->badge(),
                 TextColumn::make('tipo_notificacion_verificado')
                     ->label('Tipo de Notificacion (*)')
-                    ->visible(fn($state) => !!$state)
                     ->badge(),
                 Tables\Columns\TextColumn::make('estado')
                     ->badge()
                     ->formatStateUsing(fn(Notificacion $record): string => $record->estado->display())
-                    ->color(fn(Notificacion $record): string => $record->estado->color()),
+                    ->color(fn(Notificacion $record): string => $record->estado->color())
+                    ->icon(fn(Notificacion $record): string => $record->estado->icon()),
             ])
             ->filters([
                 //

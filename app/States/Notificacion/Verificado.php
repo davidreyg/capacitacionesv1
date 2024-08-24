@@ -8,7 +8,7 @@ class Verificado extends NotificacionState
 
     public function color(): string
     {
-        return 'info';
+        return 'success';
     }
 
     public function display(): string
@@ -22,6 +22,6 @@ class Verificado extends NotificacionState
     }
     public function icon(): string
     {
-        return 'tabler-eye-check';
+        return 'tabler-checks';
     }
 }
