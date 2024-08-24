@@ -3,6 +3,7 @@
 namespace App\Forms\Components;
 
 use App\Models\CausaBasica;
+use App\Utilities\TreeBuilder;
 use Closure;
 use Filament\Forms\Components\Concerns\CanDisableOptions;
 use Filament\Forms\Components\Concerns\CanDisableOptionsWhenSelectedInSiblingRepeaterItems;
@@ -70,19 +71,7 @@ class NestedCheckboxList extends Field
 
     protected function buildTree(array $elements, $parentId = null): array
     {
-        $branch = [];
-
-        foreach ($elements as $element) {
-            if ($element['parent_id'] == $parentId) {
-                $children = $this->buildTree($elements, $element['id']);
-                if ($children) {
-                    $element['children'] = $children;
-                }
-                $branch[$element['id']] = $element;
-            }
-        }
-
-        return $branch;
+        return TreeBuilder::buildTree($elements, $parentId);
     }
 
     protected function formatOptions(array $tree): array
