@@ -2,11 +2,16 @@
 
 namespace App\Filament\Admin\Resources;
 
+use App\Enums\Notificacion\TipoNotificacion;
 use App\Filament\Admin\Resources\NotificacionResource\Forms\NotificacionForm;
 use App\Filament\Admin\Resources\NotificacionResource\Pages;
 use App\Models\Notificacion;
+use App\States\Notificacion\Verificado;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -28,15 +33,43 @@ class NotificacionResource extends Resource
             ->columns([
                 TextColumn::make('codigo')->wrap(),
                 TextColumn::make('fecha')->date(),
-                TextColumn::make('tipo_notificacion')->badge(),
+                // TextColumn::make('tipo_notificacion')->badge(),
+                TextColumn::make('tipo_notificacion_verificado')
+                    ->label('Tipo de Notificacion (*)')
+                    ->visible(fn($state) => !!$state)
+                    ->badge(),
+                Tables\Columns\TextColumn::make('estado')
+                    ->badge()
+                    ->formatStateUsing(fn(Notificacion $record): string => $record->estado->display())
+                    ->color(fn(Notificacion $record): string => $record->estado->color()),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                // Tables\Actions\Action::make('evaluar')->url(fn(Notificacion $record) => Pages\EvaluarNotificacion::getUrl(['record' => $record])),
+                Tables\Actions\Action::make('verificar')
+                    ->visible(fn(Notificacion $record): bool => $record->estado->canTransitionTo(Verificado::class, null))
+                    ->modalWidth(MaxWidth::Medium)
+                    ->requiresConfirmation()
+                    ->form([
+                        Select::make('tipo_notificacion_verificado')
+                            ->label('Tipo de Notificacion')
+                            ->options(TipoNotificacion::toArray())
+                            ->required(),
+                    ])
+                    ->modalSubmitActionLabel('Verificar')
+                    ->databaseTransaction()
+                    ->action(
+                        function (array $data, Notificacion $record) {
+                            $record->estado->transitionTo(Verificado::class, $data['tipo_notificacion_verificado']);
+                            Notification::make()
+                                ->success()
+                                ->title('Exito!')
+                                ->body('Verificado correctamente.')
+                                ->send();
+                        }
+                    ),
                 Tables\Actions\Action::make('scat')->url(fn(Notificacion $record) => Pages\ScatNotificacion::getUrl(['record' => $record])),
-                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

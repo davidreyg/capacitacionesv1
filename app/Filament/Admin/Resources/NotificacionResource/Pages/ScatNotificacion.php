@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 
 
-// FIXME: Falta permisos correctos.
+
 class ScatNotificacion extends EditRecord
 {
     protected static string $resource = NotificacionResource::class;
@@ -33,6 +33,11 @@ class ScatNotificacion extends EditRecord
     protected static string $view = 'filament.admin.resources.notificacion-resource.pages.scat-notificacion';
     protected ?bool $hasDatabaseTransactions = true;
 
+    // FIXME: Falta permisos correctos.
+    protected function authorizeAccess(): void
+    {
+        // abort_unless(static::getResource()::canEdit($this->getRecord()), 403);
+    }
     function getHeaderActions(): array
     {
         return [
