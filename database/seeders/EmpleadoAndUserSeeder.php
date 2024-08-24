@@ -48,7 +48,7 @@ class EmpleadoAndUserSeeder extends Seeder
             $role = match ($empleado->establecimiento_tipo) {
                 'DIRIS' => config('app-roles.roles.diris'),
                 'RIS' => config('app-roles.roles.ris'),
-                'ESTABLECIMIENTO' => config('app-roles.roles.empleado'),
+                'ESTABLECIMIENTO' => config('app-roles.roles.establecimiento'),
                 default => null,
             };
 
