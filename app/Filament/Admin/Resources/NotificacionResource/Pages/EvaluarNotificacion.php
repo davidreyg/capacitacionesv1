@@ -10,9 +10,13 @@ use App\Models\CausaInmediata;
 use App\Models\Nac;
 use App\Models\Notificacion;
 use App\Models\TipoContacto;
+use App\Utilities\TreeBuilder;
 use Blade;
+use Filament\Actions\Action;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -21,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 
 
+// FIXME: Falta permisos correctos.
 class EvaluarNotificacion extends EditRecord
 {
     protected static string $resource = NotificacionResource::class;
@@ -28,6 +33,94 @@ class EvaluarNotificacion extends EditRecord
     protected static string $view = 'filament.admin.resources.notificacion-resource.pages.evaluar-notificacion';
     protected ?bool $hasDatabaseTransactions = true;
 
+    function getHeaderActions(): array
+    {
+        return [
+            Action::make('resumen')
+                ->color('info')
+                ->icon('tabler-clipboard-list')
+                ->fillForm(function (EvaluarNotificacion $livewire) {
+                    $nacData = collect(data_get($livewire, $livewire->getFormStatePath() . '.nac_ids'))
+                        ->filter(function ($values) {
+                            return collect($values)->contains(true);
+                        });
+                    return [
+                        'tipo_contacto_resumen' => data_get($livewire, $livewire->getFormStatePath() . '.tipo_contacto_ids'),
+                        'causa_inmediata_resumen' => data_get($livewire, $livewire->getFormStatePath() . '.causa_inmediata_ids'),
+                        'causa_basica_resumen' => data_get($livewire, $livewire->getFormStatePath() . '.causa_basica_ids'),
+                        'nac_resumen' => $nacData,
+                    ];
+                })
+                ->form([
+                    Section::make('1. Tipo de Contacto')
+                        ->visible(fn(EvaluarNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.tipo_contacto_ids')))
+                        ->collapsible()
+                        ->aside()
+                        ->schema([
+                            CheckboxList::make('tipo_contacto_resumen')
+                                ->hiddenLabel()
+                                ->disabled()
+                                ->options(fn($state) => TipoContacto::whereIn('id', $state)->pluck('nombre', 'id')),
+                        ]),
+                    Section::make('2. Causas Inmediatas')
+                        ->visible(fn(EvaluarNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.causa_inmediata_ids')))
+                        ->collapsible()
+                        ->aside()
+                        ->schema([
+                            CheckboxList::make('causa_inmediata_resumen')
+                                ->hiddenLabel()
+                                ->disabled()
+                                ->options(fn($state) =>
+                                    CausaInmediata::whereIn('id', $state)->pluck('nombre', 'id')),
+                        ]),
+                    Section::make('3. Causas Basicas')
+                        ->visible(fn(EvaluarNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.causa_basica_ids')))
+                        ->collapsible()
+                        ->aside()
+                        ->schema([
+                            NestedCheckboxList::make('causa_basica_resumen')
+                                ->hiddenLabel()
+                                ->disabled()
+                                ->options(
+                                    fn($state) => CausaBasica::whereIn('id', $state)
+                                        ->with('bloodline')
+                                        ->get()
+                                        ->pluck('bloodline')
+                                        ->flatten()
+                                        ->unique('id')
+                                )
+                                ->columnSpanFull(),
+                        ]),
+                    Section::make('4. Necesidades de Acción de Control (NAC)')
+                        ->visible(fn(EvaluarNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.nac_ids')))
+                        ->collapsible()
+                        ->aside()
+                        ->schema([
+                            NestedMatrix::make('nac_resumen')
+                                ->disabled()
+                                ->hiddenLabel()
+                                ->asCheckbox()
+                                ->columnData([
+                                    'P' => 'P',
+                                    'E' => 'E',
+                                    'C' => 'C',
+                                ])
+                                ->options(
+                                    function ($state) {
+                                        return Nac::whereIn('id', array_keys($state))
+                                            ->with('bloodline')
+                                            ->get()
+                                            ->pluck('bloodline')
+                                            ->flatten()
+                                            ->unique('id');
+                                    }
+                                )
+                                ->columnSpanFull()
+                                ->rowSelectRequired(false),
+                        ]),
+                ])
+        ];
+    }
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
@@ -111,11 +204,11 @@ class EvaluarNotificacion extends EditRecord
                                     ->flatten()
                                     ->pluck('id');
                                 $causaBasicaWithChildren = CausaBasica::whereIn('id', $causasBasicasIds)
-                                    ->with('descendants')
+                                    ->with('descendantsAndSelf')
                                     ->get()
-                                    ->flatMap(function ($causa) {
-                                        return $causa->descendantsAndSelf()->get();
-                                    });
+                                    ->pluck('descendantsAndSelf')
+                                    ->flatten()
+                                    ->unique('id');
                                 return $causaBasicaWithChildren;
                             })
                             ->columns(2)
@@ -150,16 +243,15 @@ class EvaluarNotificacion extends EditRecord
                                 $nacBasicaWithChildren = Nac::whereIn('id', $nacIds)
                                     ->with('descendantsAndSelf')
                                     ->get()
-                                    ->flatMap(function ($nac) {
-                                        return $nac->descendantsAndSelf()->get()->sortBy('id');
-                                    });
+                                    ->pluck('descendantsAndSelf')
+                                    ->flatten()
+                                    ->unique('id');
                                 return $nacBasicaWithChildren;
                             })
                             ->columns(2)
                             ->columnSpanFull()
                             ->rowSelectRequired(false),
                     ]),
-
             ])
                 ->columnSpanFull()
                 ->submitAction(new HtmlString(Blade::render(<<<BLADE
