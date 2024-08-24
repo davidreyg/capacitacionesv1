@@ -7,6 +7,7 @@ use App\Filament\Admin\Resources\NotificacionResource\Forms\NotificacionForm;
 use App\Filament\Admin\Resources\NotificacionResource\Pages;
 use App\Models\Notificacion;
 use App\States\Notificacion\Verificado;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
@@ -16,7 +17,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class NotificacionResource extends Resource
+class NotificacionResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Notificacion::class;
     protected static ?string $pluralModelLabel = 'Notificaciones';
@@ -69,7 +70,9 @@ class NotificacionResource extends Resource
                                 ->send();
                         }
                     ),
-                Tables\Actions\Action::make('scat')->url(fn(Notificacion $record) => Pages\ScatNotificacion::getUrl(['record' => $record])),
+                Tables\Actions\Action::make('scat')
+                    ->visible(fn(Notificacion $record) => static::can('evaluarScat', $record))
+                    ->url(fn(Notificacion $record) => Pages\ScatNotificacion::getUrl(['record' => $record])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -82,6 +85,16 @@ class NotificacionResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return array_merge(
+            config('filament-shield.permission_prefixes.resource'),
+            [
+                'evaluar_scat',
+            ]
+        );
     }
 
     public static function getPages(): array

@@ -33,10 +33,9 @@ class ScatNotificacion extends EditRecord
     protected static string $view = 'filament.admin.resources.notificacion-resource.pages.scat-notificacion';
     protected ?bool $hasDatabaseTransactions = true;
 
-    // FIXME: Falta permisos correctos.
     protected function authorizeAccess(): void
     {
-        // abort_unless(static::getResource()::canEdit($this->getRecord()), 403);
+        abort_unless(static::getResource()::can('evaluarScat', $this->record), 403);
     }
     function getHeaderActions(): array
     {
@@ -270,6 +269,11 @@ class ScatNotificacion extends EditRecord
                 BLADE))),
 
         ]);
+    }
+
+    public static function shouldRegisterNavigation(array $parameters = []): bool
+    {
+        return parent::shouldRegisterNavigation($parameters) && static::getResource()::can('evaluarScat', $parameters['record']);
     }
 
     public function getFormActions(): array

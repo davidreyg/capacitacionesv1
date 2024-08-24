@@ -112,4 +112,12 @@ class NotificacionPolicy
     {
         return $user->can('reorder_notificacion');
     }
+
+    /**
+     * Determine whether the user can evaluar SCAT.
+     */
+    public function evaluarScat(User $user, Notificacion $notificacion): bool
+    {
+        return $user->can('evaluar_scat_notificacion');
+    }
 }
