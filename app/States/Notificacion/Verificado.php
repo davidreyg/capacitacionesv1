@@ -22,6 +22,6 @@ class Verificado extends NotificacionState
     }
     public function icon(): string
     {
-        return 'tabler-file-like';
+        return 'tabler-eye-check';
     }
 }

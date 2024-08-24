@@ -51,6 +51,8 @@ class NotificacionResource extends Resource implements HasShieldPermissions
                 Tables\Actions\Action::make('verificar')
                     ->visible(fn(Notificacion $record): bool => $record->estado->canTransitionTo(Verificado::class, null))
                     ->modalWidth(MaxWidth::Medium)
+                    ->color(fn(Notificacion $record): string => (new Verificado($record))->color())
+                    ->icon(fn(Notificacion $record): string => (new Verificado($record))->icon())
                     ->requiresConfirmation()
                     ->form([
                         Select::make('tipo_notificacion_verificado')
