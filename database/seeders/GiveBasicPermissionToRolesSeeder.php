@@ -20,6 +20,7 @@ class GiveBasicPermissionToRolesSeeder extends Seeder
         $rol1->givePermissionTo(\DB::table('permissions')->pluck('id')->toArray());
         $rol2 = Role::findByName(config('app-roles.roles.ris'), $guard);
         $rol2->givePermissionTo([
+            'panel_admin',
             'page_GestionarSolicitudes',
 
             'enroll_students_evento',
@@ -52,6 +53,15 @@ class GiveBasicPermissionToRolesSeeder extends Seeder
             'view_any_sesion',
             'view_sesion',
             'subir_recursos_sesion',
+        ]);
+        $rol5 = Role::findByName(config('app-roles.roles.salud_ocupacional'), $guard);
+        $rol5->givePermissionTo([
+            'panel_admin',
+            'view_any_notificacion',
+            'create_notificacion',
+            'update_notificacion',
+            'view_notificacion',
+            'delete_notificacion',
         ]);
 
     }
