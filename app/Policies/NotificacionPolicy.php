@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Notificacion;
+use App\States\Notificacion\Registrado;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class NotificacionPolicy
@@ -39,6 +40,9 @@ class NotificacionPolicy
      */
     public function update(User $user, Notificacion $notificacion): bool
     {
+        if (!$notificacion->estado->equals(Registrado::class)) {
+            return false;
+        }
         return $user->can('update_notificacion');
     }
 
@@ -47,6 +51,9 @@ class NotificacionPolicy
      */
     public function delete(User $user, Notificacion $notificacion): bool
     {
+        if (!$notificacion->estado->equals(Registrado::class)) {
+            return false;
+        }
         return $user->can('delete_notificacion');
     }
 
