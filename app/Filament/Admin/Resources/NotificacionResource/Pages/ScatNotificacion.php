@@ -26,11 +26,11 @@ use Illuminate\Support\HtmlString;
 
 
 // FIXME: Falta permisos correctos.
-class EvaluarNotificacion extends EditRecord
+class ScatNotificacion extends EditRecord
 {
     protected static string $resource = NotificacionResource::class;
 
-    protected static string $view = 'filament.admin.resources.notificacion-resource.pages.evaluar-notificacion';
+    protected static string $view = 'filament.admin.resources.notificacion-resource.pages.scat-notificacion';
     protected ?bool $hasDatabaseTransactions = true;
 
     function getHeaderActions(): array
@@ -39,7 +39,7 @@ class EvaluarNotificacion extends EditRecord
             Action::make('resumen')
                 ->color('info')
                 ->icon('tabler-clipboard-list')
-                ->fillForm(function (EvaluarNotificacion $livewire) {
+                ->fillForm(function (ScatNotificacion $livewire) {
                     $nacData = collect(data_get($livewire, $livewire->getFormStatePath() . '.nac_ids'))
                         ->filter(function ($values) {
                             return collect($values)->contains(true);
@@ -53,7 +53,7 @@ class EvaluarNotificacion extends EditRecord
                 })
                 ->form([
                     Section::make('1. Tipo de Contacto')
-                        ->visible(fn(EvaluarNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.tipo_contacto_ids')))
+                        ->visible(fn(ScatNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.tipo_contacto_ids')))
                         ->collapsible()
                         ->aside()
                         ->schema([
@@ -63,7 +63,7 @@ class EvaluarNotificacion extends EditRecord
                                 ->options(fn($state) => TipoContacto::whereIn('id', $state)->pluck('nombre', 'id')),
                         ]),
                     Section::make('2. Causas Inmediatas')
-                        ->visible(fn(EvaluarNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.causa_inmediata_ids')))
+                        ->visible(fn(ScatNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.causa_inmediata_ids')))
                         ->collapsible()
                         ->aside()
                         ->schema([
@@ -74,7 +74,7 @@ class EvaluarNotificacion extends EditRecord
                                     CausaInmediata::whereIn('id', $state)->pluck('nombre', 'id')),
                         ]),
                     Section::make('3. Causas Basicas')
-                        ->visible(fn(EvaluarNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.causa_basica_ids')))
+                        ->visible(fn(ScatNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.causa_basica_ids')))
                         ->collapsible()
                         ->aside()
                         ->schema([
@@ -92,7 +92,7 @@ class EvaluarNotificacion extends EditRecord
                                 ->columnSpanFull(),
                         ]),
                     Section::make('4. Necesidades de Acción de Control (NAC)')
-                        ->visible(fn(EvaluarNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.nac_ids')))
+                        ->visible(fn(ScatNotificacion $livewire) => !empty (data_get($livewire, $livewire->getFormStatePath() . '.nac_ids')))
                         ->collapsible()
                         ->aside()
                         ->schema([

@@ -2,32 +2,14 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Enums\Notificacion\TipoAfectacion;
-use App\Enums\Notificacion\TipoNotificacion;
 use App\Filament\Admin\Resources\NotificacionResource\Forms\NotificacionForm;
 use App\Filament\Admin\Resources\NotificacionResource\Pages;
-use App\Filament\Admin\Resources\NotificacionResource\RelationManagers;
-use App\Models\Empleado;
 use App\Models\Notificacion;
-use Filament\Forms;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class NotificacionResource extends Resource
 {
@@ -52,7 +34,8 @@ class NotificacionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\Action::make('evaluar')->url(fn(Notificacion $record) => Pages\EvaluarNotificacion::getUrl(['record' => $record])),
+                // Tables\Actions\Action::make('evaluar')->url(fn(Notificacion $record) => Pages\EvaluarNotificacion::getUrl(['record' => $record])),
+                Tables\Actions\Action::make('scat')->url(fn(Notificacion $record) => Pages\ScatNotificacion::getUrl(['record' => $record])),
                 Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
@@ -74,7 +57,7 @@ class NotificacionResource extends Resource
             'index' => Pages\ListNotificacions::route('/'),
             'create' => Pages\CreateNotificacion::route('/create'),
             'view' => Pages\ViewNotificacion::route('/{record}'),
-            'evaluar-notificacion' => Pages\EvaluarNotificacion::route('/{record}/evaluar'),
+            'scat-notificacion' => Pages\ScatNotificacion::route('/{record}/scat'),
         ];
     }
 }
