@@ -16,6 +16,7 @@ return [
         "ris" => "ris",
         "establecimiento" => "establecimiento",
         "proveedor" => "proveedor",
+        "salud_ocupacional" => "salud ocupacional",
     ],
 
 ];
