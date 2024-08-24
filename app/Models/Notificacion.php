@@ -4,16 +4,19 @@ namespace App\Models;
 
 use App\Enums\Notificacion\TipoAfectacion;
 use App\Enums\Notificacion\TipoNotificacion;
+use App\States\Notificacion\NotificacionState;
 use App\Traits\IsEstablecimientoOwnedThroughEmpleado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\ModelStates\HasStates;
 
 class Notificacion extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
     use IsEstablecimientoOwnedThroughEmpleado;
+    use HasStates;
 
     protected $fillable = [
         'codigo',
@@ -23,6 +26,8 @@ class Notificacion extends Model implements HasMedia
         'descripcion_situacion',
         'descripcion_lesion',
         'tipo_notificacion',
+        'estado',
+        'tipo_notificacion_verificado',
         'tipo_afectacion',
         'empleado_id',
         // 'responsable_id',
@@ -30,7 +35,9 @@ class Notificacion extends Model implements HasMedia
     ];
 
     protected $casts = [
+        'estado' => NotificacionState::class,
         'tipo_notificacion' => TipoNotificacion::class,
+        'tipo_notificacion_verificado' => TipoNotificacion::class,
         'tipo_afectacion' => TipoAfectacion::class,
     ];
 

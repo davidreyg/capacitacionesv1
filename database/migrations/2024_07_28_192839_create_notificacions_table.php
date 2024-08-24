@@ -22,6 +22,8 @@ return new class extends Migration {
             $table->text('descripcion_lesion');
             $table->enum('tipo_notificacion', [TipoNotificacion::ACCIDENTE->value, TipoNotificacion::INCIDENTE->value]);
             $table->enum('tipo_afectacion', [TipoAfectacion::AMBIENTE->value, TipoAfectacion::TRABAJADOR->value]);
+            $table->enum('tipo_notificacion_verificado', [TipoNotificacion::ACCIDENTE->value, TipoNotificacion::INCIDENTE->value])->nullable();
+            $table->string('estado');
 
             $table->foreignId('empleado_id')->constrained();
 
