@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ubigeo\Distrito;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,9 +19,9 @@ class Establecimiento extends Model
         'telefono',
         'ris',
         'tipo',
-        'distrito',
         'correo',
         'parent_id',
+        'distrito_id',
     ];
     protected $casts = [
         'has_lab' => 'boolean'
@@ -39,6 +40,11 @@ class Establecimiento extends Model
     public function empleados()
     {
         return $this->hasMany(Empleado::class);
+    }
+
+    public function distrito()
+    {
+        return $this->belongsTo(Distrito::class);
     }
 
     public static function obtenerPadre(string|null $establecimiento): string|null
@@ -60,4 +66,6 @@ class Establecimiento extends Model
         }
         return $padre;
     }
+
+
 }
