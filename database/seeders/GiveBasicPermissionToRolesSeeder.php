@@ -54,14 +54,19 @@ class GiveBasicPermissionToRolesSeeder extends Seeder
             'view_sesion',
             'subir_recursos_sesion',
         ]);
-        $rol5 = Role::findByName(config('app-roles.roles.salud_ocupacional'), $guard);
+        $rol5 = Role::findByName(config('app-roles.roles.salud_ocupacional_ipress'), $guard);
         $rol5->givePermissionTo([
-            'panel_admin',
             'view_any_notificacion',
             'create_notificacion',
             'update_notificacion',
             'view_notificacion',
             'delete_notificacion',
+        ]);
+        $rol6 = Role::findByName(config('app-roles.roles.comite'), $guard);
+        $rol6->givePermissionTo([
+            'panel_admin',
+            'ver_verificados_notificacion',
+            'evaluar_scat_notificacion',
         ]);
 
     }
