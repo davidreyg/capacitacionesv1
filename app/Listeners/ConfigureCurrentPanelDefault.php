@@ -16,9 +16,11 @@ use App\Settings\LocalizationSettings;
 use App\Settings\MailSettings;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TimePicker;
 use Filament\Notifications\Notification;
 use Filament\Support\Facades\FilamentColor;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -81,8 +83,9 @@ class ConfigureCurrentPanelDefault
             'success' => $this->appearanceSettings->success->getColor(),
             'warning' => $this->appearanceSettings->warning->getColor(),
         ]);
-        Table::configureUsing(static function (Table $table) use ($paginationPageOptions, $defaultSort, $defaultPaginationPageOption): void {
-
+        Table::configureUsing(static function (Table $table) use ($dateFormat, $timeFormat, $paginationPageOptions, $defaultSort, $defaultPaginationPageOption): void {
+            Table::$defaultDateDisplayFormat = $dateFormat;
+            Table::$defaultTimeDisplayFormat = $timeFormat;
             $table
                 ->paginationPageOptions($paginationPageOptions)
                 ->defaultSort(column: 'id', direction: $defaultSort)
