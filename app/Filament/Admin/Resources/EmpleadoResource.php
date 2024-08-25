@@ -144,6 +144,7 @@ class EmpleadoResource extends Resource
         return $page->generateNavigationItems([
             Pages\EditEmpleado::class,
             Pages\GestionarEmpleadoPatologias::class,
+            Pages\GestionarEmpleadoPruebas::class,
         ]);
     }
 
@@ -154,6 +155,7 @@ class EmpleadoResource extends Resource
             'create' => Pages\CreateEmpleado::route('/create'),
             'edit' => Pages\EditEmpleado::route('/{record}/edit'),
             'patologias' => Pages\GestionarEmpleadoPatologias::route('/{record}/patologias'),
+            'pruebas' => Pages\GestionarEmpleadoPruebas::route('/{record}/pruebas'),
         ];
     }
 }
