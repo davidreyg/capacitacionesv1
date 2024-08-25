@@ -120,4 +120,12 @@ class NotificacionPolicy
     {
         return $user->can('evaluar_scat_notificacion');
     }
+
+    /**
+     * Determine whether the user can ver verificados.
+     */
+    public function verVerificados(User $user): bool
+    {
+        return $user->can('ver_verificados_notificacion');
+    }
 }

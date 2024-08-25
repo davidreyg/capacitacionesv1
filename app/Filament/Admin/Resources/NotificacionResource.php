@@ -16,6 +16,7 @@ use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class NotificacionResource extends Resource implements HasShieldPermissions
 {
@@ -26,6 +27,11 @@ class NotificacionResource extends Resource implements HasShieldPermissions
     public static function form(Form $form): Form
     {
         return $form->schema(NotificacionForm::form())->columns(3);
+    }
+
+    public static function canAccess(): bool
+    {
+        return static::canViewAny() || static::can('verVerificados');
     }
 
     public static function table(Table $table): Table
@@ -95,6 +101,7 @@ class NotificacionResource extends Resource implements HasShieldPermissions
             config('filament-shield.permission_prefixes.resource'),
             [
                 'evaluar_scat',
+                'ver_verificados',
             ]
         );
     }
@@ -107,5 +114,23 @@ class NotificacionResource extends Resource implements HasShieldPermissions
             'view' => Pages\ViewNotificacion::route('/{record}'),
             'scat-notificacion' => Pages\ScatNotificacion::route('/{record}/scat'),
         ];
+    }
+
+    // FIXME: Esto va a cambiar porque querre ver los estados verificado en adelante.
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        if (static::can('viewAny')) {
+            return $query;
+        }
+
+        if (static::can('verVerificados')) {
+            $query
+                ->where('tipo_notificacion_verificado', TipoNotificacion::ACCIDENTE)
+                ->whereState('estado', Verificado::class);
+        }
+
+        return $query;
     }
 }

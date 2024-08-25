@@ -50,6 +50,11 @@ class NotificacionResource extends Resource
                 TextColumn::make('codigo')->wrap(),
                 TextColumn::make('fecha')->date(),
                 TextColumn::make('tipo_notificacion')->badge(),
+                Tables\Columns\TextColumn::make('estado')
+                    ->badge()
+                    ->formatStateUsing(fn(Notificacion $record): string => $record->estado->display())
+                    ->color(fn(Notificacion $record): string => $record->estado->color())
+                    ->icon(fn(Notificacion $record): string => $record->estado->icon()),
             ])
             ->filters([
                 //
