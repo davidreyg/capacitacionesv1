@@ -32,6 +32,7 @@ class InitSeeder extends Seeder
         $funciones = base_path('database/sql/funciones.sql');
         $empleados = base_path('database/sql/empleados.sql');
         $capacitaciones = base_path('database/sql/capacitaciones.sql');
+        $patologias = base_path('database/sql/patologias.sql');
         // NOTIFICACIONES
         $scat = base_path('database/sql/SCAT.sql');
 
@@ -109,6 +110,10 @@ class InitSeeder extends Seeder
         }
         if (file_exists($capacitaciones)) {
             $sql = file_get_contents($capacitaciones);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($patologias)) {
+            $sql = file_get_contents($patologias);
             \DB::unprepared($sql);
         }
     }
