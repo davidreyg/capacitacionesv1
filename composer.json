@@ -26,6 +26,7 @@
         "bezhansalleh/filament-exceptions": "^2.1",
         "bezhansalleh/filament-panel-switch": "^1.0",
         "bezhansalleh/filament-shield": "^3.2",
+        "calebporzio/sushi": "^2.5",
         "codeat3/blade-fluentui-system-icons": "^1.32",
         "croustibat/filament-jobs-monitor": "^2.5",
         "filament/filament": "^3.2",
