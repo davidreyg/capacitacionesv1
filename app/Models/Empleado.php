@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Empleado\EmpleadoPatologia;
+use App\Models\Empleado\EmpleadoVacuna;
 use App\Models\Laboratorio\EmpleadoPrueba;
 use App\Models\Laboratorio\Prueba;
 use App\Traits\IsEstablecimientoOwned;
@@ -112,5 +113,21 @@ class Empleado extends Model
             ])
             ->withTimestamps()
             ->using(EmpleadoPrueba::class);
+    }
+
+    public function vacunas()
+    {
+        return $this->belongsToMany(Vacuna::class)
+            ->withPivot([
+                'fabricante_id',
+                'estado',
+                'dosis',
+                'fecha_vacuna',
+                'edad_atencion',
+                'establecimiento',
+                'lote_vacuna'
+            ])
+            ->withTimestamps()
+            ->using(EmpleadoVacuna::class);
     }
 }
