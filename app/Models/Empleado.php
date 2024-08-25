@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Empleado\EmpleadoPatologia;
+use App\Models\Laboratorio\EmpleadoPrueba;
+use App\Models\Laboratorio\Prueba;
 use App\Traits\IsEstablecimientoOwned;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -95,5 +97,20 @@ class Empleado extends Model
         return $this->belongsToMany(Patologia::class)
             ->withPivot(['fecha_diagnostico', 'edad_diagnostico', 'tratamiento'])
             ->using(EmpleadoPatologia::class);
+    }
+
+    public function pruebas()
+    {
+        return $this->belongsToMany(Prueba::class)
+            ->withPivot([
+                'metodo_prueba_id',
+                'fecha_resultado',
+                'fecha_aislamiento',
+                'resultado',
+                'dias_aislamiento',
+                'observaciones'
+            ])
+            ->withTimestamps()
+            ->using(EmpleadoPrueba::class);
     }
 }
