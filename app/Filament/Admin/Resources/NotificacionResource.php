@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources;
 use App\Enums\Notificacion\TipoNotificacion;
 use App\Filament\Admin\Resources\NotificacionResource\Forms\NotificacionForm;
 use App\Filament\Admin\Resources\NotificacionResource\Pages;
+use App\Filament\Admin\Resources\NotificacionResource\Table\NotificacionTable;
 use App\Models\Notificacion;
 use App\States\Notificacion\Verificado;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
@@ -37,19 +38,9 @@ class NotificacionResource extends Resource implements HasShieldPermissions
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('codigo')->wrap(),
-                TextColumn::make('fecha')->date(),
-                // TextColumn::make('tipo_notificacion')->badge(),
-                TextColumn::make('tipo_notificacion_verificado')
-                    ->label('Tipo de Notificacion (*)')
-                    ->badge(),
-                Tables\Columns\TextColumn::make('estado')
-                    ->badge()
-                    ->formatStateUsing(fn(Notificacion $record): string => $record->estado->display())
-                    ->color(fn(Notificacion $record): string => $record->estado->color())
-                    ->icon(fn(Notificacion $record): string => $record->estado->icon()),
-            ])
+            ->columns(
+                NotificacionTable::columns()
+            )
             ->filters([
                 //
             ])

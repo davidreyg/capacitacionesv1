@@ -5,6 +5,7 @@ namespace App\Filament\Establecimiento\Resources;
 use App\Enums\Notificacion\TipoAfectacion;
 use App\Enums\Notificacion\TipoNotificacion;
 use App\Filament\Admin\Resources\NotificacionResource\Forms\NotificacionForm;
+use App\Filament\Admin\Resources\NotificacionResource\Table\NotificacionTable;
 use App\Filament\Establecimiento\Resources\NotificacionResource\Pages;
 use App\Filament\Establecimiento\Resources\NotificacionResource\RelationManagers;
 use App\Models\Empleado;
@@ -46,16 +47,7 @@ class NotificacionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('codigo')->wrap(),
-                TextColumn::make('fecha')->date(),
-                TextColumn::make('tipo_notificacion')->badge(),
-                Tables\Columns\TextColumn::make('estado')
-                    ->badge()
-                    ->formatStateUsing(fn(Notificacion $record): string => $record->estado->display())
-                    ->color(fn(Notificacion $record): string => $record->estado->color())
-                    ->icon(fn(Notificacion $record): string => $record->estado->icon()),
-            ])
+            ->columns(NotificacionTable::columns())
             ->filters([
                 //
             ])
