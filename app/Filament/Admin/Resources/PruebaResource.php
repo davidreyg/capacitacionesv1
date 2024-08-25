@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class PruebaResource extends Resource
 {
     protected static ?string $model = Prueba::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Gestion de Empleados';
+    protected static ?string $navigationIcon = 'tabler-flask';
 
     public static function form(Form $form): Form
     {
