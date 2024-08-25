@@ -3,10 +3,10 @@
 namespace App\Filament\Admin\Resources\EmpleadoResource\Pages;
 
 use App\Filament\Admin\Resources\EmpleadoResource;
-use Filament\Actions;
-use Filament\Forms;
+use App\Filament\Admin\Resources\PatologiaResource;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\ManageRelatedRecords;
@@ -33,12 +33,21 @@ class GestionarEmpleadoPatologias extends ManageRelatedRecords
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('descripcion')
-                    // ->required()
-                    ->maxLength(255),
+                Group::make([
+                    ...PatologiaResource::patologiaForm(),
+                ])->visibleOn('create'),
+                Group::make([
+                    DatePicker::make('fecha_diagnostico')
+                        ->time(false)
+                        ->required(),
+                    TextInput::make('edad_diagnostico')
+                        ->numeric()
+                        ->minValue(1)
+                        ->maxValue(126)
+                        ->required(),
+                    RichEditor::make('tratamiento')->columnSpanFull(),
+                ])->columns(2)->visibleOn('edit')
+
             ])->columns(null);
     }
 
@@ -57,7 +66,10 @@ class GestionarEmpleadoPatologias extends ManageRelatedRecords
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
-                    ->modalWidth(MaxWidth::Large),
+                    ->modalWidth(MaxWidth::Large)
+                    ->using(function (array $data, string $model) {
+                        return $model::create($data);
+                    }),
                 Tables\Actions\AttachAction::make()
                     ->preloadRecordSelect()
                     ->modalWidth(MaxWidth::ThreeExtraLarge)
