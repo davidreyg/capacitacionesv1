@@ -4,9 +4,9 @@ namespace App\Filament\Admin\Resources\EstablecimientoResource\Pages;
 
 use App\Filament\Admin\Resources\EstablecimientoResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ManageRecords;
+use Filament\Resources\Pages\ListRecords;
 
-class ManageEstablecimientos extends ManageRecords
+class ListEstablecimientos extends ListRecords
 {
     protected static string $resource = EstablecimientoResource::class;
 
