@@ -145,6 +145,7 @@ class EmpleadoResource extends Resource
             Pages\EditEmpleado::class,
             Pages\GestionarEmpleadoPatologias::class,
             Pages\GestionarEmpleadoPruebas::class,
+            Pages\GestionarEmpleadoVacunas::class,
         ]);
     }
 
@@ -156,6 +157,7 @@ class EmpleadoResource extends Resource
             'edit' => Pages\EditEmpleado::route('/{record}/edit'),
             'patologias' => Pages\GestionarEmpleadoPatologias::route('/{record}/patologias'),
             'pruebas' => Pages\GestionarEmpleadoPruebas::route('/{record}/pruebas'),
+            'vacunas' => Pages\GestionarEmpleadoVacunas::route('/{record}/vacunas'),
         ];
     }
 }

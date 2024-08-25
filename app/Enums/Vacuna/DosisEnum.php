@@ -13,7 +13,7 @@ enum DosisEnum: string
     {
         $array = [];
         foreach (self::cases() as $case) {
-            $array[$case->name] = $case->value;
+            $array[$case->value] = $case->value;
         }
         return $array;
     }

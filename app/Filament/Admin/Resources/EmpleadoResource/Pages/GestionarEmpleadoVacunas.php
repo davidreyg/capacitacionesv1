@@ -2,14 +2,14 @@
 
 namespace App\Filament\Admin\Resources\EmpleadoResource\Pages;
 
-use App\Enums\Prueba\ResultadoEnum;
+use App\Enums\Vacuna\DosisEnum;
+use App\Enums\Vacuna\EstadoVacunaEnum;
 use App\Filament\Admin\Resources\EmpleadoResource;
-use App\Models\Laboratorio\MetodoPrueba;
+use App\Models\Fabricante;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Group;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -20,17 +20,17 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GestionarEmpleadoPruebas extends ManageRelatedRecords
+class GestionarEmpleadoVacunas extends ManageRelatedRecords
 {
     protected static string $resource = EmpleadoResource::class;
 
-    protected static string $relationship = 'pruebas';
+    protected static string $relationship = 'vacunas';
 
-    protected static ?string $navigationIcon = 'tabler-flask';
+    protected static ?string $navigationIcon = 'tabler-vaccine';
 
     public static function getNavigationLabel(): string
     {
-        return 'Pruebas';
+        return 'Vacunas';
     }
 
     public function form(Form $form): Form
@@ -38,9 +38,12 @@ class GestionarEmpleadoPruebas extends ManageRelatedRecords
         return $form
             ->schema([
                 Group::make([
+                    TextInput::make('codigo')
+                        ->required()
+                        ->maxLength(255),
                     TextInput::make('nombre')
                         ->required()
-                        ->maxLength(100),
+                        ->maxLength(255),
                 ])->visibleOn('create'),
                 Group::make([
                     ...self::detalleForm(),
@@ -51,24 +54,29 @@ class GestionarEmpleadoPruebas extends ManageRelatedRecords
     public static function detalleForm(): array
     {
         return [
-            DatePicker::make('fecha_aislamiento')
+            DatePicker::make('fecha_vacuna')
                 ->time(false)
                 ->required(),
-            DatePicker::make('fecha_resultado')
-                ->time(false)
+            Select::make('estado')
+                ->options(EstadoVacunaEnum::toArray())
                 ->required(),
-            Select::make('metodo_prueba_id')
-                ->label('Metodo de Prueba')
-                ->options(MetodoPrueba::pluck('nombre', 'id'))
+            Select::make('dosis')
+                ->options(DosisEnum::toArray())
                 ->required(),
-            Select::make('resultado')
-                ->options(ResultadoEnum::toArray())
-                ->required(),
-            TextInput::make('dias_aislamiento')
+            TextInput::make('edad_atencion')
                 ->numeric()
                 ->minValue(1)
                 ->required(),
-            RichEditor::make('observaciones'),
+            TextInput::make('establecimiento')
+                ->maxLength(200)
+                ->required(),
+            TextInput::make('lote_vacuna')
+                ->maxLength(100)
+                ->required(),
+            Select::make('fabricante_id')
+                ->label('Fabricante')
+                ->options(Fabricante::pluck('nombre', 'id'))
+                ->required(),
         ];
     }
 
@@ -76,11 +84,13 @@ class GestionarEmpleadoPruebas extends ManageRelatedRecords
     {
         return $table
             ->recordTitleAttribute('nombre')
-            ->defaultSort('fecha_resultado')
+            ->defaultSort(null)
             ->columns([
-                Tables\Columns\TextColumn::make('fecha_resultado')->date(),
+                Tables\Columns\TextColumn::make('establecimiento')->wrap(),
                 Tables\Columns\TextColumn::make('nombre'),
-                Tables\Columns\TextColumn::make('resultado')->badge(),
+                Tables\Columns\TextColumn::make('dosis'),
+                Tables\Columns\TextColumn::make('created_at')->date()->label('Fecha de registro'),
+                Tables\Columns\TextColumn::make('estado')->badge(),
             ])
             ->filters([
                 //
@@ -102,8 +112,7 @@ class GestionarEmpleadoPruebas extends ManageRelatedRecords
                     ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
-                    ->modalWidth(MaxWidth::ThreeExtraLarge),
+                Tables\Actions\EditAction::make(),
                 Tables\Actions\DetachAction::make(),
                 // Tables\Actions\DeleteAction::make(),
             ])
