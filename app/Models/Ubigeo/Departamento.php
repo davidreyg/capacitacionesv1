@@ -9,119 +9,39 @@ class Departamento extends Model
 {
     use Sushi;
 
+    public $incrementing = false;
+    protected $keyType = "string";
 
     protected $rows = [
-        [
-            "id" => 1,
-            "name" => "Amazonas"
-        ],
-        [
-            "id" => 2,
-            "name" => "Áncash"
-        ],
-        [
-            "id" => 3,
-            "name" => "Apurímac"
-        ],
-        [
-            "id" => 4,
-            "name" => "Arequipa"
-        ],
-        [
-            "id" => 5,
-            "name" => "Ayacucho"
-        ],
-        [
-            "id" => 6,
-            "name" => "Cajamarca"
-        ],
-        [
-            "id" => 7,
-            "name" => "Callao"
-        ],
-        [
-            "id" => 8,
-            "name" => "Cusco"
-        ],
-        [
-            "id" => 9,
-            "name" => "Huancavelica"
-        ],
-        [
-            "id" => 10,
-            "name" => "Huánuco"
-        ],
-        [
-            "id" => 11,
-            "name" => "Ica"
-        ],
-        [
-            "id" => 12,
-            "name" => "Junín"
-        ],
-        [
-            "id" => 13,
-            "name" => "La Libertad"
-        ],
-        [
-            "id" => 14,
-            "name" => "Lambayeque"
-        ],
-        [
-            "id" => 15,
-            "name" => "Lima"
-        ],
-        [
-            "id" => 16,
-            "name" => "Loreto"
-        ],
-        [
-            "id" => 17,
-            "name" => "Madre de Dios"
-        ],
-        [
-            "id" => 18,
-            "name" => "Moquegua"
-        ],
-        [
-            "id" => 19,
-            "name" => "Pasco"
-        ],
-        [
-            "id" => 20,
-            "name" => "Piura"
-        ],
-        [
-            "id" => 21,
-            "name" => "Puno"
-        ],
-        [
-            "id" => 22,
-            "name" => "San Martín"
-        ],
-        [
-            "id" => 23,
-            "name" => "Tacna"
-        ],
-        [
-            "id" => 24,
-            "name" => "Tumbes"
-        ],
-        [
-            "id" => 25,
-            "name" => "Ucayali"
-        ],
-        [
-            "id" => 26,
-            "name" => "Extranjero"
-        ]
+        ["id" => "01", "nombre" => "Amazonas"],
+        ["id" => "02", "nombre" => "Ancash"],
+        ["id" => "03", "nombre" => "Apurimac"],
+        ["id" => "04", "nombre" => "Arequipa"],
+        ["id" => "05", "nombre" => "Ayacucho"],
+        ["id" => "06", "nombre" => "Cajamarca"],
+        ["id" => "07", "nombre" => "Cusco"],
+        ["id" => "08", "nombre" => "Huancavelica"],
+        ["id" => "09", "nombre" => "Huanuco"],
+        ["id" => "10", "nombre" => "Ica"],
+        ["id" => "11", "nombre" => "Junin"],
+        ["id" => "12", "nombre" => "La Libertad"],
+        ["id" => "13", "nombre" => "Lambayeque"],
+        ["id" => "14", "nombre" => "Lima"],
+        ["id" => "15", "nombre" => "Loreto"],
+        ["id" => "16", "nombre" => "Madre De Dios"],
+        ["id" => "17", "nombre" => "Moquegua"],
+        ["id" => "18", "nombre" => "Pasco"],
+        ["id" => "19", "nombre" => "Piura"],
+        ["id" => "20", "nombre" => "Puno"],
+        ["id" => "21", "nombre" => "San Martin"],
+        ["id" => "22", "nombre" => "Tacna"],
+        ["id" => "23", "nombre" => "Tumbes"],
+        ["id" => "24", "nombre" => "Callao"],
+        ["id" => "25", "nombre" => "Ucayali"],
     ];
 
     public function provincias()
     {
         return $this->hasMany(Provincia::class);
     }
-
-
 }
-

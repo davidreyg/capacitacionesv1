@@ -8,992 +8,985 @@ use Sushi\Sushi;
 class Provincia extends Model
 {
     use Sushi;
+    public $incrementing = false;
+    protected $keyType = "string";
+
     protected $rows = [
         [
-            "id" => 100,
-            "name" => "Extranjero",
-            "departamento_id" => 26
+            "id" => "0101",
+            "nombre" => "Chachapoyas",
+            "departamento_id" => "01",
         ],
         [
-            "id" => 101,
-            "name" => "Chachapoyas",
-            "departamento_id" => 1
+            "id" => "0102",
+            "nombre" => "Bagua",
+            "departamento_id" => "01",
         ],
         [
-            "id" => 102,
-            "name" => "Bagua",
-            "departamento_id" => 1
+            "id" => "0103",
+            "nombre" => "Bongara",
+            "departamento_id" => "01",
         ],
         [
-            "id" => 103,
-            "name" => "Bongará",
-            "departamento_id" => 1
+            "id" => "0104",
+            "nombre" => "Luya",
+            "departamento_id" => "01",
         ],
         [
-            "id" => 104,
-            "name" => "Condorcanqui",
-            "departamento_id" => 1
+            "id" => "0105",
+            "nombre" => "Rodriguez De Mendoza",
+            "departamento_id" => "01",
         ],
         [
-            "id" => 105,
-            "name" => "Luya",
-            "departamento_id" => 1
+            "id" => "0106",
+            "nombre" => "Condorcanqui",
+            "departamento_id" => "01",
         ],
         [
-            "id" => 106,
-            "name" => "Rodríguez de Mendoza",
-            "departamento_id" => 1
+            "id" => "0107",
+            "nombre" => "Utcubamba",
+            "departamento_id" => "01",
         ],
         [
-            "id" => 107,
-            "name" => "Utcubamba",
-            "departamento_id" => 1
+            "id" => "0201",
+            "nombre" => "Huaraz",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 201,
-            "name" => "Huaraz",
-            "departamento_id" => 2
+            "id" => "0202",
+            "nombre" => "Aija",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 202,
-            "name" => "Aija",
-            "departamento_id" => 2
+            "id" => "0203",
+            "nombre" => "Bolognesi",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 203,
-            "name" => "Antonio Raymondi",
-            "departamento_id" => 2
+            "id" => "0204",
+            "nombre" => "Carhuaz",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 204,
-            "name" => "Asunción",
-            "departamento_id" => 2
+            "id" => "0205",
+            "nombre" => "Casma",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 205,
-            "name" => "Bolognesi",
-            "departamento_id" => 2
+            "id" => "0206",
+            "nombre" => "Corongo",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 206,
-            "name" => "Carhuaz",
-            "departamento_id" => 2
+            "id" => "0207",
+            "nombre" => "Huaylas",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 207,
-            "name" => "Carlos Fermín Fitzcarrald",
-            "departamento_id" => 2
+            "id" => "0208",
+            "nombre" => "Huari",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 208,
-            "name" => "Casma",
-            "departamento_id" => 2
+            "id" => "0209",
+            "nombre" => "Mariscal Luzuriaga",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 209,
-            "name" => "Corongo",
-            "departamento_id" => 2
+            "id" => "0210",
+            "nombre" => "Pallasca",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 210,
-            "name" => "Huari",
-            "departamento_id" => 2
+            "id" => "0211",
+            "nombre" => "Pomabamba",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 211,
-            "name" => "Huarmey",
-            "departamento_id" => 2
+            "id" => "0212",
+            "nombre" => "Recuay",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 212,
-            "name" => "Huaylas",
-            "departamento_id" => 2
+            "id" => "0213",
+            "nombre" => "Santa",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 213,
-            "name" => "Mariscal Luzuriaga",
-            "departamento_id" => 2
+            "id" => "0214",
+            "nombre" => "Sihuas",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 214,
-            "name" => "Ocros",
-            "departamento_id" => 2
+            "id" => "0215",
+            "nombre" => "Yungay",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 215,
-            "name" => "Pallasca",
-            "departamento_id" => 2
+            "id" => "0216",
+            "nombre" => "Antonio Raimondi",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 216,
-            "name" => "Pomabamba",
-            "departamento_id" => 2
+            "id" => "0217",
+            "nombre" => "Carlos Fermin Fitzcarrald",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 217,
-            "name" => "Recuay",
-            "departamento_id" => 2
+            "id" => "0218",
+            "nombre" => "Asuncion",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 218,
-            "name" => "Santa",
-            "departamento_id" => 2
+            "id" => "0219",
+            "nombre" => "Huarmey",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 219,
-            "name" => "Sihuas",
-            "departamento_id" => 2
+            "id" => "0220",
+            "nombre" => "Ocros",
+            "departamento_id" => "02",
         ],
         [
-            "id" => 220,
-            "name" => "Yungay",
-            "departamento_id" => 2
+            "id" => "0301",
+            "nombre" => "Abancay",
+            "departamento_id" => "03",
         ],
         [
-            "id" => 301,
-            "name" => "Abancay",
-            "departamento_id" => 3
+            "id" => "0302",
+            "nombre" => "Aymaraes",
+            "departamento_id" => "03",
         ],
         [
-            "id" => 302,
-            "name" => "Andahuaylas",
-            "departamento_id" => 3
+            "id" => "0303",
+            "nombre" => "Andahuaylas",
+            "departamento_id" => "03",
         ],
         [
-            "id" => 303,
-            "name" => "Antabamba",
-            "departamento_id" => 3
+            "id" => "0304",
+            "nombre" => "Antabamba",
+            "departamento_id" => "03",
         ],
         [
-            "id" => 304,
-            "name" => "Aymaraes",
-            "departamento_id" => 3
+            "id" => "0305",
+            "nombre" => "Cotabambas",
+            "departamento_id" => "03",
         ],
         [
-            "id" => 305,
-            "name" => "Cotabambas",
-            "departamento_id" => 3
+            "id" => "0306",
+            "nombre" => "Grau",
+            "departamento_id" => "03",
         ],
         [
-            "id" => 306,
-            "name" => "Chincheros",
-            "departamento_id" => 3
+            "id" => "0307",
+            "nombre" => "Chincheros",
+            "departamento_id" => "03",
         ],
         [
-            "id" => 307,
-            "name" => "Grau",
-            "departamento_id" => 3
+            "id" => "0401",
+            "nombre" => "Arequipa",
+            "departamento_id" => "04",
         ],
         [
-            "id" => 401,
-            "name" => "Arequipa",
-            "departamento_id" => 4
+            "id" => "0402",
+            "nombre" => "Caylloma",
+            "departamento_id" => "04",
         ],
         [
-            "id" => 402,
-            "name" => "Camaná",
-            "departamento_id" => 4
+            "id" => "0403",
+            "nombre" => "Camana",
+            "departamento_id" => "04",
         ],
         [
-            "id" => 403,
-            "name" => "Caravelí",
-            "departamento_id" => 4
+            "id" => "0404",
+            "nombre" => "Caraveli",
+            "departamento_id" => "04",
         ],
         [
-            "id" => 404,
-            "name" => "Castilla",
-            "departamento_id" => 4
+            "id" => "0405",
+            "nombre" => "Castilla",
+            "departamento_id" => "04",
         ],
         [
-            "id" => 405,
-            "name" => "Caylloma",
-            "departamento_id" => 4
+            "id" => "0406",
+            "nombre" => "Condesuyos",
+            "departamento_id" => "04",
         ],
         [
-            "id" => 406,
-            "name" => "Condesuyos",
-            "departamento_id" => 4
+            "id" => "0407",
+            "nombre" => "Islay",
+            "departamento_id" => "04",
         ],
         [
-            "id" => 407,
-            "name" => "Islay",
-            "departamento_id" => 4
+            "id" => "0408",
+            "nombre" => "La Union",
+            "departamento_id" => "04",
         ],
         [
-            "id" => 408,
-            "name" => "La Uniòn",
-            "departamento_id" => 4
+            "id" => "0501",
+            "nombre" => "Huamanga",
+            "departamento_id" => "05",
         ],
         [
-            "id" => 501,
-            "name" => "Huamanga",
-            "departamento_id" => 5
+            "id" => "0502",
+            "nombre" => "Cangallo",
+            "departamento_id" => "05",
         ],
         [
-            "id" => 502,
-            "name" => "Cangallo",
-            "departamento_id" => 5
+            "id" => "0503",
+            "nombre" => "Huanta",
+            "departamento_id" => "05",
         ],
         [
-            "id" => 503,
-            "name" => "Huanca Sancos",
-            "departamento_id" => 5
+            "id" => "0504",
+            "nombre" => "La Mar",
+            "departamento_id" => "05",
         ],
         [
-            "id" => 504,
-            "name" => "Huanta",
-            "departamento_id" => 5
+            "id" => "0505",
+            "nombre" => "Lucanas",
+            "departamento_id" => "05",
         ],
         [
-            "id" => 505,
-            "name" => "La Mar",
-            "departamento_id" => 5
+            "id" => "0506",
+            "nombre" => "Parinacochas",
+            "departamento_id" => "05",
         ],
         [
-            "id" => 506,
-            "name" => "Lucanas",
-            "departamento_id" => 5
+            "id" => "0507",
+            "nombre" => "Victor Fajardo",
+            "departamento_id" => "05",
         ],
         [
-            "id" => 507,
-            "name" => "Parinacochas",
-            "departamento_id" => 5
+            "id" => "0508",
+            "nombre" => "Huanca Sancos",
+            "departamento_id" => "05",
         ],
         [
-            "id" => 508,
-            "name" => "Pàucar del Sara Sara",
-            "departamento_id" => 5
+            "id" => "0509",
+            "nombre" => "Vilcas Huaman",
+            "departamento_id" => "05",
         ],
         [
-            "id" => 509,
-            "name" => "Sucre",
-            "departamento_id" => 5
+            "id" => "0510",
+            "nombre" => "Paucar Del Sara Sara",
+            "departamento_id" => "05",
         ],
         [
-            "id" => 510,
-            "name" => "Víctor Fajardo",
-            "departamento_id" => 5
+            "id" => "0511",
+            "nombre" => "Sucre",
+            "departamento_id" => "05",
         ],
         [
-            "id" => 511,
-            "name" => "Vilcas Huamán",
-            "departamento_id" => 5
+            "id" => "0601",
+            "nombre" => "Cajamarca",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 601,
-            "name" => "Cajamarca",
-            "departamento_id" => 6
+            "id" => "0602",
+            "nombre" => "Cajabamba",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 602,
-            "name" => "Cajabamba",
-            "departamento_id" => 6
+            "id" => "0603",
+            "nombre" => "Celendin",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 603,
-            "name" => "Celendín",
-            "departamento_id" => 6
+            "id" => "0604",
+            "nombre" => "Contumaza",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 604,
-            "name" => "Chota",
-            "departamento_id" => 6
+            "id" => "0605",
+            "nombre" => "Cutervo",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 605,
-            "name" => "Contumazá",
-            "departamento_id" => 6
+            "id" => "0606",
+            "nombre" => "Chota",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 606,
-            "name" => "Cutervo",
-            "departamento_id" => 6
+            "id" => "0607",
+            "nombre" => "Hualgayoc",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 607,
-            "name" => "Hualgayoc",
-            "departamento_id" => 6
+            "id" => "0608",
+            "nombre" => "Jaen",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 608,
-            "name" => "Jaén",
-            "departamento_id" => 6
+            "id" => "0609",
+            "nombre" => "Santa Cruz",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 609,
-            "name" => "San Ignacio",
-            "departamento_id" => 6
+            "id" => "0610",
+            "nombre" => "San Miguel",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 610,
-            "name" => "San Marcos",
-            "departamento_id" => 6
+            "id" => "0611",
+            "nombre" => "San Ignacio",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 611,
-            "name" => "San Miguel",
-            "departamento_id" => 6
+            "id" => "0612",
+            "nombre" => "San Marcos",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 612,
-            "name" => "San Pablo",
-            "departamento_id" => 6
+            "id" => "0613",
+            "nombre" => "San Pablo",
+            "departamento_id" => "06",
         ],
         [
-            "id" => 613,
-            "name" => "Santa Cruz",
-            "departamento_id" => 6
+            "id" => "0701",
+            "nombre" => "Cusco",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 701,
-            "name" => "Prov. Const. del Callao",
-            "departamento_id" => 7
+            "id" => "0702",
+            "nombre" => "Acomayo",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 801,
-            "name" => "Cusco",
-            "departamento_id" => 8
+            "id" => "0703",
+            "nombre" => "Anta",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 802,
-            "name" => "Acomayo",
-            "departamento_id" => 8
+            "id" => "0704",
+            "nombre" => "Calca",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 803,
-            "name" => "Anta",
-            "departamento_id" => 8
+            "id" => "0705",
+            "nombre" => "Canas",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 804,
-            "name" => "Calca",
-            "departamento_id" => 8
+            "id" => "0706",
+            "nombre" => "Canchis",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 805,
-            "name" => "Canas",
-            "departamento_id" => 8
+            "id" => "0707",
+            "nombre" => "Chumbivilcas",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 806,
-            "name" => "Canchis",
-            "departamento_id" => 8
+            "id" => "0708",
+            "nombre" => "Espinar",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 807,
-            "name" => "Chumbivilcas",
-            "departamento_id" => 8
+            "id" => "0709",
+            "nombre" => "La Convencion",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 808,
-            "name" => "Espinar",
-            "departamento_id" => 8
+            "id" => "0710",
+            "nombre" => "Paruro",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 809,
-            "name" => "La Convención",
-            "departamento_id" => 8
+            "id" => "0711",
+            "nombre" => "Paucartambo",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 810,
-            "name" => "Paruro",
-            "departamento_id" => 8
+            "id" => "0712",
+            "nombre" => "Quispicanchi",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 811,
-            "name" => "Paucartambo",
-            "departamento_id" => 8
+            "id" => "0713",
+            "nombre" => "Urubamba",
+            "departamento_id" => "07",
         ],
         [
-            "id" => 812,
-            "name" => "Quispicanchi",
-            "departamento_id" => 8
+            "id" => "0801",
+            "nombre" => "Huancavelica",
+            "departamento_id" => "08",
         ],
         [
-            "id" => 813,
-            "name" => "Urubamba",
-            "departamento_id" => 8
+            "id" => "0802",
+            "nombre" => "Acobamba",
+            "departamento_id" => "08",
         ],
         [
-            "id" => 901,
-            "name" => "Huancavelica",
-            "departamento_id" => 9
+            "id" => "0803",
+            "nombre" => "Angaraes",
+            "departamento_id" => "08",
         ],
         [
-            "id" => 902,
-            "name" => "Acobamba",
-            "departamento_id" => 9
+            "id" => "0804",
+            "nombre" => "Castrovirreyna",
+            "departamento_id" => "08",
         ],
         [
-            "id" => 903,
-            "name" => "Angaraes",
-            "departamento_id" => 9
+            "id" => "0805",
+            "nombre" => "Tayacaja",
+            "departamento_id" => "08",
         ],
         [
-            "id" => 904,
-            "name" => "Castrovirreyna",
-            "departamento_id" => 9
+            "id" => "0806",
+            "nombre" => "Huaytara",
+            "departamento_id" => "08",
         ],
         [
-            "id" => 905,
-            "name" => "Churcampa",
-            "departamento_id" => 9
+            "id" => "0807",
+            "nombre" => "Churcampa",
+            "departamento_id" => "08",
         ],
         [
-            "id" => 906,
-            "name" => "Huaytará",
-            "departamento_id" => 9
+            "id" => "0901",
+            "nombre" => "Huanuco",
+            "departamento_id" => "09",
         ],
         [
-            "id" => 907,
-            "name" => "Tayacaja",
-            "departamento_id" => 9
+            "id" => "0902",
+            "nombre" => "Ambo",
+            "departamento_id" => "09",
         ],
         [
-            "id" => 1001,
-            "name" => "Huánuco",
-            "departamento_id" => 10
+            "id" => "0903",
+            "nombre" => "Dos De Mayo",
+            "departamento_id" => "09",
         ],
         [
-            "id" => 1002,
-            "name" => "Ambo",
-            "departamento_id" => 10
+            "id" => "0904",
+            "nombre" => "Huamalies",
+            "departamento_id" => "09",
         ],
         [
-            "id" => 1003,
-            "name" => "Dos de Mayo",
-            "departamento_id" => 10
+            "id" => "0905",
+            "nombre" => "Marañon",
+            "departamento_id" => "09",
         ],
         [
-            "id" => 1004,
-            "name" => "Huacaybamba",
-            "departamento_id" => 10
+            "id" => "0906",
+            "nombre" => "Leoncio Prado",
+            "departamento_id" => "09",
         ],
         [
-            "id" => 1005,
-            "name" => "Huamalíes",
-            "departamento_id" => 10
+            "id" => "0907",
+            "nombre" => "Pachitea",
+            "departamento_id" => "09",
         ],
         [
-            "id" => 1006,
-            "name" => "Leoncio Prado",
-            "departamento_id" => 10
+            "id" => "0908",
+            "nombre" => "Puerto Inca",
+            "departamento_id" => "09",
         ],
         [
-            "id" => 1007,
-            "name" => "Marañón",
-            "departamento_id" => 10
+            "id" => "0909",
+            "nombre" => "Huacaybamba",
+            "departamento_id" => "09",
         ],
         [
-            "id" => 1008,
-            "name" => "Pachitea",
-            "departamento_id" => 10
+            "id" => "0910",
+            "nombre" => "Lauricocha",
+            "departamento_id" => "09",
         ],
         [
-            "id" => 1009,
-            "name" => "Puerto Inca",
-            "departamento_id" => 10
+            "id" => "0911",
+            "nombre" => "Yarowilca",
+            "departamento_id" => "09",
         ],
         [
-            "id" => 1010,
-            "name" => "Lauricocha ",
-            "departamento_id" => 10
+            "id" => "1001",
+            "nombre" => "Ica",
+            "departamento_id" => "10",
         ],
         [
-            "id" => 1011,
-            "name" => "Yarowilca ",
-            "departamento_id" => 10
+            "id" => "1002",
+            "nombre" => "Chincha",
+            "departamento_id" => "10",
         ],
         [
-            "id" => 1101,
-            "name" => "Ica ",
-            "departamento_id" => 11
+            "id" => "1003",
+            "nombre" => "Nazca",
+            "departamento_id" => "10",
         ],
         [
-            "id" => 1102,
-            "name" => "Chincha ",
-            "departamento_id" => 11
+            "id" => "1004",
+            "nombre" => "Pisco",
+            "departamento_id" => "10",
         ],
         [
-            "id" => 1103,
-            "name" => "Nasca ",
-            "departamento_id" => 11
+            "id" => "1005",
+            "nombre" => "Palpa",
+            "departamento_id" => "10",
         ],
         [
-            "id" => 1104,
-            "name" => "Palpa ",
-            "departamento_id" => 11
+            "id" => "1101",
+            "nombre" => "Huancayo",
+            "departamento_id" => "11",
         ],
         [
-            "id" => 1105,
-            "name" => "Pisco ",
-            "departamento_id" => 11
+            "id" => "1102",
+            "nombre" => "Concepcion",
+            "departamento_id" => "11",
         ],
         [
-            "id" => 1201,
-            "name" => "Huancayo ",
-            "departamento_id" => 12
+            "id" => "1103",
+            "nombre" => "Jauja",
+            "departamento_id" => "11",
         ],
         [
-            "id" => 1202,
-            "name" => "Concepción ",
-            "departamento_id" => 12
+            "id" => "1104",
+            "nombre" => "Junin",
+            "departamento_id" => "11",
         ],
         [
-            "id" => 1203,
-            "name" => "Chanchamayo ",
-            "departamento_id" => 12
+            "id" => "1105",
+            "nombre" => "Tarma",
+            "departamento_id" => "11",
         ],
         [
-            "id" => 1204,
-            "name" => "Jauja ",
-            "departamento_id" => 12
+            "id" => "1106",
+            "nombre" => "Yauli",
+            "departamento_id" => "11",
         ],
         [
-            "id" => 1205,
-            "name" => "Junín ",
-            "departamento_id" => 12
+            "id" => "1107",
+            "nombre" => "Satipo",
+            "departamento_id" => "11",
         ],
         [
-            "id" => 1206,
-            "name" => "Satipo ",
-            "departamento_id" => 12
+            "id" => "1108",
+            "nombre" => "Chanchamayo",
+            "departamento_id" => "11",
         ],
         [
-            "id" => 1207,
-            "name" => "Tarma ",
-            "departamento_id" => 12
+            "id" => "1109",
+            "nombre" => "Chupaca",
+            "departamento_id" => "11",
         ],
         [
-            "id" => 1208,
-            "name" => "Yauli ",
-            "departamento_id" => 12
+            "id" => "1201",
+            "nombre" => "Trujillo",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1209,
-            "name" => "Chupaca ",
-            "departamento_id" => 12
+            "id" => "1202",
+            "nombre" => "Bolivar",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1301,
-            "name" => "Trujillo ",
-            "departamento_id" => 13
+            "id" => "1203",
+            "nombre" => "Sanchez Carrion",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1302,
-            "name" => "Ascope ",
-            "departamento_id" => 13
+            "id" => "1204",
+            "nombre" => "Otuzco",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1303,
-            "name" => "Bolívar ",
-            "departamento_id" => 13
+            "id" => "1205",
+            "nombre" => "Pacasmayo",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1304,
-            "name" => "Chepén ",
-            "departamento_id" => 13
+            "id" => "1206",
+            "nombre" => "Pataz",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1305,
-            "name" => "Julcán ",
-            "departamento_id" => 13
+            "id" => "1207",
+            "nombre" => "Santiago De Chuco",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1306,
-            "name" => "Otuzco ",
-            "departamento_id" => 13
+            "id" => "1208",
+            "nombre" => "Ascope",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1307,
-            "name" => "Pacasmayo ",
-            "departamento_id" => 13
+            "id" => "1209",
+            "nombre" => "Chepen",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1308,
-            "name" => "Pataz ",
-            "departamento_id" => 13
+            "id" => "1210",
+            "nombre" => "Julcan",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1309,
-            "name" => "Sánchez Carrión ",
-            "departamento_id" => 13
+            "id" => "1211",
+            "nombre" => "Gran Chimu",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1310,
-            "name" => "Santiago de Chuco ",
-            "departamento_id" => 13
+            "id" => "1212",
+            "nombre" => "Viru",
+            "departamento_id" => "12",
         ],
         [
-            "id" => 1311,
-            "name" => "Gran Chimú ",
-            "departamento_id" => 13
+            "id" => "1301",
+            "nombre" => "Chiclayo",
+            "departamento_id" => "13",
         ],
         [
-            "id" => 1312,
-            "name" => "Virú ",
-            "departamento_id" => 13
+            "id" => "1302",
+            "nombre" => "Ferreñafe",
+            "departamento_id" => "13",
         ],
         [
-            "id" => 1401,
-            "name" => "Chiclayo ",
-            "departamento_id" => 14
+            "id" => "1303",
+            "nombre" => "Lambayeque",
+            "departamento_id" => "13",
         ],
         [
-            "id" => 1402,
-            "name" => "Ferreñafe ",
-            "departamento_id" => 14
+            "id" => "1401",
+            "nombre" => "Lima",
+            "departamento_id" => "14",
         ],
         [
-            "id" => 1403,
-            "name" => "Lambayeque ",
-            "departamento_id" => 14
+            "id" => "1402",
+            "nombre" => "Cajatambo",
+            "departamento_id" => "14",
         ],
         [
-            "id" => 1501,
-            "name" => "Lima ",
-            "departamento_id" => 15
+            "id" => "1403",
+            "nombre" => "Canta",
+            "departamento_id" => "14",
         ],
         [
-            "id" => 1502,
-            "name" => "Barranca ",
-            "departamento_id" => 15
+            "id" => "1404",
+            "nombre" => "Cañete",
+            "departamento_id" => "14",
         ],
         [
-            "id" => 1503,
-            "name" => "Cajatambo ",
-            "departamento_id" => 15
+            "id" => "1405",
+            "nombre" => "Huaura",
+            "departamento_id" => "14",
         ],
         [
-            "id" => 1504,
-            "name" => "Canta ",
-            "departamento_id" => 15
+            "id" => "1406",
+            "nombre" => "Huarochiri",
+            "departamento_id" => "14",
         ],
         [
-            "id" => 1505,
-            "name" => "Cañete ",
-            "departamento_id" => 15
+            "id" => "1407",
+            "nombre" => "Yauyos",
+            "departamento_id" => "14",
         ],
         [
-            "id" => 1506,
-            "name" => "Huaral ",
-            "departamento_id" => 15
+            "id" => "1408",
+            "nombre" => "Huaral",
+            "departamento_id" => "14",
         ],
         [
-            "id" => 1507,
-            "name" => "Huarochirí ",
-            "departamento_id" => 15
+            "id" => "1409",
+            "nombre" => "Barranca",
+            "departamento_id" => "14",
         ],
         [
-            "id" => 1508,
-            "name" => "Huaura ",
-            "departamento_id" => 15
+            "id" => "1410",
+            "nombre" => "Oyon",
+            "departamento_id" => "14",
         ],
         [
-            "id" => 1509,
-            "name" => "Oyón ",
-            "departamento_id" => 15
+            "id" => "1501",
+            "nombre" => "Maynas",
+            "departamento_id" => "15",
         ],
         [
-            "id" => 1510,
-            "name" => "Yauyos ",
-            "departamento_id" => 15
+            "id" => "1502",
+            "nombre" => "Alto Amazonas",
+            "departamento_id" => "15",
         ],
         [
-            "id" => 1601,
-            "name" => "Maynas ",
-            "departamento_id" => 16
+            "id" => "1503",
+            "nombre" => "Loreto",
+            "departamento_id" => "15",
         ],
         [
-            "id" => 1602,
-            "name" => "Alto Amazonas ",
-            "departamento_id" => 16
+            "id" => "1504",
+            "nombre" => "Requena",
+            "departamento_id" => "15",
         ],
         [
-            "id" => 1603,
-            "name" => "Loreto ",
-            "departamento_id" => 16
+            "id" => "1505",
+            "nombre" => "Ucayali",
+            "departamento_id" => "15",
         ],
         [
-            "id" => 1604,
-            "name" => "Mariscal Ramón Castilla ",
-            "departamento_id" => 16
+            "id" => "1506",
+            "nombre" => "Mariscal Ramon Castilla",
+            "departamento_id" => "15",
         ],
         [
-            "id" => 1605,
-            "name" => "Requena ",
-            "departamento_id" => 16
+            "id" => "1507",
+            "nombre" => "Datem Del Marañon",
+            "departamento_id" => "15",
         ],
         [
-            "id" => 1606,
-            "name" => "Ucayali ",
-            "departamento_id" => 16
+            "id" => "1601",
+            "nombre" => "Tambopata",
+            "departamento_id" => "16",
         ],
         [
-            "id" => 1607,
-            "name" => "Datem del Marañón ",
-            "departamento_id" => 16
+            "id" => "1602",
+            "nombre" => "Manu",
+            "departamento_id" => "16",
         ],
         [
-            "id" => 1608,
-            "name" => "Putumayo",
-            "departamento_id" => 16
+            "id" => "1603",
+            "nombre" => "Tahuamanu",
+            "departamento_id" => "16",
         ],
         [
-            "id" => 1701,
-            "name" => "Tambopata ",
-            "departamento_id" => 17
+            "id" => "1701",
+            "nombre" => "Mariscal Nieto",
+            "departamento_id" => "17",
         ],
         [
-            "id" => 1702,
-            "name" => "Manu ",
-            "departamento_id" => 17
+            "id" => "1702",
+            "nombre" => "General Sanchez Cerro",
+            "departamento_id" => "17",
         ],
         [
-            "id" => 1703,
-            "name" => "Tahuamanu ",
-            "departamento_id" => 17
+            "id" => "1703",
+            "nombre" => "Ilo",
+            "departamento_id" => "17",
         ],
         [
-            "id" => 1801,
-            "name" => "Mariscal Nieto ",
-            "departamento_id" => 18
+            "id" => "1801",
+            "nombre" => "Pasco",
+            "departamento_id" => "18",
         ],
         [
-            "id" => 1802,
-            "name" => "General Sánchez Cerro ",
-            "departamento_id" => 18
+            "id" => "1802",
+            "nombre" => "Daniel Alcides Carrion",
+            "departamento_id" => "18",
         ],
         [
-            "id" => 1803,
-            "name" => "Ilo ",
-            "departamento_id" => 18
+            "id" => "1803",
+            "nombre" => "Oxapampa",
+            "departamento_id" => "18",
         ],
         [
-            "id" => 1901,
-            "name" => "Pasco ",
-            "departamento_id" => 19
+            "id" => "1901",
+            "nombre" => "Piura",
+            "departamento_id" => "19",
         ],
         [
-            "id" => 1902,
-            "name" => "Daniel Alcides Carrión ",
-            "departamento_id" => 19
+            "id" => "1902",
+            "nombre" => "Ayabaca",
+            "departamento_id" => "19",
         ],
         [
-            "id" => 1903,
-            "name" => "Oxapampa ",
-            "departamento_id" => 19
+            "id" => "1903",
+            "nombre" => "Huancabamba",
+            "departamento_id" => "19",
         ],
         [
-            "id" => 2001,
-            "name" => "Piura ",
-            "departamento_id" => 20
+            "id" => "1904",
+            "nombre" => "Morropon",
+            "departamento_id" => "19",
         ],
         [
-            "id" => 2002,
-            "name" => "Ayabaca ",
-            "departamento_id" => 20
+            "id" => "1905",
+            "nombre" => "Paita",
+            "departamento_id" => "19",
         ],
         [
-            "id" => 2003,
-            "name" => "Huancabamba ",
-            "departamento_id" => 20
+            "id" => "1906",
+            "nombre" => "Sullana",
+            "departamento_id" => "19",
         ],
         [
-            "id" => 2004,
-            "name" => "Morropón ",
-            "departamento_id" => 20
+            "id" => "1907",
+            "nombre" => "Talara",
+            "departamento_id" => "19",
         ],
         [
-            "id" => 2005,
-            "name" => "Paita ",
-            "departamento_id" => 20
+            "id" => "1908",
+            "nombre" => "Sechura",
+            "departamento_id" => "19",
         ],
         [
-            "id" => 2006,
-            "name" => "Sullana ",
-            "departamento_id" => 20
+            "id" => "2001",
+            "nombre" => "Puno",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2007,
-            "name" => "Talara ",
-            "departamento_id" => 20
+            "id" => "2002",
+            "nombre" => "Azangaro",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2008,
-            "name" => "Sechura ",
-            "departamento_id" => 20
+            "id" => "2003",
+            "nombre" => "Carabaya",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2101,
-            "name" => "Puno ",
-            "departamento_id" => 21
+            "id" => "2004",
+            "nombre" => "Chucuito",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2102,
-            "name" => "Azángaro ",
-            "departamento_id" => 21
+            "id" => "2005",
+            "nombre" => "Huancane",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2103,
-            "name" => "Carabaya ",
-            "departamento_id" => 21
+            "id" => "2006",
+            "nombre" => "Lampa",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2104,
-            "name" => "Chucuito ",
-            "departamento_id" => 21
+            "id" => "2007",
+            "nombre" => "Melgar",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2105,
-            "name" => "El Collao ",
-            "departamento_id" => 21
+            "id" => "2008",
+            "nombre" => "Sandia",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2106,
-            "name" => "Huancané ",
-            "departamento_id" => 21
+            "id" => "2009",
+            "nombre" => "San Roman",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2107,
-            "name" => "Lampa ",
-            "departamento_id" => 21
+            "id" => "2010",
+            "nombre" => "Yunguyo",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2108,
-            "name" => "Melgar ",
-            "departamento_id" => 21
+            "id" => "2011",
+            "nombre" => "San Antonio De Putina",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2109,
-            "name" => "Moho ",
-            "departamento_id" => 21
+            "id" => "2012",
+            "nombre" => "El Collao",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2110,
-            "name" => "San Antonio de Putina ",
-            "departamento_id" => 21
+            "id" => "2013",
+            "nombre" => "Moho",
+            "departamento_id" => "20",
         ],
         [
-            "id" => 2111,
-            "name" => "San Román ",
-            "departamento_id" => 21
+            "id" => "2101",
+            "nombre" => "Moyobamba",
+            "departamento_id" => "21",
         ],
         [
-            "id" => 2112,
-            "name" => "Sandia ",
-            "departamento_id" => 21
+            "id" => "2102",
+            "nombre" => "Huallaga",
+            "departamento_id" => "21",
         ],
         [
-            "id" => 2113,
-            "name" => "Yunguyo ",
-            "departamento_id" => 21
+            "id" => "2103",
+            "nombre" => "Lamas",
+            "departamento_id" => "21",
         ],
         [
-            "id" => 2201,
-            "name" => "Moyobamba ",
-            "departamento_id" => 22
+            "id" => "2104",
+            "nombre" => "Mariscal Caceres",
+            "departamento_id" => "21",
         ],
         [
-            "id" => 2202,
-            "name" => "Bellavista ",
-            "departamento_id" => 22
+            "id" => "2105",
+            "nombre" => "Rioja",
+            "departamento_id" => "21",
         ],
         [
-            "id" => 2203,
-            "name" => "El Dorado ",
-            "departamento_id" => 22
+            "id" => "2106",
+            "nombre" => "San Martin",
+            "departamento_id" => "21",
         ],
         [
-            "id" => 2204,
-            "name" => "Huallaga ",
-            "departamento_id" => 22
+            "id" => "2107",
+            "nombre" => "Bellavista",
+            "departamento_id" => "21",
         ],
         [
-            "id" => 2205,
-            "name" => "Lamas ",
-            "departamento_id" => 22
+            "id" => "2108",
+            "nombre" => "Tocache",
+            "departamento_id" => "21",
         ],
         [
-            "id" => 2206,
-            "name" => "Mariscal Cáceres ",
-            "departamento_id" => 22
+            "id" => "2109",
+            "nombre" => "Picota",
+            "departamento_id" => "21",
         ],
         [
-            "id" => 2207,
-            "name" => "Picota ",
-            "departamento_id" => 22
+            "id" => "2110",
+            "nombre" => "El Dorado",
+            "departamento_id" => "21",
         ],
         [
-            "id" => 2208,
-            "name" => "Rioja ",
-            "departamento_id" => 22
+            "id" => "2201",
+            "nombre" => "Tacna",
+            "departamento_id" => "22",
         ],
         [
-            "id" => 2209,
-            "name" => "San Martín ",
-            "departamento_id" => 22
+            "id" => "2202",
+            "nombre" => "Tarata",
+            "departamento_id" => "22",
         ],
         [
-            "id" => 2210,
-            "name" => "Tocache ",
-            "departamento_id" => 22
+            "id" => "2203",
+            "nombre" => "Jorge Basadre",
+            "departamento_id" => "22",
         ],
         [
-            "id" => 2301,
-            "name" => "Tacna ",
-            "departamento_id" => 23
+            "id" => "2204",
+            "nombre" => "Candarave",
+            "departamento_id" => "22",
         ],
         [
-            "id" => 2302,
-            "name" => "Candarave ",
-            "departamento_id" => 23
+            "id" => "2301",
+            "nombre" => "Tumbes",
+            "departamento_id" => "23",
         ],
         [
-            "id" => 2303,
-            "name" => "Jorge Basadre ",
-            "departamento_id" => 23
+            "id" => "2302",
+            "nombre" => "Contralmirante Villar",
+            "departamento_id" => "23",
         ],
         [
-            "id" => 2304,
-            "name" => "Tarata ",
-            "departamento_id" => 23
+            "id" => "2303",
+            "nombre" => "Zarumilla",
+            "departamento_id" => "23",
         ],
         [
-            "id" => 2401,
-            "name" => "Tumbes ",
-            "departamento_id" => 24
+            "id" => "2401",
+            "nombre" => "Callao",
+            "departamento_id" => "24",
         ],
         [
-            "id" => 2402,
-            "name" => "Contralmirante Villar ",
-            "departamento_id" => 24
+            "id" => "2501",
+            "nombre" => "Coronel Portillo",
+            "departamento_id" => "25",
         ],
         [
-            "id" => 2403,
-            "name" => "Zarumilla ",
-            "departamento_id" => 24
+            "id" => "2502",
+            "nombre" => "Padre Abad",
+            "departamento_id" => "25",
         ],
         [
-            "id" => 2501,
-            "name" => "Coronel Portillo ",
-            "departamento_id" => 25
+            "id" => "2503",
+            "nombre" => "Atalaya",
+            "departamento_id" => "25",
         ],
         [
-            "id" => 2502,
-            "name" => "Atalaya ",
-            "departamento_id" => 25
+            "id" => "2504",
+            "nombre" => "Purus",
+            "departamento_id" => "25",
         ],
-        [
-            "id" => 2503,
-            "name" => "Padre Abad ",
-            "departamento_id" => 25
-        ],
-        [
-            "id" => 2504,
-            "name" => "Purús",
-            "departamento_id" => 25
-        ]
     ];
 
     public function distrito()
@@ -1006,4 +999,3 @@ class Provincia extends Model
         return $this->belongsTo(Departamento::class);
     }
 }
-

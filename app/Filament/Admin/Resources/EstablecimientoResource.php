@@ -61,7 +61,7 @@ class EstablecimientoResource extends Resource
                 Forms\Components\Hidden::make('parent_id'),
                 Forms\Components\Select::make('departamento_id')
                     ->label('Departamento')
-                    ->options(Departamento::pluck('name', 'id'))
+                    ->options(Departamento::pluck('nombre', 'id'))
                     ->live()
                     ->hint(new HtmlString(\Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="data.departamento_id" />')))
                     ->searchable()
@@ -73,7 +73,7 @@ class EstablecimientoResource extends Resource
                 Forms\Components\Select::make('provincia_id')
                     ->label('Provincia')
                     ->options(function (Forms\Get $get) {
-                        return Provincia::where('departamento_id', $get('departamento_id'))->pluck('name', 'id');
+                        return Provincia::where('departamento_id', $get('departamento_id'))->pluck('nombre', 'id');
                     })
                     ->live()
                     ->hint(new HtmlString(\Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="data.provincia_id" />')))
@@ -83,7 +83,7 @@ class EstablecimientoResource extends Resource
                 Forms\Components\Select::make('distrito_id')
                     ->label('Distrito')
                     ->options(function (Forms\Get $get) {
-                        return Distrito::where('provincia_id', $get('provincia_id'))->pluck('name', 'id');
+                        return Distrito::where('provincia_id', $get('provincia_id'))->pluck('nombre', 'id');
                     })
                     ->searchable(),
 
