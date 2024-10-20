@@ -28,7 +28,9 @@
 				"onecentlin.laravel5-snippets",
 				"pcbowers.alpine-intellisense"
 			],
-			"settings": {}
+			"settings": {
+				"editor.formatOnSave": true
+			}
 		}
 	},
 	"remoteUser": "sail",
