@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Notificacion\TipoAfectacion;
 use App\Enums\Notificacion\TipoNotificacion;
+use App\Models\AnexoUno\AnexoUno;
 use App\States\Notificacion\NotificacionState;
 use App\Traits\IsEstablecimientoOwnedThroughEmpleado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -71,6 +72,11 @@ class Notificacion extends Model implements HasMedia
         return $this->belongsToMany(Nac::class, 'notificacion_nac')
             ->withPivot(['P', 'E', 'C'])
             ->using(NotificacionNac::class);
+    }
+
+    public function anexoUno()
+    {
+        return $this->hasOne(AnexoUno::class);
     }
 
 }

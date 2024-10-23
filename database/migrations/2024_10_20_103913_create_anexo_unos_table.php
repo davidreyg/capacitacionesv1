@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -44,7 +43,6 @@ return new class extends Migration
             // IV. DATOS DE LA ENFERMEDAD RELACIONADA A LTRAABAJO
             $table->foreignId('anexo_uno_enfermedades_trabajo_id')->constrained(); //tabla7
 
-            // factor riesgo causante.
             $table->string('enfermedad_centro_medico_nombre');
             $table->string('enfermedad_centro_medico_ruc');
             $table->date('enfermedad_fecha_ingreso');

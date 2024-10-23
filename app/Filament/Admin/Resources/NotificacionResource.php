@@ -45,6 +45,9 @@ class NotificacionResource extends Resource implements HasShieldPermissions
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('anexoUno')
+                    // ->visible(fn(Notificacion $record) => static::can('evaluarScat', $record))
+                    ->url(fn(Notificacion $record) => Pages\RegistrarAnexoUno::getUrl(['record' => $record])),
                 Tables\Actions\Action::make('verificar')
                     ->visible(fn(Notificacion $record): bool => $record->estado->canTransitionTo(Verificado::class, null))
                     ->modalWidth(MaxWidth::Medium)
@@ -104,6 +107,7 @@ class NotificacionResource extends Resource implements HasShieldPermissions
             'create' => Pages\CreateNotificacion::route('/create'),
             'view' => Pages\ViewNotificacion::route('/{record}'),
             'scat-notificacion' => Pages\ScatNotificacion::route('/{record}/scat'),
+            'anexo-uno' => Pages\RegistrarAnexoUno::route('/{record}/anexo-uno'),
         ];
     }
 
