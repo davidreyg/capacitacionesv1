@@ -9,6 +9,7 @@ export default {
         "./resources/views/components/forms/**/*.blade.php",
         "./vendor/filament/**/*.blade.php",
         './vendor/andrewdwallo/filament-selectify/resources/views/**/*.blade.php', // The package's vendor directory
+        './vendor/jaocero/radio-deck/resources/views/**/*.blade.php',
     ],
     theme: {
         extend: {
