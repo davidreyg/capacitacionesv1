@@ -148,7 +148,8 @@ class InitSeeder extends Seeder
             'telefono' => 955927839,
             'ris' => 'LIMA',
             'tipo' => 'DIRIS',
-            'parent_id' => null
+            'parent_id' => null,
+            'distrito_id' => '140108'
         ];
 
         \DB::table('establecimientos')->insert($data);
