@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\EstablecimientoResource\Forms;
 use App\Actions\BuscarReniec;
+use App\Models\AnexoUno\AnexoUnoActividadEconomica;
 use App\Models\Establecimiento;
 use App\Models\TipoDocumento;
 use App\Models\Ubigeo\Departamento;
@@ -81,6 +82,13 @@ class EstablecimientoForm
                     return Distrito::where('provincia_id', $get('provincia_id'))->pluck('nombre', 'id');
                 })
                 ->searchable(),
+            TextInput::make('ruc')
+                ->numeric()
+                ->required(),
+            Select::make('anexo_uno_actividad_economica_id')
+                ->label('Actividad Economica')
+                ->options(AnexoUnoActividadEconomica::pluck('descripcion', 'id'))
+                ->required(),
 
 
         ];
