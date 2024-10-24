@@ -22,6 +22,8 @@ class Establecimiento extends Model
         'correo',
         'parent_id',
         'distrito_id',
+        'ruc',
+        'anexo_uno_actividad_economica_id',
     ];
     protected $casts = [
         'has_lab' => 'boolean'
