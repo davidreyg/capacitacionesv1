@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Establecimiento\TipoEstablecimientoEnum;
 use App\Models\Ubigeo\Distrito;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +27,8 @@ class Establecimiento extends Model
         'anexo_uno_actividad_economica_id',
     ];
     protected $casts = [
-        'has_lab' => 'boolean'
+        'has_lab' => 'boolean',
+        'tipo' => TipoEstablecimientoEnum::class
     ];
 
     public function users()
