@@ -4,11 +4,14 @@ namespace App\Filament\Admin\Resources\NotificacionResource\Pages;
 
 use App\Enums\AnexoUno\TipoAnexoUno;
 use App\Enums\Establecimiento\TipoEstablecimientoEnum;
+use App\Filament\Admin\Resources\EmpleadoResource\Pages\EditEmpleado;
 use App\Filament\Admin\Resources\EstablecimientoResource\Forms\EstablecimientoForm;
 use App\Filament\Admin\Resources\EstablecimientoResource\Pages\EditEstablecimiento;
 use App\Filament\Admin\Resources\NotificacionResource;
 use App\Models\AnexoUno\AnexoUno;
 use App\Models\AnexoUno\AnexoUnoActividadEconomica;
+use App\Models\AnexoUno\AnexoUnoCategoriaTrabajador;
+use App\Models\Empleado;
 use App\Models\Establecimiento;
 use App\Models\Notificacion;
 use Filament\Actions;
@@ -40,13 +43,46 @@ class RegistrarAnexoUno extends EditRecord
 
     public function mount(int|string $record): void
     {
-        $this->record = AnexoUno::find($record) ?? new AnexoUno();
+        $temp = $this->resolveRecord($record);
+        $this->record = $temp->anexoUno ?? new AnexoUno();
+        // dd($record);
         $this->parent = $this->resolveRecord($record);
         $this->authorizeAccess();
 
         $this->fillForm();
 
         $this->previousUrl = url()->previous();
+    }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        if (isset($this->getRecord()->id)) {
+            $establecimientoEmpleador = $this->getRecord()->establecimientoEmpleador;
+            $establecimientoLaboral = $this->getRecord()->establecimientoLaboral;
+            $empleado = $this->getRecord()->empleado;
+            //setear PASO 1 si ya existe:
+            $data['empleador_ruc'] = $establecimientoEmpleador->ruc;
+            $data['empleador_direccion'] = $establecimientoEmpleador->direccion;
+            $data['empleador_anexo_uno_actividad_economica_id'] = $establecimientoEmpleador->anexo_uno_actividad_economica_id;
+            $data['empleador_telefono'] = $establecimientoEmpleador->telefono;
+            //setear PASO 2 si ya existe:
+            $data['laboral_ruc'] = $establecimientoLaboral->ruc;
+            $data['laboral_direccion'] = $establecimientoLaboral->direccion;
+            $data['laboral_anexo_uno_actividad_economica_id'] = $establecimientoLaboral->anexo_uno_actividad_economica_id;
+            $data['laboral_telefono'] = $establecimientoLaboral->telefono;
+
+            $data['empleado_numero_documento'] = $empleado->numero_documento;
+            $data['empleado_direccion'] = $empleado->direccion;
+            $data['empleado_anexo_uno_categoria_trabajador_id'] = $empleado->anexo_uno_categoria_trabajador_id;
+            $data['empleado_essalud'] = $empleado->essalud;
+            $data['empleado_eps'] = $empleado->eps;
+            $data['empleado_sexo'] = $empleado->sexo;
+            $data['empleado_asegurado'] = $empleado->asegurado;
+            $data['empleado_telefono'] = $empleado->telefono;
+
+        }
+
+        return $data;
     }
 
     protected function handleRecordUpdate(Model $record, array $data): Model
@@ -179,6 +215,84 @@ class RegistrarAnexoUno extends EditRecord
                         ->required(),
                     TextInput::make('laboral_telefono')
                         ->label('Telefono')
+                        ->dehydrated()
+                        ->disabled()
+                        ->required(),
+                ])->columns(2),
+            Step::make('Datos del empleado')
+                // ->description('Datos del E')
+                ->schema([
+                    Select::make('empleado_id')
+                        ->label('Empleado')
+                        ->options(Empleado::pluck('nombres', 'id'))
+                        ->afterStateUpdated(function ($state, Set $set) {
+                            $empleado = Empleado::find($state);
+                            if ($empleado) {
+                                $set('empleado_numero_documento', $empleado->numero_documento);
+                                $set('empleado_direccion', $empleado->direccion);
+                                $set('empleado_anexo_uno_categoria_trabajador_id', $empleado->anexo_uno_categoria_trabajador_id);
+                                $set('empleado_essalud', $empleado->essalud);
+                                $set('empleado_eps', $empleado->eps);
+                                $set('empleado_sexo', $empleado->sexo);
+                                $set('empleado_asegurado', $empleado->asegurado);
+                                $set('empleado_telefono', $empleado->telefono);
+                            } else {
+                                $set('empleado_numero_documento', NULL);
+                                $set('empleado_direccion', NULL);
+                                $set('empleado_anexo_uno_categoria_trabajador_id', NULL);
+                                $set('empleado_essalud', NULL);
+                                $set('empleado_eps', NULL);
+                                $set('empleado_sexo', NULL);
+                                $set('empleado_asegurado', NULL);
+                                $set('empleado_telefono', NULL);
+                            }
+                        })
+                        ->suffixAction(
+                            fn($state) => $state ? Action::make('editarEmpleado')
+                                ->label('Editar')
+                                ->visible(fn($state) => !!$state)
+                                ->icon('tabler-edit')
+                                ->url(EditEmpleado::getUrl(['record' => $state]))
+                                ->openUrlInNewTab() :
+                            Action::make('editarEmpleado')
+                                ->label('Editar')
+                                ->hidden()
+                        )
+                        ->live(),
+                    TextInput::make('empleado_numero_documento')
+                        ->label('N° de documetno')
+                        ->dehydrated()
+                        ->disabled()
+                        ->required(),
+                    TextInput::make('empleado_direccion')
+                        ->label('Direccion')
+                        ->dehydrated()
+                        ->disabled()
+                        ->required(),
+                    Select::make('empleado_anexo_uno_categoria_trabajador_id')
+                        ->label('Categoria Ocupacional')
+                        ->options(AnexoUnoCategoriaTrabajador::pluck('descripcion', 'id'))
+                        ->dehydrated()
+                        ->disabled()
+                        ->required(),
+                    TextInput::make('empleado_essalud')
+                        ->label('ESSALUD')
+                        ->dehydrated()
+                        ->disabled()
+                        ->required(),
+                    TextInput::make('empleado_eps')
+                        ->label('EPS')
+                        ->dehydrated()
+                        ->disabled()
+                        ->required(),
+                    TextInput::make('empleado_sexo')
+                        ->label('Genero')
+                        ->dehydrated()
+                        ->disabled()
+                        ->required(),
+                    Toggle::make('empleado_asegurado')
+                        ->label('Asegurado')
+                        ->inline(false)
                         ->dehydrated()
                         ->disabled()
                         ->required(),

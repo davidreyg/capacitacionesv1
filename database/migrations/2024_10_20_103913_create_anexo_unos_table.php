@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->foreign('establecimiento_laboral_id')->references('id')->on('establecimientos');
             $table->timestamps();
 
-            // $table->foreignId('empleado_id')->constrained(); //DATOS DEL TRABAJADOR
+            $table->foreignId('empleado_id')->constrained(); //DATOS DEL TRABAJADOR
 
             // // IV. DATOS DEL ACCIDENTE DE TRABAJO
             // $table->dateTime('fecha_hora_accidente');

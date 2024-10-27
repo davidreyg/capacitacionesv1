@@ -4,10 +4,12 @@ namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\EmpleadoResource\Pages;
 use App\Filament\Admin\Resources\EmpleadoResource\RelationManagers;
+use App\Models\AnexoUno\AnexoUnoCategoriaTrabajador;
 use App\Models\Empleado;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Pages\SubNavigationPosition;
@@ -88,6 +90,21 @@ class EmpleadoResource extends Resource
             Select::make('funcion_id')
                 ->relationship('funcion', 'nombre')
                 ->required(),
+            Select::make('anexo_uno_categoria_trabajador_id')
+                ->options(AnexoUnoCategoriaTrabajador::pluck('descripcion', 'id'))
+                ->required(),
+            Toggle::make('asegurado')
+                ->inline(false)
+                ->required(),
+            TextInput::make('essalud')
+                ->required()
+                ->maxLength(100),
+            TextInput::make('eps')
+                ->required()
+                ->maxLength(100),
+            TextInput::make('direccion')
+                ->required()
+                ->maxLength(100),
         ];
     }
 

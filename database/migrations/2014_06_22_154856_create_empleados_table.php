@@ -23,6 +23,13 @@ return new class extends Migration {
             $table->string('viene_de', 100);
             $table->string('email', 100)->nullable();
             $table->string('telefono', 100)->nullable();
+            $table->string('direccion', 255)->nullable();
+
+            //anexo 1
+            $table->foreignId('anexo_uno_categoria_trabajador_id')->nullable()->constrained();
+            $table->boolean('asegurado')->default(false);
+            $table->string('essalud', 100)->nullable();
+            $table->string('eps', 100)->nullable();
 
             $table->foreignId('establecimiento_id')->constrained();
             $table->foreignId('unidad_organica_id')->constrained();
