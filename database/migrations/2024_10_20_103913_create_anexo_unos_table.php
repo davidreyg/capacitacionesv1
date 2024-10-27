@@ -27,27 +27,27 @@ return new class extends Migration {
             $table->foreignId('empleado_id')->constrained(); //DATOS DEL TRABAJADOR
 
             // // IV. DATOS DEL ACCIDENTE DE TRABAJO
-            // $table->dateTime('fecha_hora_accidente');
-            // $table->foreignId('anexo_uno_forma_accidente_id')->constrained(); //tabla3
-            // $table->foreignId('anexo_uno_agente_causante_id')->constrained(); //tabla4
-            // $table->string('accidente_centro_medico_nombre');
-            // $table->string('accidente_centro_medico_ruc');
-            // $table->date('accidente_fecha_ingreso');
-            // $table->foreignId('anexo_uno_parte_afectada_id')->constrained(); //tabla5
-            // $table->foreignId('anexo_uno_naturaleza_lesion_id')->constrained(); //tabla6
+            $table->dateTime('fecha_hora_accidente');
+            $table->foreignId('anexo_uno_forma_accidente_id')->constrained(); //tabla3
+            $table->foreignId('anexo_uno_agente_causante_id')->constrained(); //tabla4
+            $table->string('accidente_centro_medico_nombre');
+            $table->string('accidente_centro_medico_ruc');
+            $table->date('accidente_fecha_ingreso');
+            $table->foreignId('anexo_uno_parte_afectada_id')->constrained(); //tabla5
+            $table->foreignId('anexo_uno_naturaleza_lesion_id')->constrained(); //tabla6
 
-            // // CONSECUENCIAS DEL ACCIDENTE.
-            // $table->string('accidente_medico_nombre');
-            // $table->unsignedInteger('accidente_medico_numero_colegiatura');
+            // CONSECUENCIAS DEL ACCIDENTE.
+            $table->string('accidente_medico_nombre');
+            $table->unsignedInteger('accidente_medico_numero_colegiatura');
 
             // // IV. DATOS DE LA ENFERMEDAD RELACIONADA A LTRAABAJO
-            // $table->foreignId('anexo_uno_enfermedades_trabajo_id')->constrained(); //tabla7
+            $table->foreignId('anexo_uno_enfermedades_trabajo_id')->constrained(); //tabla7
 
-            // $table->string('enfermedad_centro_medico_nombre');
-            // $table->string('enfermedad_centro_medico_ruc');
-            // $table->date('enfermedad_fecha_ingreso');
-            // $table->string('enfermedad_medico_nombre');
-            // $table->unsignedInteger('enfermedad_medico_numero_colegiatura');
+            $table->string('enfermedad_centro_medico_nombre');
+            $table->string('enfermedad_centro_medico_ruc');
+            $table->date('enfermedad_fecha_ingreso');
+            $table->string('enfermedad_medico_nombre');
+            $table->unsignedInteger('enfermedad_medico_numero_colegiatura');
 
             // Relacion con notficacion
             $table->foreignId('notificacion_id')->constrained();

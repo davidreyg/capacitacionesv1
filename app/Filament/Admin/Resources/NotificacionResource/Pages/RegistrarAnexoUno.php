@@ -10,13 +10,23 @@ use App\Filament\Admin\Resources\EstablecimientoResource\Pages\EditEstablecimien
 use App\Filament\Admin\Resources\NotificacionResource;
 use App\Models\AnexoUno\AnexoUno;
 use App\Models\AnexoUno\AnexoUnoActividadEconomica;
+use App\Models\AnexoUno\AnexoUnoAgenteCausante;
 use App\Models\AnexoUno\AnexoUnoCategoriaTrabajador;
+use App\Models\AnexoUno\AnexoUnoEnfermedadesTrabajo;
+use App\Models\AnexoUno\AnexoUnoFormaAccidente;
+use App\Models\AnexoUno\AnexoUnoNaturalezaLesion;
+use App\Models\AnexoUno\AnexoUnoParteAfectada;
+use App\Models\AnexoUno\Consecuencia;
+use App\Models\AnexoUno\Riesgo;
 use App\Models\Empleado;
 use App\Models\Establecimiento;
 use App\Models\Notificacion;
 use Filament\Actions;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
@@ -60,6 +70,8 @@ class RegistrarAnexoUno extends EditRecord
             $establecimientoEmpleador = $this->getRecord()->establecimientoEmpleador;
             $establecimientoLaboral = $this->getRecord()->establecimientoLaboral;
             $empleado = $this->getRecord()->empleado;
+            $riesgo_ids = $this->getRecord()->riesgos->map(fn($riesgo) => $riesgo->id);
+            $consecuencia_ids = $this->getRecord()->consecuencias->map(fn($consecuencia) => $consecuencia->id);
             //setear PASO 1 si ya existe:
             $data['empleador_ruc'] = $establecimientoEmpleador->ruc;
             $data['empleador_direccion'] = $establecimientoEmpleador->direccion;
@@ -80,6 +92,9 @@ class RegistrarAnexoUno extends EditRecord
             $data['empleado_asegurado'] = $empleado->asegurado;
             $data['empleado_telefono'] = $empleado->telefono;
 
+            $data['riesgo_ids'] = $riesgo_ids;
+            $data['consecuencia_ids'] = $consecuencia_ids;
+
         }
 
         return $data;
@@ -87,9 +102,11 @@ class RegistrarAnexoUno extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        // dd($data);
-        $this->parent->anexoUno()->updateOrCreate($data);
-
+        $dataSinRelaciones = \Arr::except($data, ['riesgo_ids', 'consecuencia_ids']);
+        $record = $this->parent->anexoUno()->updateOrCreate($dataSinRelaciones);
+        // Guardar relationships...
+        $record->riesgos()->sync($data['riesgo_ids']);
+        $record->consecuencias()->sync($data['consecuencia_ids']);
         return $record;
     }
 
@@ -297,13 +314,95 @@ class RegistrarAnexoUno extends EditRecord
                         ->disabled()
                         ->required(),
                 ])->columns(2),
-            // Step::make('Visibility')
-            //     ->description('Control who can view it')
-            //     ->schema([
-            //         Toggle::make('is_visible')
-            //             ->label('Visible to customers.')
-            //             ->default(true),
-            //     ]),
+            Step::make('Datos del accidente de trabajo')
+                // ->description('Control who can view it')
+                ->schema([
+                    Fieldset::make('Datos Generales')->schema([
+                        DateTimePicker::make('fecha_hora_accidente')
+                            ->label('Fecha del accidente'),
+                        Select::make('anexo_uno_forma_accidente_id')
+                            ->label('Forma accidente')
+                            ->options(AnexoUnoFormaAccidente::pluck('descripcion', 'id'))
+                            ->required(),
+                        Select::make('anexo_uno_agente_causante_id')
+                            ->label('Agente Causante')
+                            ->options(AnexoUnoAgenteCausante::get()->groupBy('grupo')->mapWithKeys(function ($items, $categoria) {
+                                return [
+                                    $categoria => $items->pluck('descripcion', 'id')->toArray()
+                                ];
+                            }))
+                            ->required(),
+                    ]),
+                    Fieldset::make('Certificacion Medica')->schema([
+                        TextInput::make('accidente_centro_medico_nombre')
+                            ->label('Centro Medico')
+                            ->required(),
+                        TextInput::make('accidente_centro_medico_ruc')
+                            ->label('RUC')
+                            ->required(),
+                        DatePicker::make('accidente_fecha_ingreso')
+                            ->required(),
+                        Select::make('anexo_uno_parte_afectada_id')
+                            ->label('Parte del cuerpo afectado')
+                            ->options(AnexoUnoParteAfectada::pluck('descripcion', 'id'))
+                            ->required(),
+                        Select::make('anexo_uno_naturaleza_lesion_id')
+                            ->label('Naturaleza de la lesión')
+                            ->options(AnexoUnoNaturalezaLesion::pluck('descripcion', 'id'))
+                            ->required(),
+                        TextInput::make('accidente_medico_nombre')
+                            ->label('Medico')
+                            ->required(),
+                        TextInput::make('accidente_medico_numero_colegiatura')
+                            ->label('N° Colegiatura')
+                            ->numeric()
+                            ->required(),
+
+                    ]),
+                    Fieldset::make('Consecuencias del accidente')
+                        ->schema([
+                            CheckboxList::make('consecuencia_ids')
+                                // ->hiddenLabel()
+                                ->options(Consecuencia::pluck('nombre', 'id'))
+                                ->required(),
+
+                        ])
+                ])->columns(2),
+            Step::make('Datos de la enfermedad relacionada al trabajo')
+                // ->description('Control who can view it')
+                ->schema([
+                    Fieldset::make('Datos generales')
+                        ->schema([
+                            Select::make('anexo_uno_enfermedades_trabajo_id')
+                                ->label('Naturaleza de la enfermedad')
+                                ->options(AnexoUnoEnfermedadesTrabajo::pluck('descripcion', 'id'))
+                                ->required(),
+                            CheckboxList::make('riesgo_ids')
+                                ->label('Factor de riesgo causante')
+                                ->options(Riesgo::pluck('nombre', 'id'))
+                                // ->relationship('riesgos', 'nombre')
+                                ->columns(3)
+                                ->required(),
+                        ]),
+                    Fieldset::make('Certificacion medica')
+                        ->schema([
+                            TextInput::make('enfermedad_centro_medico_nombre')
+                                ->label('Centro Medico')
+                                ->required(),
+                            TextInput::make('enfermedad_centro_medico_ruc')
+                                ->label('RUC')
+                                ->required(),
+                            DatePicker::make('enfermedad_fecha_ingreso')
+                                ->required(),
+                            TextInput::make('enfermedad_medico_nombre')
+                                ->label('Medico')
+                                ->required(),
+                            TextInput::make('enfermedad_medico_numero_colegiatura')
+                                ->label('N° Colegiatura')
+                                ->numeric()
+                                ->required(),
+                        ]),
+                ]),
         ];
     }
 }
