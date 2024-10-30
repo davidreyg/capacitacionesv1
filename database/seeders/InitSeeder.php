@@ -38,6 +38,7 @@ class InitSeeder extends Seeder
         // NOTIFICACIONES
         $scat = base_path('database/sql/SCAT.sql');
         $anexoUno = base_path('database/sql/anexo_uno.sql');
+        $preguntas = base_path('database/sql/declaracion_preguntas.sql');
 
         if (file_exists($items)) {
             $sql = file_get_contents($items);
@@ -129,6 +130,10 @@ class InitSeeder extends Seeder
         }
         if (file_exists($anexoUno)) {
             $sql = file_get_contents($anexoUno);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($preguntas)) {
+            $sql = file_get_contents($preguntas);
             \DB::unprepared($sql);
         }
     }
