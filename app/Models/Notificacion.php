@@ -79,4 +79,9 @@ class Notificacion extends Model implements HasMedia
         return $this->hasOne(AnexoUno::class);
     }
 
+    public function declaracions()
+    {
+        return $this->hasMany(Declaracion::class);
+    }
+
 }

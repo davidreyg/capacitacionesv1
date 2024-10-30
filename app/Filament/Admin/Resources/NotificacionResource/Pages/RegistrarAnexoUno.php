@@ -38,6 +38,7 @@ use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
+use Guava\FilamentNestedResources\Concerns\NestedPage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use JaOcero\RadioDeck\Forms\Components\RadioDeck;
@@ -45,7 +46,9 @@ use Livewire\Attributes\Locked;
 
 class RegistrarAnexoUno extends EditRecord
 {
+    use NestedPage;
     use EditRecord\Concerns\HasWizard;
+
     protected static string $resource = NotificacionResource::class;
 
     #[Locked]

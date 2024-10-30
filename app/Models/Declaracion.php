@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Declaracion\TipoDeclaranteEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,8 @@ class Declaracion extends Model
         'hora_ocurrencia',
         'lugar_ocurrencia',
         'reportado_jefe_inmediato',
+        'empleado_id',
+        'user_id',
     ];
 
     /**
@@ -29,15 +32,20 @@ class Declaracion extends Model
      */
     protected $casts = [
         'reportado_jefe_inmediate' => 'boolean',
+        'tipo_declarante' => TipoDeclaranteEnum::class,
     ];
 
-    /**
-     * The preguntas that belong to the Declaracion
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
     public function preguntas()
     {
         return $this->belongsToMany(Pregunta::class)->withPivot(['respuesta']);
+    }
+    public function declaracionPreguntas()
+    {
+        return $this->hasMany(DeclaracionPregunta::class);
+    }
+
+    public function notificacion()
+    {
+        return $this->belongsTo(Notificacion::class);
     }
 }

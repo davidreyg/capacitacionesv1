@@ -21,6 +21,7 @@ use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Pages\EditRecord;
+use Guava\FilamentNestedResources\Concerns\NestedPage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 
@@ -28,6 +29,8 @@ use Illuminate\Support\HtmlString;
 
 class ScatNotificacion extends EditRecord
 {
+    use NestedPage;
+
     protected static string $resource = NotificacionResource::class;
 
     protected static string $view = 'filament.admin.resources.notificacion-resource.pages.scat-notificacion';

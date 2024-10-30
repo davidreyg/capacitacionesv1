@@ -12,15 +12,17 @@ return new class extends Migration {
     {
         Schema::create('declaracions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('empleado_id')->constrained();
             $table->string('tipo_declarante', 100);
             $table->date('fecha_ocurrencia');
-            $table->time('hora_hocurrencia');
+            $table->time('hora_ocurrencia');
             $table->string('lugar_ocurrencia');
             $table->boolean('reportado_jefe_inmediato');
 
             // PREGUNTAS
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('notificacion_id')->constrained();
             $table->timestamps();
         });
     }

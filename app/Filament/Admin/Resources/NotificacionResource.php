@@ -12,18 +12,25 @@ use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Pages\SubNavigationPosition;
+use Guava\FilamentNestedResources\Ancestor;
+use Guava\FilamentNestedResources\Concerns\NestedResource;
 use Illuminate\Database\Eloquent\Builder;
 
 class NotificacionResource extends Resource implements HasShieldPermissions
 {
+    use NestedResource;
+
     protected static ?string $model = Notificacion::class;
     protected static ?string $pluralModelLabel = 'Notificaciones';
     protected static ?string $navigationIcon = 'tabler-walk';
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function form(Form $form): Form
     {
@@ -108,7 +115,18 @@ class NotificacionResource extends Resource implements HasShieldPermissions
             'view' => Pages\ViewNotificacion::route('/{record}'),
             'scat-notificacion' => Pages\ScatNotificacion::route('/{record}/scat'),
             'anexo-uno' => Pages\RegistrarAnexoUno::route('/{record}/anexo-uno'),
+            'declaracions' => Pages\GestionarNotificacionDeclaraciones::route('/{record}/declaracions'),
+            'declaracions.create' => Pages\CreateNotificacionDeclaracion::route('/{record}/declaracions/create'),
         ];
+    }
+
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+                // Pages\EditNotificacion::class,
+            Pages\ViewNotificacion::class,
+            Pages\GestionarNotificacionDeclaraciones::class,
+        ]);
     }
 
     // FIXME: Esto va a cambiar porque querre ver los estados verificado en adelante.
@@ -127,5 +145,10 @@ class NotificacionResource extends Resource implements HasShieldPermissions
         }
 
         return $query;
+    }
+
+    public static function getAncestor(): ?Ancestor
+    {
+        return null;
     }
 }
