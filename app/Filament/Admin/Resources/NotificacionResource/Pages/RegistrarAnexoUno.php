@@ -56,31 +56,39 @@ class RegistrarAnexoUno extends EditRecord
 
     public function mount(int|string $record): void
     {
-        $temp = $this->resolveRecord($record);
-        $this->record = $temp->anexoUno ?? new AnexoUno();
-        // dd($record);
-        $this->parent = $this->resolveRecord($record);
-        $this->authorizeAccess();
+        parent::mount($record);
+        // $temp = $this->resolveRecord($record);
+        // $this->record = $temp->anexoUno ?? new AnexoUno();
+        // $this->parent = $this->resolveRecord($record);
+        // $this->authorizeAccess();
 
-        $this->fillForm();
+        // $this->fillForm();
 
-        $this->previousUrl = url()->previous();
+        // $this->previousUrl = url()->previous();
     }
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        if (isset($this->getRecord()->id)) {
-            $establecimientoEmpleador = $this->getRecord()->establecimientoEmpleador;
-            $establecimientoLaboral = $this->getRecord()->establecimientoLaboral;
-            $empleado = $this->getRecord()->empleado;
-            $riesgo_ids = $this->getRecord()->riesgos->map(fn($riesgo) => $riesgo->id);
-            $consecuencia_ids = $this->getRecord()->consecuencias->map(fn($consecuencia) => $consecuencia->id);
+        $anexoUno = $this->getRecord()->anexoUno;
+        // dd($anexoUno->id);
+        if (isset($anexoUno->id)) {
+            $establecimientoEmpleador = $anexoUno->establecimientoEmpleador;
+            $establecimientoLaboral = $anexoUno->establecimientoLaboral;
+            $empleado = $anexoUno->empleado;
+            $riesgo_ids = $anexoUno->riesgos->map(fn($riesgo) => $riesgo->id);
+            $consecuencia_ids = $anexoUno->consecuencias->map(fn($consecuencia) => $consecuencia->id);
+
+            $data['tipo'] = $anexoUno->tipo;
+            $data['fecha_presentacion'] = $anexoUno->fecha_presentacion;
+
             //setear PASO 1 si ya existe:
+            $data['establecimiento_empleador_id'] = $establecimientoEmpleador->id;
             $data['empleador_ruc'] = $establecimientoEmpleador->ruc;
             $data['empleador_direccion'] = $establecimientoEmpleador->direccion;
             $data['empleador_anexo_uno_actividad_economica_id'] = $establecimientoEmpleador->anexo_uno_actividad_economica_id;
             $data['empleador_telefono'] = $establecimientoEmpleador->telefono;
             //setear PASO 2 si ya existe:
+            $data['establecimiento_laboral_id'] = $establecimientoLaboral->id;
             $data['laboral_ruc'] = $establecimientoLaboral->ruc;
             $data['laboral_direccion'] = $establecimientoLaboral->direccion;
             $data['laboral_anexo_uno_actividad_economica_id'] = $establecimientoLaboral->anexo_uno_actividad_economica_id;
@@ -95,8 +103,27 @@ class RegistrarAnexoUno extends EditRecord
             $data['empleado_asegurado'] = $empleado->asegurado;
             $data['empleado_telefono'] = $empleado->telefono;
 
-            $data['riesgo_ids'] = $riesgo_ids;
+            //PASO 5
+            $data['fecha_hora_accidente'] = $anexoUno->fecha_hora_accidente;
+            $data['anexo_uno_forma_accidente_id'] = $anexoUno->anexo_uno_forma_accidente_id;
+            $data['anexo_uno_agente_causante_id'] = $anexoUno->anexo_uno_agente_causante_id;
+            $data['accidente_centro_medico_nombre'] = $anexoUno->accidente_centro_medico_nombre;
+            $data['accidente_centro_medico_ruc'] = $anexoUno->accidente_centro_medico_ruc;
+            $data['accidente_fecha_ingreso'] = $anexoUno->accidente_fecha_ingreso;
+            $data['anexo_uno_parte_afectada_id'] = $anexoUno->anexo_uno_parte_afectada_id;
+            $data['anexo_uno_naturaleza_lesion_id'] = $anexoUno->anexo_uno_naturaleza_lesion_id;
+            $data['accidente_medico_nombre'] = $anexoUno->accidente_medico_nombre;
+            $data['accidente_medico_numero_colegiatura'] = $anexoUno->accidente_medico_numero_colegiatura;
             $data['consecuencia_ids'] = $consecuencia_ids;
+
+            // paso  6
+            $data['anexo_uno_enfermedades_trabajo_id'] = $anexoUno->anexo_uno_enfermedades_trabajo_id;
+            $data['enfermedad_centro_medico_nombre'] = $anexoUno->enfermedad_centro_medico_nombre;
+            $data['enfermedad_centro_medico_ruc'] = $anexoUno->enfermedad_centro_medico_ruc;
+            $data['enfermedad_fecha_ingreso'] = $anexoUno->enfermedad_fecha_ingreso;
+            $data['enfermedad_medico_nombre'] = $anexoUno->enfermedad_medico_nombre;
+            $data['enfermedad_medico_numero_colegiatura'] = $anexoUno->enfermedad_medico_numero_colegiatura;
+            $data['riesgo_ids'] = $riesgo_ids;
 
         }
 
@@ -105,8 +132,16 @@ class RegistrarAnexoUno extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
+        $x = new Notificacion();
+        // $x->anexoUno()->update
         $dataSinRelaciones = \Arr::except($data, ['riesgo_ids', 'consecuencia_ids']);
-        $record = $this->parent->anexoUno()->updateOrCreate($dataSinRelaciones);
+
+        if ($this->getRecord()->anexoUno) {
+            $this->getRecord()->anexoUno()->update($dataSinRelaciones);
+            $record = $this->getRecord()->anexoUno;
+        } else {
+            $record = $this->getRecord()->anexoUno()->updateOrCreate($dataSinRelaciones);
+        }
         // Guardar relationships...
         $record->riesgos()->sync($data['riesgo_ids']);
         $record->consecuencias()->sync($data['consecuencia_ids']);

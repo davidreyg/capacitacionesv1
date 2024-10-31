@@ -126,6 +126,7 @@ class NotificacionResource extends Resource implements HasShieldPermissions
                 // Pages\EditNotificacion::class,
             Pages\ViewNotificacion::class,
             Pages\GestionarNotificacionDeclaraciones::class,
+            Pages\RegistrarAnexoUno::class,
         ]);
     }
 

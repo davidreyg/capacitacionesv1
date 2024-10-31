@@ -81,9 +81,16 @@ class DeclaracionResource extends Resource
                                     ]
                                 )
                             )
+                            ->mutateRelationshipDataBeforeFillUsing(function (array $data, Declaracion $record): array {
+                                $pregunta = $record->preguntas->find($data['pregunta_id']);
+                                $data['nombre'] = $pregunta->nombre;
+
+                                return $data;
+                            })
                             ->schema([
                                 Textarea::make('respuesta'),
                                 Hidden::make('pregunta_id'),
+                                Hidden::make('nombre'),
                             ])
                             ->itemLabel(fn(array $state): ?string => $state['nombre'] ?? null),
 
