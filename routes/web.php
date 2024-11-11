@@ -3,8 +3,10 @@
 use App\Actions\GenerarPdf;
 use App\Enums\Setting\ReportType;
 use App\Models\Evento;
+use App\Models\RegistroAccidente\RegistroAccidente;
 use App\Services\AsistenciaDataSource\AsistenciaDataSourceFactory;
 use App\Enums\Services\AsistenciaDataSourceType;
+use App\View\Components\FichaRegistroAccidente;
 use Filament\Facades\Filament;
 use Filament\Notifications\Events\DatabaseNotificationsSent;
 use Filament\Notifications\Notification;
@@ -64,7 +66,7 @@ Route::get('/ficha-capacitacion-pdf', function (Request $request) {
     $evento = Evento::findOrFail($eventoId);
     // return view('components.layouts.pdf', ['current' => ReportType::FICHA_CAPACITACION->value, 'datos' => $evento])->render();
     // Genera el PDF y retorna la respuesta de descarga
-    return GenerarPdf::make()->handle(ReportType::FICHA_CAPACITACION, $evento);
+    return GenerarPdf::make()->filename('reporte_asistencia')->handle(ReportType::FICHA_CAPACITACION, $evento);
 })
     ->name('ficha-capacitacion');
 
@@ -72,6 +74,15 @@ Route::get('/asistencia', function () {
     $dataSource = AsistenciaDataSourceFactory::make(AsistenciaDataSourceType::FAKE);
     return view('components.layouts.pdf', ['current' => ReportType::ASISTENCIA->value, 'datos' => $dataSource->getData(1)])->render();
 });
+
+Route::get('/pdf/registro-accidente/{id}', function (int $id) {
+    $registroAccidente = RegistroAccidente::findOrFail($id);
+    return GenerarPdf::make()
+        ->filename('registro_accidente')
+        ->header('components.pdf.header-registro-accidente')
+        ->handle(ReportType::FICHA_REGISTRO_ACCIDENTE, $registroAccidente);
+})->middleware(['auth']);
+
 Route::get('/test', function () {
 
     $recipient = auth()->user();

@@ -8,6 +8,7 @@ enum ReportType: string implements HasLabel
 {
     case ASISTENCIA = 'reporte-asistencia';
     case FICHA_CAPACITACION = 'ficha-capacitacion';
+    case FICHA_REGISTRO_ACCIDENTE = 'ficha-registro-accidente';
 
     public function getLabel(): ?string
     {

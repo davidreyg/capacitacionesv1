@@ -100,13 +100,10 @@ class RegistroAccidente extends EditRecord
 
             // PASO 3
             $data['empleado_numero_documento'] = $empleado->numero_documento;
-            // $data['empleado_direccion'] = $empleado->direccion;
-            // $data['empleado_anexo_uno_categoria_trabajador_id'] = $empleado->anexo_uno_categoria_trabajador_id;
-            // $data['empleado_essalud'] = $empleado->essalud;
-            // $data['empleado_eps'] = $empleado->eps;
+            $data['empleado_antiguedad_puesto'] = $empleado->antiguedad_puesto;
+            $data['empleado_turno'] = $empleado->turno;
+            $data['empleado_tiempo_experiencia'] = $empleado->tiempo_experiencia;
             $data['empleado_sexo'] = $empleado->sexo;
-            // $data['empleado_asegurado'] = $empleado->asegurado;
-            // $data['empleado_telefono'] = $empleado->telefono;
 
             //PASO 4 INVESTIGAICON DEL ACCIDENTE DE TRABAJO
             $data['fecha_hora_accidente'] = $registroAccidente->fecha_hora_accidente;
@@ -327,9 +324,15 @@ class RegistroAccidente extends EditRecord
                             if ($empleado) {
                                 $set('empleado_numero_documento', $empleado->numero_documento);
                                 $set('empleado_sexo', $empleado->sexo);
+                                $set('empleado_antiguedad_puesto', $empleado->antiguedad_puesto);
+                                $set('empleado_turno', $empleado->turno);
+                                $set('empleado_tiempo_experiencia', $empleado->tiempo_experiencia);
                             } else {
                                 $set('empleado_numero_documento', NULL);
                                 $set('empleado_sexo', NULL);
+                                $set('empleado_antiguedad_puesto', NULL);
+                                $set('empleado_turno', NULL);
+                                $set('empleado_tiempo_experiencia', NULL);
                             }
                         })
                         ->suffixAction(
@@ -351,6 +354,21 @@ class RegistroAccidente extends EditRecord
                         ->required(),
                     TextInput::make('empleado_sexo')
                         ->label('Genero')
+                        ->dehydrated()
+                        ->disabled()
+                        ->required(),
+                    TextInput::make('empleado_antiguedad_puesto')
+                        ->label('Antiguedad en el puesto')
+                        ->dehydrated()
+                        ->disabled()
+                        ->required(),
+                    TextInput::make('empleado_turno')
+                        ->label('Turno')
+                        ->dehydrated()
+                        ->disabled()
+                        ->required(),
+                    TextInput::make('empleado_tiempo_experiencia')
+                        ->label('Tiempo de experiencia en el puesto')
                         ->dehydrated()
                         ->disabled()
                         ->required(),

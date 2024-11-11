@@ -105,6 +105,17 @@ class EmpleadoResource extends Resource
             TextInput::make('direccion')
                 ->required()
                 ->maxLength(100),
+            TextInput::make('tiempo_experiencia')
+                ->required()
+                ->maxLength(100),
+            TextInput::make('antiguedad_puesto')
+                ->required()
+                ->numeric()
+                ->minValue(0)
+                ->maxLength(100),
+            Select::make('turno')
+                ->options(['T' => 'Tarde', 'M' => 'Mañana'])
+                ->required(),
         ];
     }
 

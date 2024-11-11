@@ -3,6 +3,8 @@
 namespace App\Models\RegistroAccidente;
 
 use App\Enums\RegistroAccidente\CausasGrupoEnum;
+use App\Enums\RegistroAccidente\GradoAccidenteEnum;
+use App\Enums\RegistroAccidente\GravedadEnum;
 use App\Models\Empleado;
 use App\Models\Establecimiento;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,9 +16,23 @@ class RegistroAccidente extends Model
 
     protected $guarded = [];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'grado_accidente' => GradoAccidenteEnum::class,
+        'gravedad_accidente' => GravedadEnum::class,
+    ];
     public function registroAccidenteCausaBasicas()
     {
         return $this->hasMany(RegistroAccidenteCausa::class)->where('grupo', CausasGrupoEnum::CAUSAS_BASICAS);
+    }
+
+    public function registroAccidenteCausas()
+    {
+        return $this->hasMany(RegistroAccidenteCausa::class);
     }
 
     public function registroAccidenteCausaInmediatas()

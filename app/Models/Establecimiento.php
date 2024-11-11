@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Establecimiento\TipoEstablecimientoEnum;
+use App\Models\AnexoUno\AnexoUnoActividadEconomica;
 use App\Models\Ubigeo\Distrito;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -49,6 +50,11 @@ class Establecimiento extends Model
     public function distrito()
     {
         return $this->belongsTo(Distrito::class);
+    }
+
+    public function anexoUnoActividadEconomica()
+    {
+        return $this->belongsTo(AnexoUnoActividadEconomica::class);
     }
 
     public static function obtenerPadre(string|null $establecimiento): string|null

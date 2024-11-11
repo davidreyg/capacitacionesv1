@@ -30,6 +30,10 @@ return new class extends Migration {
             $table->boolean('asegurado')->default(false);
             $table->string('essalud', 100)->nullable();
             $table->string('eps', 100)->nullable();
+            // Registro accidente
+            $table->integer('antiguedad_puesto')->unsigned()->nullable();
+            $table->string('turno')->nullable();
+            $table->integer('tiempo_experiencia')->unsigned()->nullable();
 
             $table->foreignId('establecimiento_id')->constrained();
             $table->foreignId('unidad_organica_id')->constrained();
