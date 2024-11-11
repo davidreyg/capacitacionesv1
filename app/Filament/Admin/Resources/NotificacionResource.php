@@ -115,6 +115,7 @@ class NotificacionResource extends Resource implements HasShieldPermissions
             'view' => Pages\ViewNotificacion::route('/{record}'),
             'scat-notificacion' => Pages\ScatNotificacion::route('/{record}/scat'),
             'anexo-uno' => Pages\RegistrarAnexoUno::route('/{record}/anexo-uno'),
+            'registro_accidente' => Pages\RegistroAccidente::route('/{record}/registro-accidente'),
             'declaracions' => Pages\GestionarNotificacionDeclaraciones::route('/{record}/declaracions'),
             'declaracions.create' => Pages\CreateNotificacionDeclaracion::route('/{record}/declaracions/create'),
         ];
@@ -127,6 +128,7 @@ class NotificacionResource extends Resource implements HasShieldPermissions
             Pages\ViewNotificacion::class,
             Pages\GestionarNotificacionDeclaraciones::class,
             Pages\RegistrarAnexoUno::class,
+            Pages\RegistroAccidente::class,
         ]);
     }
 
