@@ -34,6 +34,9 @@ return new class extends Migration {
             $table->integer('antiguedad_puesto')->unsigned()->nullable();
             $table->string('turno')->nullable();
             $table->integer('tiempo_experiencia')->unsigned()->nullable();
+            // DECLARACIONES
+            $table->string('grado_instruccion')->nullable();
+
 
             $table->foreignId('establecimiento_id')->constrained();
             $table->foreignId('unidad_organica_id')->constrained();

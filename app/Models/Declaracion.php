@@ -39,6 +39,17 @@ class Declaracion extends Model
     {
         return $this->belongsToMany(Pregunta::class)->withPivot(['respuesta']);
     }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function declaracionPreguntas()
     {
         return $this->hasMany(DeclaracionPregunta::class);

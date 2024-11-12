@@ -17,6 +17,7 @@ class GenerarPdf
     private float $height;
     private ?string $header;
     private string $filename;
+    private string $marginTop;
 
     public function handle(ReportType $tipoReporte, object $data)
     {
@@ -28,7 +29,7 @@ class GenerarPdf
             ->footer(Stream::string('footer.html', $this->footer()))
             ->paperSize(8.27, 11.7)
             // ->landscape()
-            ->margins('90px', '50px', '30px', '30px')
+            ->margins($this->getMarginTop(), '50px', '30px', '30px')
             ->printBackground()
             ->preferCssPageSize()
             ->assets(Stream::path(public_path(vite('resources/css/pdf/pdf.css', hotServer: false, relative: true)), 'pdf.css'))
@@ -65,6 +66,11 @@ class GenerarPdf
         $this->filename = $filename;
         return $this;
     }
+    public function marginTop(string $marginTop)
+    {
+        $this->marginTop = $marginTop;
+        return $this;
+    }
 
     public function getHeader()
     {
@@ -82,6 +88,15 @@ class GenerarPdf
             $this->filename = 'DocumentoPdf';
         }
         return $this->filename;
+    }
+
+    public function getMarginTop()
+    {
+        // Verifica si el header ya está inicializado, si no, lo inicializa.
+        if (empty($this->marginTop)) {
+            $this->marginTop = '90px';
+        }
+        return $this->marginTop;
     }
 
 

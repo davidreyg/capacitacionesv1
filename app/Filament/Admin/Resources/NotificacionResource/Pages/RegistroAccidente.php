@@ -59,6 +59,21 @@ class RegistroAccidente extends EditRecord
 
     protected static string $resource = NotificacionResource::class;
 
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\DeleteAction::make(),
+            Actions\Action::make('imprimir')
+                ->label('Imprimir')
+                ->icon('heroicon-o-printer')
+                ->visible(fn(Notificacion $record): bool => !!$record->registroAccidente)
+                ->url(fn(Notificacion $record): string => route('registro-accidente-pdf', [
+                    'id' => $record->registroAccidente ? $record->registroAccidente->id : null
+                ]))
+                ->openUrlInNewTab(),
+        ];
+    }
+
     protected function mutateFormDataBeforeFill(array $data): array
     {
         $registroAccidente = $this->getRecord()->registroAccidente;
@@ -413,16 +428,18 @@ class RegistroAccidente extends EditRecord
                         // ->relationship('registroAccidenteCausaBasica')
                         ->schema([
                             Select::make('tipo')
-                                ->options(CausasTipoEnum::class),
-                            Textarea::make('descripcion'),
+                                ->options(CausasTipoEnum::class)
+                                ->required(),
+                            Textarea::make('descripcion')->required(),
                             Hidden::make('grupo')->default(CausasGrupoEnum::CAUSAS_BASICAS),
                         ]),
                     Repeater::make('registroAccidenteCausaInmediatas')
                         // ->relationship('registroAccidenteCausaInmediata')
                         ->schema([
                             Select::make('tipo')
-                                ->options(CausasTipoEnum::class),
-                            Textarea::make('descripcion'),
+                                ->options(CausasTipoEnum::class)
+                                ->required(),
+                            Textarea::make('descripcion')->required(),
                             Hidden::make('grupo')->default(CausasGrupoEnum::CAUSAS_INMEDIATAS),
                         ])
                 ])->columns(2),
@@ -431,20 +448,28 @@ class RegistroAccidente extends EditRecord
                     Repeater::make('registroAccidenteMedidas')
                         ->hiddenLabel()
                         ->schema([
-                            TextInput::make('nombre'),
-                            TextInput::make('responsable'),
-                            DatePicker::make('fecha_ejecucion'),
-                            TextInput::make('estado'),
-                        ])->columns(4)
+                            TextInput::make('nombre')->required(),
+                            TextInput::make('responsable')->required(),
+                            DatePicker::make('fecha_ejecucion')->required(),
+                            TextInput::make('estado')->required(),
+                        ])
+                        ->required()
+                        ->columns(4)
                 ]),
             Step::make('Responsable del registro y la investigacion')
                 ->schema([
                     Repeater::make('registroAccidenteResponsables')
                         ->hiddenLabel()
                         ->schema([
-                            Select::make('empleado_id')->options(Empleado::pluck('nombres', 'id')),
-                            DatePicker::make('fecha'),
-                        ])->columns(2)
+                            Select::make('empleado_id')
+                                ->options(Empleado::pluck('nombres', 'id'))
+                                ->searchable(['nombres'])
+                                ->required(),
+                            DatePicker::make('fecha')
+                                ->required(),
+                        ])
+                        ->required()
+                        ->columns(2)
                 ]),
         ];
     }

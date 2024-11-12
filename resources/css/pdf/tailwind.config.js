@@ -7,6 +7,7 @@ export default {
         "./resources/views/components/reporte-asistencia.blade.php",
         "./resources/views/components/ficha-capacitacion.blade.php",
         "./resources/views/components/ficha-registro-accidente.blade.php",
+        "./resources/views/components/declaracion-testigo-pdf.blade.php",
     ],
     plugins: [require('daisyui'), forms, typography],
 };
