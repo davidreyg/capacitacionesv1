@@ -18,6 +18,9 @@ class GenerarPdf
     private ?string $header;
     private string $filename;
     private string $marginTop;
+    private string $marginBottom;
+    private string $marginLeft;
+    private string $marginRight;
 
     public function handle(ReportType $tipoReporte, object $data)
     {
@@ -29,7 +32,7 @@ class GenerarPdf
             ->footer(Stream::string('footer.html', $this->footer()))
             ->paperSize(8.27, 11.7)
             // ->landscape()
-            ->margins($this->getMarginTop(), '50px', '30px', '30px')
+            ->margins($this->getMarginTop(), $this->getMarginBottom(), $this->getMarginLeft(), $this->getMarginRight())
             ->printBackground()
             ->preferCssPageSize()
             ->assets(Stream::path(public_path(vite('resources/css/pdf/pdf.css', hotServer: false, relative: true)), 'pdf.css'))
@@ -71,6 +74,21 @@ class GenerarPdf
         $this->marginTop = $marginTop;
         return $this;
     }
+    public function marginBottom(string $marginBottom)
+    {
+        $this->marginBottom = $marginBottom;
+        return $this;
+    }
+    public function marginLeft(string $marginLeft)
+    {
+        $this->marginLeft = $marginLeft;
+        return $this;
+    }
+    public function marginRight(string $marginRight)
+    {
+        $this->marginRight = $marginRight;
+        return $this;
+    }
 
     public function getHeader()
     {
@@ -97,6 +115,30 @@ class GenerarPdf
             $this->marginTop = '90px';
         }
         return $this->marginTop;
+    }
+    public function getMarginBottom()
+    {
+        // Verifica si el header ya está inicializado, si no, lo inicializa.
+        if (empty($this->marginBottom)) {
+            $this->marginBottom = '50px';
+        }
+        return $this->marginBottom;
+    }
+    public function getMarginLeft()
+    {
+        // Verifica si el header ya está inicializado, si no, lo inicializa.
+        if (empty($this->marginLeft)) {
+            $this->marginLeft = '30px';
+        }
+        return $this->marginLeft;
+    }
+    public function getMarginRight()
+    {
+        // Verifica si el header ya está inicializado, si no, lo inicializa.
+        if (empty($this->marginRight)) {
+            $this->marginRight = '30px';
+        }
+        return $this->marginRight;
     }
 
 

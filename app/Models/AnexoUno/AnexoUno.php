@@ -41,6 +41,9 @@ class AnexoUno extends Model
     protected $casts = [
         'tipo' => TipoAnexoUno::class,
         'fecha_presentacion' => 'date',
+        'fecha_hora_accidente' => 'datetime',
+        'accidente_fecha_ingreso' => 'date',
+        'enfermedad_fecha_ingreso' => 'date',
     ];
 
     public function notificacion()
@@ -61,6 +64,31 @@ class AnexoUno extends Model
     public function empleado()
     {
         return $this->belongsTo(Empleado::class);
+    }
+
+    public function anexoUnoFormaAccidente()
+    {
+        return $this->belongsTo(AnexoUnoFormaAccidente::class);
+    }
+
+    public function anexoUnoAgenteCausante()
+    {
+        return $this->belongsTo(AnexoUnoAgenteCausante::class);
+    }
+
+    public function anexoUnoParteAfectada()
+    {
+        return $this->belongsTo(AnexoUnoParteAfectada::class);
+    }
+
+    public function anexoUnoNaturalezaLesion()
+    {
+        return $this->belongsTo(AnexoUnoNaturalezaLesion::class);
+    }
+
+    public function anexoUnoEnfermedadesTrabajo()
+    {
+        return $this->belongsTo(AnexoUnoEnfermedadesTrabajo::class);
     }
 
     public function consecuencias()

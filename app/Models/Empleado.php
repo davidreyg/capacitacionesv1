@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\AnexoUno\AnexoUnoCategoriaTrabajador;
 use App\Models\Empleado\EmpleadoPatologia;
 use App\Models\Empleado\EmpleadoVacuna;
 use App\Models\Laboratorio\EmpleadoPrueba;
 use App\Models\Laboratorio\Prueba;
+use App\Models\Ubigeo\Distrito;
 use App\Traits\IsEstablecimientoOwned;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,6 +45,10 @@ class Empleado extends Model
         'desplazamiento_id',
         'regimen_laboral_id',
         'funcion_id',
+    ];
+
+    protected $casts = [
+        'asegurado' => 'boolean',
     ];
 
     public function getNombreCompletoAttribute(): string
@@ -84,6 +90,15 @@ class Empleado extends Model
     public function funcion()
     {
         return $this->belongsTo(Funcion::class);
+    }
+
+    public function distrito()
+    {
+        return $this->belongsTo(Distrito::class);
+    }
+    public function anexoUnoCategoriaTrabajador()
+    {
+        return $this->belongsTo(AnexoUnoCategoriaTrabajador::class);
     }
 
     public function eventos()

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Ubigeo\Distrito;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,7 @@ class EmpleadoFactory extends Factory
     protected static $desplazamientoIds = null;
     protected static $regimenLaboralIds = null;
     protected static $funcionIds = null;
+    protected static $distritoIds = null;
 
     /**
      * Método para inicializar los IDs.
@@ -33,6 +35,7 @@ class EmpleadoFactory extends Factory
             self::$desplazamientoIds = \DB::table('desplazamientos')->pluck('id')->toArray();
             self::$regimenLaboralIds = \DB::table('regimen_laborals')->pluck('id')->toArray();
             self::$funcionIds = \DB::table('funcions')->pluck('id')->toArray();
+            self::$distritoIds = Distrito::pluck('id')->toArray();
         }
     }
 
@@ -66,6 +69,7 @@ class EmpleadoFactory extends Factory
             'desplazamiento_id' => fake()->randomElement(self::$desplazamientoIds),
             'regimen_laboral_id' => fake()->randomElement(self::$regimenLaboralIds),
             'funcion_id' => fake()->randomElement(self::$funcionIds),
+            'distrito_id' => fake()->randomElement(self::$distritoIds),
         ];
     }
 }

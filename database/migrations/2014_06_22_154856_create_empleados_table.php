@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->string('email', 100)->nullable();
             $table->string('telefono', 100)->nullable();
             $table->string('direccion', 255)->nullable();
+            $table->string('distrito_id', 255);
 
             //anexo 1
             $table->foreignId('anexo_uno_categoria_trabajador_id')->nullable()->constrained();

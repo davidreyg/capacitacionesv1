@@ -67,6 +67,20 @@ class RegistrarAnexoUno extends EditRecord
         // $this->previousUrl = url()->previous();
     }
 
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\Action::make('imprimir')
+                ->label('Imprimir')
+                ->icon('heroicon-o-printer')
+                ->visible(fn(Notificacion $record): bool => !!$record->anexoUno)
+                ->url(fn(Notificacion $record): string => route('anexo-uno-pdf', [
+                    'id' => $record->anexoUno ? $record->anexoUno->id : null
+                ]))
+                ->openUrlInNewTab(),
+        ];
+    }
+
     protected function mutateFormDataBeforeFill(array $data): array
     {
         $anexoUno = $this->getRecord()->anexoUno;

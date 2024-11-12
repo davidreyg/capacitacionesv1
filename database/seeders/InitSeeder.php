@@ -104,6 +104,10 @@ class InitSeeder extends Seeder
             $sql = file_get_contents($funciones);
             \DB::unprepared($sql);
         }
+        if (file_exists($anexoUno)) {
+            $sql = file_get_contents($anexoUno);
+            \DB::unprepared($sql);
+        }
         if (file_exists($empleados)) {
             $sql = file_get_contents($empleados);
             \DB::unprepared($sql);
@@ -126,10 +130,6 @@ class InitSeeder extends Seeder
         }
         if (file_exists($vacunas)) {
             $sql = file_get_contents($vacunas);
-            \DB::unprepared($sql);
-        }
-        if (file_exists($anexoUno)) {
-            $sql = file_get_contents($anexoUno);
             \DB::unprepared($sql);
         }
         if (file_exists($preguntas)) {

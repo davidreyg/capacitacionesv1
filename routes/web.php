@@ -2,6 +2,7 @@
 
 use App\Actions\GenerarPdf;
 use App\Enums\Setting\ReportType;
+use App\Models\AnexoUno\AnexoUno;
 use App\Models\Declaracion;
 use App\Models\Evento;
 use App\Models\RegistroAccidente\RegistroAccidente;
@@ -92,6 +93,17 @@ Route::get('/pdf/declaracion-testigo/{id}', function (int $id) {
         ->marginTop('100px')
         ->handle(ReportType::DECLARACION_TESTIGO_PDF, $declaracion);
 })->middleware(['auth'])->name('declaracion-pdf');
+
+Route::get('/pdf/anexo-uno/{id}', function (int $id) {
+    $anexoUno = AnexoUno::findOrFail($id);
+    return GenerarPdf::make()
+        ->filename('anexo_uno')
+        ->header('components.pdf.header-anexo-uno')
+        ->marginTop('90px')
+        ->marginLeft('100px')
+        ->marginRight('100px')
+        ->handle(ReportType::ANEXO_UNO, $anexoUno);
+})->middleware(['auth'])->name('anexo-uno-pdf');
 
 Route::get('/test', function () {
 
