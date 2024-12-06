@@ -45,6 +45,7 @@ class Empleado extends Model
         'desplazamiento_id',
         'regimen_laboral_id',
         'funcion_id',
+        'distrito_id',
     ];
 
     protected $casts = [

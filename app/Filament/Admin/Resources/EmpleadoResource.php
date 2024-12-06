@@ -6,11 +6,16 @@ use App\Filament\Admin\Resources\EmpleadoResource\Pages;
 use App\Filament\Admin\Resources\EmpleadoResource\RelationManagers;
 use App\Models\AnexoUno\AnexoUnoCategoriaTrabajador;
 use App\Models\Empleado;
+use App\Models\Ubigeo\Departamento;
+use App\Models\Ubigeo\Distrito;
+use App\Models\Ubigeo\Provincia;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Pages\Page;
 use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Resource;
@@ -18,6 +23,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\HtmlString;
 
 class EmpleadoResource extends Resource
 {
@@ -50,9 +56,9 @@ class EmpleadoResource extends Resource
                 ->required(),
             DatePicker::make('fecha_alta')
                 ->required(),
-            TextInput::make('sexo')
-                ->required()
-                ->maxLength(1),
+            Select::make('turno')
+                ->options(['M' => 'Masculino', 'F' => 'Femenino'])
+                ->required(),
             TextInput::make('plaza')
                 ->required()
                 ->numeric(),
@@ -116,6 +122,33 @@ class EmpleadoResource extends Resource
             Select::make('turno')
                 ->options(['T' => 'Tarde', 'M' => 'Mañana'])
                 ->required(),
+            Select::make('departamento_id')
+                ->label('Departamento')
+                ->options(Departamento::pluck('nombre', 'id'))
+                ->live()
+                ->hint(new HtmlString(\Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="data.departamento_id" />')))
+                ->searchable()
+                ->dehydrated()
+                ->afterStateUpdated(function (Set $set) {
+                    $set('provincia_id', null);
+                    $set('distrito_id', null);
+                }),
+            Select::make('provincia_id')
+                ->label('Provincia')
+                ->options(function (Get $get) {
+                    return Provincia::where('departamento_id', $get('departamento_id'))->pluck('nombre', 'id');
+                })
+                ->live()
+                ->hint(new HtmlString(\Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="data.provincia_id" />')))
+                ->searchable()
+                ->dehydrated()
+                ->afterStateUpdated(fn(Set $set) => $set('distrito_id', null)),
+            Select::make('distrito_id')
+                ->label('Distrito')
+                ->options(function (Get $get) {
+                    return Distrito::where('provincia_id', $get('provincia_id'))->pluck('nombre', 'id');
+                })
+                ->searchable(),
         ];
     }
 
