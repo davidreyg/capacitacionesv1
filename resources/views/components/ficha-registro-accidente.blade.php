@@ -326,15 +326,15 @@
                     <tr>
                         <td class="border border-gray-300 px-2 py-1 text-center">ACCIDENTE LEVE</td>
                         <td class="border border-gray-300 px-2 py-1 text-center">
-                            {{ $registroAccidente->gravedad_accidente === App\Enums\RegistroAccidente\GravedadEnum::LEVE ? 'X' : '' }}
+                            {{ $registroAccidente->gravedad_accidente === App\Enums\RegistroAccidente\GravedadEnum::ACCIDENTE_LEVE ? 'X' : '' }}
                         </td>
                         <td class="border border-gray-300 px-2 py-1 text-center">ACCIDENTE INCAPACITANTE</td>
                         <td class="border border-gray-300 px-2 py-1 text-center">
-                            {{ $registroAccidente->gravedad_accidente === App\Enums\RegistroAccidente\GravedadEnum::INCAPACITANTE ? 'X' : '' }}
+                            {{ $registroAccidente->gravedad_accidente === App\Enums\RegistroAccidente\GravedadEnum::ACCIDENTE_INCAPACITANTE ? 'X' : '' }}
                         </td>
                         <td class="border border-gray-300 px-2 py-1 text-center">MORTAL</td>
                         <td class="border border-gray-300 px-2 py-1 text-center">
-                            {{ $registroAccidente->gravedad_accidente === App\Enums\RegistroAccidente\GravedadEnum::MORTAL ? 'X' : '' }}
+                            {{ $registroAccidente->gravedad_accidente === App\Enums\RegistroAccidente\GravedadEnum::ACCIDENTE_MORTAL ? 'X' : '' }}
                         </td>
 
                         <td class="border border-gray-300 px-2 py-1 text-center">TOTAL TEMPORAL</td>
