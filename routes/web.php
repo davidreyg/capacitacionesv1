@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\GenerarPdf;
+use App\DTO\IndicadorFiltroData;
 use App\Enums\Setting\ReportType;
 use App\Models\AnexoUno\AnexoUno;
 use App\Models\Declaracion;
@@ -8,10 +9,8 @@ use App\Models\Evento;
 use App\Models\RegistroAccidente\RegistroAccidente;
 use App\Services\AsistenciaDataSource\AsistenciaDataSourceFactory;
 use App\Enums\Services\AsistenciaDataSourceType;
-use App\View\Components\FichaRegistroAccidente;
+use Carbon\Carbon;
 use Filament\Facades\Filament;
-use Filament\Notifications\Events\DatabaseNotificationsSent;
-use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -105,14 +104,15 @@ Route::get('/pdf/anexo-uno/{id}', function (int $id) {
         ->handle(ReportType::ANEXO_UNO, $anexoUno);
 })->middleware(['auth'])->name('anexo-uno-pdf');
 
-Route::get('/test', function () {
-
-    $recipient = auth()->user();
-
-    Notification::make()
-        ->title('Saved successfully')
-        ->sendToDatabase($recipient);
-    event(new DatabaseNotificationsSent($recipient));
-    return dd(auth()->user());
-    // return view('components.layouts.pdf', ['current' => ReportType::ASISTENCIA->value, 'datos' => $dataSource->getData(1)])->render();
-});
+Route::get('/pdf/indicadores', function (Request $request) {
+    $startDate = Carbon::createFromFormat('Y-m', $request->fecha_inicio)->startOfMonth();
+    $endDate = Carbon::createFromFormat('Y-m', $request->fecha_fin)->endOfMonth();
+    return GenerarPdf::make()
+        ->landscape()
+        ->filename('indicadores')
+        ->header('components.pdf.header')
+        ->marginTop('90px')
+        ->marginLeft('20px')
+        ->marginRight('20px')
+        ->handle(ReportType::INDICADORES, new IndicadorFiltroData($startDate, $endDate));
+})->middleware(['auth'])->name('indicadores-pdf');
