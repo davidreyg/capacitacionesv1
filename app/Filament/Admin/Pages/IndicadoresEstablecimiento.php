@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 class IndicadoresEstablecimiento extends Page
 {
     use HasPageShield;
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'tabler-dashboard';
     protected static ?string $title = 'Indicador por Establecimiento';
 
     protected static string $view = 'filament.admin.pages.indicadores-establecimiento';
