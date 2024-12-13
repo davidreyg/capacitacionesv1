@@ -30,10 +30,10 @@ class IndicadoresPdf extends Component
     public array $fechasEnRango;
     public DateTime $startDate;
     public DateTime $endDate;
+    public ?string $establecimientoId;
 
     public function __construct(IndicadorFiltroData $datos, ReportSettings $reportSettings, GeneralSettings $generalSettings)
     {
-        // dd($datos->get('fecha_inicio')->);
         $this->reportSettings = $reportSettings;
         $this->fontFam = $this->reportSettings->font->getLabel();
         $this->fontHtml = $this->font($this->reportSettings->font->getLabel())->getFontHtml();
@@ -41,6 +41,7 @@ class IndicadoresPdf extends Component
         $this->generalSettings = $generalSettings;
         $this->startDate = $datos->fechaInicio;
         $this->endDate = $datos->fechaFin;
+        $this->establecimientoId = $datos->establecimientoId;
 
         // Crear un periodo mensual
         $meses = CarbonPeriod::create($this->startDate, '1 month', $this->endDate);
@@ -71,6 +72,12 @@ class IndicadoresPdf extends Component
             ->join('anexo_unos', 'notificacions.id', '=', 'anexo_unos.notificacion_id')
             ->join('anexo_uno_consecuencia', 'anexo_unos.id', '=', 'anexo_uno_consecuencia.anexo_uno_id')
             ->join('consecuencias', 'anexo_uno_consecuencia.consecuencia_id', '=', 'consecuencias.id')
+            ->when(isset($this->establecimientoId), function ($query) {
+                return $query
+                    ->join('empleados', 'notificacions.empleado_id', '=', 'empleados.id') // Join con empleados
+                    ->join('establecimientos', 'empleados.establecimiento_id', '=', 'establecimientos.id') // Join con establecimientos
+                    ->where('establecimientos.id', $this->establecimientoId); // Filtro dinámico por establecimiento_id
+            })
             ->where('consecuencias.nombre', GravedadEnum::ACCIDENTE_LEVE->name)
             ->whereBetween('notificacions.fecha', [$this->startDate, $this->endDate])
             ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, COUNT(consecuencias.id) as total')
@@ -86,6 +93,12 @@ class IndicadoresPdf extends Component
             ->join('anexo_unos', 'notificacions.id', '=', 'anexo_unos.notificacion_id')
             ->join('anexo_uno_consecuencia', 'anexo_unos.id', '=', 'anexo_uno_consecuencia.anexo_uno_id')
             ->join('consecuencias', 'anexo_uno_consecuencia.consecuencia_id', '=', 'consecuencias.id')
+            ->when(isset($this->establecimientoId), function ($query) {
+                return $query
+                    ->join('empleados', 'notificacions.empleado_id', '=', 'empleados.id') // Join con empleados
+                    ->join('establecimientos', 'empleados.establecimiento_id', '=', 'establecimientos.id') // Join con establecimientos
+                    ->where('establecimientos.id', $this->establecimientoId); // Filtro dinámico por establecimiento_id
+            })
             ->where('consecuencias.nombre', GravedadEnum::ACCIDENTE_MORTAL->name)
             ->whereBetween('notificacions.fecha', [$this->startDate, $this->endDate])
             ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, COUNT(consecuencias.id) as total')
@@ -100,6 +113,12 @@ class IndicadoresPdf extends Component
             ->join('anexo_unos', 'notificacions.id', '=', 'anexo_unos.notificacion_id')
             ->join('anexo_uno_consecuencia', 'anexo_unos.id', '=', 'anexo_uno_consecuencia.anexo_uno_id')
             ->join('consecuencias', 'anexo_uno_consecuencia.consecuencia_id', '=', 'consecuencias.id')
+            ->when(isset($this->establecimientoId), function ($query) {
+                return $query
+                    ->join('empleados', 'notificacions.empleado_id', '=', 'empleados.id') // Join con empleados
+                    ->join('establecimientos', 'empleados.establecimiento_id', '=', 'establecimientos.id') // Join con establecimientos
+                    ->where('establecimientos.id', $this->establecimientoId); // Filtro dinámico por establecimiento_id
+            })
             ->where('consecuencias.grupo', GravedadEnum::ACCIDENTE_INCAPACITANTE->name)
             ->whereBetween('notificacions.fecha', [$this->startDate, $this->endDate])
             ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, COUNT(consecuencias.id) as total')
@@ -113,6 +132,12 @@ class IndicadoresPdf extends Component
 
         $diasDescanso = DB::table('notificacions')
             ->join('registro_accidentes', 'notificacions.id', '=', 'registro_accidentes.notificacion_id')
+            ->when(isset($this->establecimientoId), function ($query) {
+                return $query
+                    ->join('empleados', 'notificacions.empleado_id', '=', 'empleados.id') // Join con empleados
+                    ->join('establecimientos', 'empleados.establecimiento_id', '=', 'establecimientos.id') // Join con establecimientos
+                    ->where('establecimientos.id', $this->establecimientoId); // Filtro dinámico por establecimiento_id
+            })
             ->whereBetween('notificacions.fecha', [$this->startDate, $this->endDate])
             ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, SUM(registro_accidentes.dias_descanso) as total')
             ->groupBy('yearMonth')
@@ -125,6 +150,12 @@ class IndicadoresPdf extends Component
         $enfermedadesTrabajo = DB::table('notificacions')
             ->join('anexo_unos', 'notificacions.id', '=', 'anexo_unos.notificacion_id')
             ->whereNotNull('anexo_unos.anexo_uno_enfermedades_trabajo_id')
+            ->when(isset($this->establecimientoId), function ($query) {
+                return $query
+                    ->join('empleados', 'notificacions.empleado_id', '=', 'empleados.id') // Join con empleados
+                    ->join('establecimientos', 'empleados.establecimiento_id', '=', 'establecimientos.id') // Join con establecimientos
+                    ->where('establecimientos.id', $this->establecimientoId); // Filtro dinámico por establecimiento_id
+            })
             ->whereBetween('notificacions.fecha', [$this->startDate, $this->endDate])
             ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, COUNT(anexo_unos.id) as total')
             ->groupBy('yearMonth')
@@ -137,6 +168,12 @@ class IndicadoresPdf extends Component
         $agentesCausantes = DB::table('notificacions')
             ->join('anexo_unos', 'notificacions.id', '=', 'anexo_unos.notificacion_id')
             ->whereNotNull('anexo_unos.anexo_uno_agente_causante_id')
+            ->when(isset($this->establecimientoId), function ($query) {
+                return $query
+                    ->join('empleados', 'notificacions.empleado_id', '=', 'empleados.id') // Join con empleados
+                    ->join('establecimientos', 'empleados.establecimiento_id', '=', 'establecimientos.id') // Join con establecimientos
+                    ->where('establecimientos.id', $this->establecimientoId); // Filtro dinámico por establecimiento_id
+            })
             ->whereBetween('notificacions.fecha', [$this->startDate, $this->endDate])
             ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, COUNT(anexo_unos.id) as total')
             ->groupBy('yearMonth')
@@ -148,8 +185,14 @@ class IndicadoresPdf extends Component
 
         $incidentes = DB::table('notificacions')
             ->where('tipo_notificacion_verificado', TipoNotificacion::INCIDENTE->value)
+            ->when(isset($this->establecimientoId), function ($query) {
+                return $query
+                    ->join('empleados', 'notificacions.empleado_id', '=', 'empleados.id') // Join con empleados
+                    ->join('establecimientos', 'empleados.establecimiento_id', '=', 'establecimientos.id') // Join con establecimientos
+                    ->where('establecimientos.id', $this->establecimientoId); // Filtro dinámico por establecimiento_id
+            })
             ->whereBetween('fecha', [$this->startDate, $this->endDate])
-            ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, COUNT(id) as total')
+            ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, COUNT(*) as total')
             ->groupBy('yearMonth')
             ->orderBy('yearMonth')
             ->get()
@@ -160,8 +203,14 @@ class IndicadoresPdf extends Component
 
         $accidentes = DB::table('notificacions')
             ->where('tipo_notificacion_verificado', TipoNotificacion::ACCIDENTE->value)
+            ->when(isset($this->establecimientoId), function ($query) {
+                return $query
+                    ->join('empleados', 'notificacions.empleado_id', '=', 'empleados.id') // Join con empleados
+                    ->join('establecimientos', 'empleados.establecimiento_id', '=', 'establecimientos.id') // Join con establecimientos
+                    ->where('establecimientos.id', $this->establecimientoId); // Filtro dinámico por establecimiento_id
+            })
             ->whereBetween('fecha', [$this->startDate, $this->endDate])
-            ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, COUNT(id) as total')
+            ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, COUNT(*) as total')
             ->groupBy('yearMonth')
             ->orderBy('yearMonth')
             ->get()
@@ -174,6 +223,10 @@ class IndicadoresPdf extends Component
         $establecimientos = DB::table('notificacions')
             ->join('empleados', 'notificacions.empleado_id', '=', 'empleados.id')
             ->join('establecimientos', 'empleados.establecimiento_id', '=', 'establecimientos.id')
+            ->when(isset($this->establecimientoId), function ($query) {
+                return $query
+                    ->where('establecimientos.id', $this->establecimientoId); // Filtro dinámico por establecimiento_id
+            })
             ->whereBetween('notificacions.fecha', [$this->startDate, $this->endDate])
             ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, COUNT(DISTINCT establecimientos.id) as total')
             ->groupBy('yearMonth')
@@ -185,6 +238,11 @@ class IndicadoresPdf extends Component
         $unidadesOrganicas = DB::table('notificacions')
             ->join('empleados', 'notificacions.empleado_id', '=', 'empleados.id')
             ->join('unidad_organicas', 'empleados.unidad_organica_id', '=', 'unidad_organicas.id')
+            ->when(isset($this->establecimientoId), function ($query) {
+                return $query
+                    ->join('establecimientos', 'empleados.establecimiento_id', '=', 'establecimientos.id') // Join con establecimientos
+                    ->where('establecimientos.id', $this->establecimientoId); // Filtro dinámico por establecimiento_id
+            })
             ->whereBetween('notificacions.fecha', [$this->startDate, $this->endDate])
             ->selectRaw('DATE_FORMAT(notificacions.fecha, "%Y-%m") as yearMonth, COUNT(DISTINCT unidad_organicas.id) as total')
             ->groupBy('yearMonth')

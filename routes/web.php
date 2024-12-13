@@ -107,6 +107,7 @@ Route::get('/pdf/anexo-uno/{id}', function (int $id) {
 Route::get('/pdf/indicadores', function (Request $request) {
     $startDate = Carbon::createFromFormat('Y-m', $request->fecha_inicio)->startOfMonth();
     $endDate = Carbon::createFromFormat('Y-m', $request->fecha_fin)->endOfMonth();
+    $establecimientoId = $request->establecimiento_id;
     return GenerarPdf::make()
         ->landscape()
         ->filename('indicadores')
@@ -114,5 +115,5 @@ Route::get('/pdf/indicadores', function (Request $request) {
         ->marginTop('90px')
         ->marginLeft('20px')
         ->marginRight('20px')
-        ->handle(ReportType::INDICADORES, new IndicadorFiltroData($startDate, $endDate));
+        ->handle(ReportType::INDICADORES, new IndicadorFiltroData($startDate, $endDate, $establecimientoId));
 })->middleware(['auth'])->name('indicadores-pdf');
