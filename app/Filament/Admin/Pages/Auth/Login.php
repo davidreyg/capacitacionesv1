@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Pages\Auth;
 
+use App\Settings\GeneralSettings;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Component;
@@ -87,7 +88,7 @@ class Login extends BasePage
 
     public function getHeading(): string|Htmlable
     {
-        return 'Sistema de Capacitaciones V 1.0';
+        return app(GeneralSettings::class)->brand_name;
     }
 
     protected function getLoginFormComponent(): Component
