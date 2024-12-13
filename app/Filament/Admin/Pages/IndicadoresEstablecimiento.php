@@ -9,12 +9,13 @@ use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Illuminate\Database\Eloquent\Collection;
 
-class Indicadores extends Page
+class IndicadoresEstablecimiento extends Page
 {
     use HasPageShield;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $title = 'Indicador por Establecimiento';
 
-    protected static string $view = 'filament.admin.pages.indicadores';
+    protected static string $view = 'filament.admin.pages.indicadores-establecimiento';
 
     public Collection $periodos;
     public ?array $data = [];
@@ -41,6 +42,7 @@ class Indicadores extends Page
         $url = route('indicadores-pdf', [
             'fecha_inicio' => "{$data['añoInicio']}-{$data['mesInicio']}",
             'fecha_fin' => "{$data['añoFin']}-{$data['mesFin']}",
+            'establecimiento_id' => auth()->user()->empleado->establecimiento_id,
         ]);
         $this->dispatch('submitForm', $url);
     }
