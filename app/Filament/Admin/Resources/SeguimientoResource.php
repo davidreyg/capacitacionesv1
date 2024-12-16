@@ -36,6 +36,11 @@ class SeguimientoResource extends Resource
             ->schema([]);
     }
 
+    public static function canViewAny(): bool
+    {
+        return static::can('verSeguimiento');
+    }
+
     public static function table(Table $table): Table
     {
         return $table

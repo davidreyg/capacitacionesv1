@@ -72,7 +72,7 @@ return [
             'FilamentInfoWidget',
         ],
 
-        'resources' => ['MisEventosResource'],
+        'resources' => ['SeguimientoResource'],
     ],
 
     'discovery' => [

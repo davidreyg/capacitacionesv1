@@ -99,10 +99,10 @@ class EstablecimientoPolicy
     }
 
     /**
-     * Determine whether the user can reorder.
+     * Determine whether the user can verSeguimiento.
      */
-    public function reorder(User $user): bool
+    public function verSeguimiento(User $user): bool
     {
-        return $user->can('reorder_establecimiento');
+        return $user->can('ver_seguimiento_establecimiento');
     }
 }

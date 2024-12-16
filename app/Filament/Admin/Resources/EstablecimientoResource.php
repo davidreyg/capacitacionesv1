@@ -9,6 +9,7 @@ use App\Models\Establecimiento;
 use App\Models\Ubigeo\Departamento;
 use App\Models\Ubigeo\Distrito;
 use App\Models\Ubigeo\Provincia;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\HtmlString;
 
-class EstablecimientoResource extends Resource
+class EstablecimientoResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Establecimiento::class;
     protected static ?string $navigationGroup = 'Mantenimiento';
@@ -73,5 +74,15 @@ class EstablecimientoResource extends Resource
             'create' => Pages\CreateEstablecimiento::route('/create'),
             'edit' => Pages\EditEstablecimiento::route('/{record}/edit'),
         ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return array_merge(
+            config('filament-shield.permission_prefixes.resource'),
+            [
+                'ver_seguimiento',
+            ]
+        );
     }
 }
